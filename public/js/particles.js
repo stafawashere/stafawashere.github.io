@@ -1,22 +1,22 @@
 (() => {
-    const canvas = document.getElementById('mesh-bg');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("mesh-bg");
+    const ctx = canvas.getContext("2d");
 
-    const BASE_PARTICLE_COUNT = 100;
-    const CONNECT_DIST = 160;
-    const MOUSE_RADIUS = 200;
-    const BASE_COLOR = { r: 255, g: 255, b: 255 };
-    const ACCENT_COLOR = { r: 232, g: 138, b: 171 };
-    const BASE_SPEED = 0.4;
-    
+    const particleCount = 100;
+    const connectDist = 160;
+    const mouseRadius = 200;
+    const baseColor = { r: 255, g: 255, b: 255 };
+    const accentColor = { r: 232, g: 138, b: 171 };
+    const speed = 0.4;
+
     let width, height, particles;
     let mouse = { x: -9999, y: -9999 };
 
-    function getParticleCount() {
+    function getCount() {
         const area = (width || window.innerWidth) * (height || window.innerHeight);
-        const reference = 1200 * 800; // desktop-ish
-        const scale = Math.max(0.4, Math.min(1.2, area / reference));
-        return Math.round(BASE_PARTICLE_COUNT * scale);
+        const ref = 1200 * 800;
+        const scale = Math.max(0.4, Math.min(1.2, area / ref));
+        return Math.round(particleCount * scale);
     }
 
     function resize() {
@@ -34,20 +34,20 @@
             }
         }
 
-        const desired = getParticleCount();
+        const desired = getCount();
         if (!particles || particles.length !== desired) {
             createParticles(desired);
         }
     }
 
-    function createParticles(count = getParticleCount()) {
+    function createParticles(count = getCount()) {
         particles = [];
         for (let i = 0; i < count; i++) {
             particles.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                vx: (Math.random() - 0.5) * BASE_SPEED,
-                vy: (Math.random() - 0.5) * BASE_SPEED,
+                vx: (Math.random() - 0.5) * speed,
+                vy: (Math.random() - 0.5) * speed,
                 radius: Math.random() * 1.5 + 0.5,
             });
         }
@@ -61,12 +61,12 @@
         const dx = x - mouse.x;
         const dy = y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const t = Math.max(0, 1 - dist / MOUSE_RADIUS);
+        const t = Math.max(0, 1 - dist / mouseRadius);
         const ease = t * t;
 
-        const r = Math.round(lerp(BASE_COLOR.r, ACCENT_COLOR.r, ease));
-        const g = Math.round(lerp(BASE_COLOR.g, ACCENT_COLOR.g, ease));
-        const b = Math.round(lerp(BASE_COLOR.b, ACCENT_COLOR.b, ease));
+        const r = Math.round(lerp(baseColor.r, accentColor.r, ease));
+        const g = Math.round(lerp(baseColor.g, accentColor.g, ease));
+        const b = Math.round(lerp(baseColor.b, accentColor.b, ease));
 
         return { color: `rgba(${r},${g},${b},${alpha})`, glow: ease };
     }
@@ -94,10 +94,10 @@
                 const dy = a.y - b.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < CONNECT_DIST) {
+                if (dist < connectDist) {
                     const midX = (a.x + b.x) / 2;
                     const midY = (a.y + b.y) / 2;
-                    const alpha = (1 - dist / CONNECT_DIST) * 0.35;
+                    const alpha = (1 - dist / connectDist) * 0.35;
                     const data = getColorData(midX, midY, alpha);
 
                     ctx.beginPath();
@@ -106,7 +106,7 @@
                     ctx.strokeStyle = data.color;
                     ctx.lineWidth = 0.6 + data.glow * 1.2;
                     if (data.glow > 0.05) {
-                        ctx.shadowColor = 'rgba(232,138,171,0.6)';
+                        ctx.shadowColor = "rgba(232,138,171,0.6)";
                         ctx.shadowBlur = data.glow * 12;
                     } else {
                         ctx.shadowBlur = 0;
@@ -122,7 +122,7 @@
             ctx.arc(p.x, p.y, p.radius + data.glow * 1.5, 0, Math.PI * 2);
             ctx.fillStyle = data.color;
             if (data.glow > 0.05) {
-                ctx.shadowColor = 'rgba(232,138,171,0.7)';
+                ctx.shadowColor = "rgba(232,138,171,0.7)";
                 ctx.shadowBlur = data.glow * 16;
             } else {
                 ctx.shadowBlur = 0;
@@ -138,17 +138,17 @@
         requestAnimationFrame(loop);
     }
 
-    window.addEventListener('mousemove', (e) => {
+    window.addEventListener("mousemove", (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     });
 
-    window.addEventListener('mouseleave', () => {
+    window.addEventListener("mouseleave", () => {
         mouse.x = -9999;
         mouse.y = -9999;
     });
 
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     resize();
     loop();

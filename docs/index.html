@@ -19,139 +19,146 @@
         </div>
 
         
+
         <svg class="hero-title" viewBox="0 0 1000 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <mask id="name-mask">
                     <rect x="0" y="0" width="1000" height="110" fill="white"/>
-                    <polygon points="0,68 30,68 130,50 250,68 310,56 420,63 500,48 580,69 680,53 760,68 870,56 960,66 1000,66 1000,110 0,110" fill="black"/>
+                    <polygon points="0,68 30,68 130,53 250,68 310,56 420,63 500,53 580,69 680,53 760,68 870,61 960,70 1000,70 1000,110 0,110" fill="black"/>
                 </mask>
+
+                <pattern id="pcb-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="0.6" fill="#e88aab" opacity="0.12"/>
+                </pattern>
+
+                <radialGradient id="glow-grad" cx="0.5" cy="0.5" r="0.5">
+                    <stop offset="0%" stop-color="white"/>
+                    <stop offset="100%" stop-color="black"/>
+                </radialGradient>
+
+                <mask id="glow-mask">
+                    <rect id="glow-rect" x="0" y="0" width="200" height="200" fill="url(#glow-grad)" transform="translate(-9999, -9999)"/>
+                    <rect id="pulse-glow-rect" x="0" y="0" width="160" height="160" fill="url(#glow-grad)" transform="translate(-9999, -9999)"/>
+                    <polygon points="0,68 30,68 130,53 250,68 310,56 420,63 500,53 580,69 680,53 760,68 870,61 960,70 1000,70 1000,110 0,110" fill="black"/>
+                </mask>
+
+                <filter id="pulse-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+
+                <filter id="letterpress" x="-5%" y="-5%" width="110%" height="120%">
+                    <feOffset dx="0" dy="3.5" in="SourceAlpha" result="off"/>
+                    <feGaussianBlur stdDeviation="1" in="off" result="blur"/>
+                    <feFlood flood-color="#000" flood-opacity="0.2" result="shadow"/>
+                    <feComposite in="shadow" in2="blur" operator="in" result="inset"/>
+                    <feMerge>
+                        <feMergeNode in="SourceGraphic"/>
+                        <feMergeNode in="inset"/>
+                    </feMerge>
+                </filter>
             </defs>
+
+            <rect width="1000" height="110" fill="url(#pcb-grid)"/>
 
             <text x="500" y="65" text-anchor="middle" mask="url(#name-mask)"
                   font-family="'Roboto Mono', monospace" font-size="90" font-weight="700"
-                  fill="#e6e6e6" letter-spacing="3">MAHFUJ MUSTAFA</text>
+                  fill="#e6e6e6" letter-spacing="3" filter="url(#noise-texture)">MAHFUJ MUSTAFA</text>
+
+            <text x="500" y="65" text-anchor="middle" mask="url(#glow-mask)"
+                  font-family="'Roboto Mono', monospace" font-size="90" font-weight="700"
+                  fill="#e87da3" letter-spacing="3" opacity="0.6" filter="url(#letterpress)">MAHFUJ MUSTAFA</text>
+
 
             
-            <line x1="30" y1="68" x2="130" y2="50" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="30" y1="68" x2="130" y2="53" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
-            <line x1="130" y1="50" x2="250" y2="68" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="130" y1="53" x2="250" y2="68" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
             <line x1="250" y1="68" x2="310" y2="56" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
             <line x1="310" y1="56" x2="420" y2="63" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
-            <line x1="420" y1="63" x2="500" y2="48" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="420" y1="63" x2="500" y2="53" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
-            <line x1="500" y1="48" x2="580" y2="69" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="500" y1="53" x2="580" y2="69" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
             <line x1="580" y1="69" x2="680" y2="53" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
             <line x1="680" y1="53" x2="760" y2="68" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
-            <line x1="760" y1="68" x2="870" y2="56" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="760" y1="68" x2="870" y2="61" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
-            <line x1="870" y1="56" x2="960" y2="66" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="870" y1="61" x2="960" y2="70" stroke="#e88aab" stroke-width="1" stroke-opacity="0.5"/>
             
 
             
-            <circle
-                cx="30"
-                cy="68"
-                r="3.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <line x1="130" y1="53" x2="130" y2="69" stroke="#e88aab" stroke-width="0.6" stroke-opacity="0.12"/>
+            <circle cx="130" cy="69" r="2" fill="#303030" stroke="#e88aab" stroke-width="0.4" stroke-opacity="0.15"/>
             
-            <circle
-                cx="130"
-                cy="50"
-                r="3"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <line x1="310" y1="56" x2="325" y2="70" stroke="#e88aab" stroke-width="0.6" stroke-opacity="0.12"/>
+            <circle cx="325" cy="70" r="1.5" fill="#303030" stroke="#e88aab" stroke-width="0.4" stroke-opacity="0.15"/>
             
-            <circle
-                cx="250"
-                cy="68"
-                r="4"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <line x1="420" y1="63" x2="420" y2="77" stroke="#e88aab" stroke-width="0.6" stroke-opacity="0.12"/>
+            <circle cx="420" cy="77" r="2" fill="#303030" stroke="#e88aab" stroke-width="0.4" stroke-opacity="0.15"/>
             
-            <circle
-                cx="310"
-                cy="56"
-                r="2.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <line x1="580" y1="69" x2="568" y2="82" stroke="#e88aab" stroke-width="0.6" stroke-opacity="0.12"/>
+            <circle cx="568" cy="82" r="1.8" fill="#303030" stroke="#e88aab" stroke-width="0.4" stroke-opacity="0.15"/>
             
-            <circle
-                cx="420"
-                cy="63"
-                r="3.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <line x1="760" y1="68" x2="760" y2="82" stroke="#e88aab" stroke-width="0.6" stroke-opacity="0.12"/>
+            <circle cx="760" cy="82" r="2" fill="#303030" stroke="#e88aab" stroke-width="0.4" stroke-opacity="0.15"/>
             
-            <circle
-                cx="500"
-                cy="48"
-                r="3"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <line x1="870" y1="61" x2="884" y2="71" stroke="#e88aab" stroke-width="0.6" stroke-opacity="0.12"/>
+            <circle cx="884" cy="71" r="1.5" fill="#303030" stroke="#e88aab" stroke-width="0.4" stroke-opacity="0.15"/>
             
-            <circle
-                cx="580"
-                cy="69"
-                r="3.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+
+            <circle id="pulse-dot" r="3" fill="#e88aab" filter="url(#pulse-glow)" opacity="0.9">
+                <animateMotion dur="4s" repeatCount="indefinite" path="M 30 68 L 130 53 L 250 68 L 310 56 L 420 63 L 500 53 L 580 69 L 680 53 L 760 68 L 870 61 L 960 70"/>
+                <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+
+            <circle r="6" fill="none" stroke="#e88aab" stroke-width="0.8" opacity="0.3">
+                <animateMotion dur="4s" repeatCount="indefinite" path="M 30 68 L 130 53 L 250 68 L 310 56 L 420 63 L 500 53 L 580 69 L 680 53 L 760 68 L 870 61 L 960 70"/>
+                <animate attributeName="r" values="4;8;4" dur="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+
             
-            <circle
-                cx="680"
-                cy="53"
-                r="2.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <circle cx="30" cy="68" r="3.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
             
-            <circle
-                cx="760"
-                cy="68"
-                r="3.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <circle cx="130" cy="53" r="3"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
             
-            <circle
-                cx="870"
-                cy="56"
-                r="3"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <circle cx="250" cy="68" r="4"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
             
-            <circle
-                cx="960"
-                cy="66"
-                r="2.5"
-                fill="#303030"
-                stroke="#e88aab"
-                stroke-width="1.2"
-                stroke-opacity="0.7"/>
+            <circle cx="310" cy="56" r="2.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="420" cy="63" r="3.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="500" cy="53" r="3"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="580" cy="69" r="3.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="680" cy="53" r="2.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="760" cy="68" r="3.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="870" cy="61" r="3"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
+            
+            <circle cx="960" cy="70" r="2.5"
+                    fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="0.7"/>
             
         </svg>
 
@@ -294,5 +301,6 @@
         </section>
     </div>
     <script src="js/particles.js"></script>
+    <script src="js/glow.js"></script>
 </body>
 </html>
