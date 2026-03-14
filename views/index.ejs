@@ -146,7 +146,7 @@
             </g>
 
             <% for (let i = 0; i < nodes.length; i++) { %>
-            <circle cx="<%= nodes[i].x %>" cy="<%= nodes[i].y %>" r="<%= dotR[i] %>"
+            <circle class="circuit-node" cx="<%= nodes[i].x %>" cy="<%= nodes[i].y %>" r="<%= dotR[i] %>"
                     fill="#303030" stroke="#e88aab" stroke-width="0.7" stroke-opacity="<%= dotOps[i] %>"/>
             <% } %>
         </svg>
@@ -291,5 +291,6 @@
     </div>
     <script src="js/particles.js"></script>
     <script src="js/glow.js"></script>
+    <script src="js/circuit-hover.js"></script>
 </body>
 </html>
