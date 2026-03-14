@@ -5,12 +5,14 @@
     const pulseDot = document.getElementById("pulse-dot");
     if (!svg || !glowRect || !pulseRect || !pulseDot) return;
 
+    const pulseGroup = document.getElementById("pulse-group");
     const pt = svg.createSVGPoint();
     const mouseR = 100;
     const pulseR = 50;
+    let mouseOver = false;
 
-    // mouse glow
     svg.addEventListener("mousemove", (e) => {
+        mouseOver = true;
         pt.x = e.clientX;
         pt.y = e.clientY;
         const p = pt.matrixTransform(svg.getScreenCTM().inverse());
@@ -22,22 +24,27 @@
     });
 
     svg.addEventListener("mouseleave", () => {
+        mouseOver = false;
         glowRect.setAttribute("transform", "translate(-9999, -9999)");
     });
 
-    // pulse dot glow
     function tick() {
-        const dotCTM = pulseDot.getCTM();
-        const svgCTM = svg.getCTM();
-        if (dotCTM && svgCTM) {
-            const svgInv = svgCTM.inverse();
-            const sx = svgInv.a * dotCTM.e + svgInv.c * dotCTM.f + svgInv.e;
-            const sy = svgInv.b * dotCTM.e + svgInv.d * dotCTM.f + svgInv.f;
-            pulseRect.setAttribute("x", sx - pulseR);
-            pulseRect.setAttribute("y", sy - pulseR);
-            pulseRect.setAttribute("width", pulseR * 2);
-            pulseRect.setAttribute("height", pulseR * 2);
-            pulseRect.setAttribute("transform", "");
+        const groupOpacity = parseFloat(window.getComputedStyle(pulseGroup).opacity);
+        if (groupOpacity < 0.1 || mouseOver) {
+            pulseRect.setAttribute("transform", "translate(-9999, -9999)");
+        } else {
+            const dotCTM = pulseDot.getCTM();
+            const svgCTM = svg.getCTM();
+            if (dotCTM && svgCTM) {
+                const svgInv = svgCTM.inverse();
+                const sx = svgInv.a * dotCTM.e + svgInv.c * dotCTM.f + svgInv.e;
+                const sy = svgInv.b * dotCTM.e + svgInv.d * dotCTM.f + svgInv.f;
+                pulseRect.setAttribute("x", sx - pulseR);
+                pulseRect.setAttribute("y", sy - pulseR);
+                pulseRect.setAttribute("width", pulseR * 2);
+                pulseRect.setAttribute("height", pulseR * 2);
+                pulseRect.setAttribute("transform", "");
+            }
         }
         requestAnimationFrame(tick);
     }
