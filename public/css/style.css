@@ -76,11 +76,31 @@ h2 {
     margin-top: 36px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 0;
+}
+
+h2 .section-arrow {
+    order: 0;
+    margin-right: 16px;
+}
+
+h2::before {
+    content: "";
+    order: 1;
+    width: 6px;
+    height: 6px;
+    margin-right: -3px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
 }
 
 h2::after {
     content: "";
+    order: 2;
     flex: 1;
     height: 1px;
     background: linear-gradient(to right, var(--accent), transparent);

@@ -11,7 +11,7 @@
     const LINE_WIDTH = 1;
     const LINE_OPACITY = 0.5;
     const NODE_R = 3;
-    const NODE_FILL = "#303030";
+    const NODE_FILL = "#1e1e1e";
     const NODE_STROKE = "#e88aab";
     const NODE_STROKE_W = 0.7;
     const FADE_MS = 200;
@@ -30,7 +30,7 @@
 
     function gutterX() {
         const padding = parseFloat(getComputedStyle(page).paddingLeft);
-        return Math.max(8, padding * 0.3);
+        return Math.max(8, padding * 0.5);
     }
 
     function startY() {
