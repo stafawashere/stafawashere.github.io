@@ -15,7 +15,6 @@
     const NODE_STROKE_W = 0.7;
     const FADE_MS = 200;
     const MIN_NODE_DIST = 25;
-
     const IDLE_OPACITY = 0.14;
     const ACTIVE_OPACITY = 0.5;
     const TRUNK_OPACITY = 0.14;
@@ -57,8 +56,10 @@
 
     function makeLine(x1, y1, x2, y2, opacity) {
         const l = document.createElementNS(NS, "line");
-        l.setAttribute("x1", x1); l.setAttribute("y1", y1);
-        l.setAttribute("x2", x2); l.setAttribute("y2", y2);
+        l.setAttribute("x1", x1);
+        l.setAttribute("y1", y1);
+        l.setAttribute("x2", x2);
+        l.setAttribute("y2", y2);
         l.setAttribute("stroke", LINE_COLOR);
         l.setAttribute("stroke-width", LINE_WIDTH);
         l.setAttribute("stroke-opacity", opacity);
@@ -67,7 +68,8 @@
 
     function makeNode(cx, cy, opacity) {
         const c = document.createElementNS(NS, "circle");
-        c.setAttribute("cx", cx); c.setAttribute("cy", cy);
+        c.setAttribute("cx", cx);
+        c.setAttribute("cy", cy);
         c.setAttribute("r", NODE_R);
         c.setAttribute("fill", NODE_FILL);
         c.setAttribute("stroke", NODE_STROKE);
@@ -118,7 +120,6 @@
         return { gapY, colGapX: (prevRight + elLeft) / 2 };
     }
 
-    // Returns { branchY, branchPts } — branchY is where this entry taps the trunk
     function buildBranch(el) {
         const target = targetPos(el);
         if (!target) return null;
@@ -140,7 +141,6 @@
             pts.push({ x: target.x, y: target.y });
         }
 
-        // Nudge terminal slightly past the title
         const last = pts[pts.length - 1];
         const prev = pts[pts.length - 2];
         const dx = last.x - prev.x;
@@ -156,7 +156,7 @@
         const g = document.createElementNS(NS, "g");
         g.classList.add("circuit-connector");
         g.style.opacity = String(IDLE_OPACITY);
-        g.style.transition = `opacity ${FADE_MS}ms ease`;
+        g.style.transition = "opacity " + FADE_MS + "ms ease";
 
         for (let i = 0; i < pts.length - 1; i++) {
             g.appendChild(makeLine(pts[i].x, pts[i].y, pts[i + 1].x, pts[i + 1].y, ACTIVE_OPACITY));
@@ -176,7 +176,6 @@
     }
 
     function drawAll() {
-        // Clear previous
         if (trunkGroup && trunkGroup.parentNode) trunkGroup.parentNode.removeChild(trunkGroup);
         trunkGroup = null;
         allGroups.forEach(item => {
@@ -188,7 +187,6 @@
         const sy = startY();
         let maxBranchY = sy;
 
-        // First pass: build all branches and find the trunk extent
         const entries = [];
         page.querySelectorAll(".entry, .skills-group").forEach(el => {
             const result = buildBranch(el);
@@ -197,19 +195,16 @@
             if (result.branchY > maxBranchY) maxBranchY = result.branchY;
         });
 
-        // Draw single shared trunk line
         trunkGroup = document.createElementNS(NS, "g");
         trunkGroup.classList.add("circuit-trunk");
         trunkGroup.style.opacity = String(TRUNK_OPACITY);
-        trunkGroup.style.transition = `opacity ${FADE_MS}ms ease`;
+        trunkGroup.style.transition = "opacity " + FADE_MS + "ms ease";
         trunkGroup.appendChild(makeLine(gx, sy, gx, maxBranchY, ACTIVE_OPACITY));
-        // Add junction nodes on trunk where branches tap in
         entries.forEach(entry => {
             trunkGroup.appendChild(makeNode(gx, entry.branchY, 0.7));
         });
         overlay.appendChild(trunkGroup);
 
-        // Draw individual branch groups (no trunk segment)
         entries.forEach(entry => {
             const g = buildBranchGroup(entry.pts);
             overlay.appendChild(g);
@@ -218,7 +213,6 @@
     }
 
     function highlight(el) {
-        // Brighten trunk
         if (trunkGroup) trunkGroup.style.opacity = String(TRUNK_OPACITY * 2);
         allGroups.forEach(item => {
             item.g.style.opacity = item.el === el ? String(ACTIVE_OPACITY) : String(IDLE_OPACITY);
@@ -232,16 +226,13 @@
         });
     }
 
-    // Initial draw
     drawAll();
 
-    // Hover events
     page.querySelectorAll(".entry, .skills-group").forEach(el => {
         el.addEventListener("mouseenter", () => highlight(el));
         el.addEventListener("mouseleave", () => unhighlight());
     });
 
-    // Redraw on resize
     let resizeTimer;
     window.addEventListener("resize", () => {
         clearTimeout(resizeTimer);
