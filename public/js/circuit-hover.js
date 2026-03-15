@@ -88,7 +88,9 @@
     function rightColRouting(el) {
         const pageRect = page.getBoundingClientRect();
         const prev = el.previousElementSibling;
-        const bottom = prev ? contentBottom(prev) : contentBottom(el);
+        const selfBottom = contentBottom(el);
+        const prevBottom = prev ? contentBottom(prev) : selfBottom;
+        const bottom = Math.max(selfBottom, prevBottom);
 
         let gapY;
         const next = el.nextElementSibling;
@@ -96,9 +98,15 @@
             gapY = (bottom + next.getBoundingClientRect().top - pageRect.top) / 2;
         } else {
             const section = el.closest("section");
-            gapY = section
-                ? (bottom + section.getBoundingClientRect().bottom - pageRect.top) / 2
-                : bottom + 12;
+            const nextSection = section ? section.nextElementSibling : null;
+            if (nextSection) {
+                const nextTop = nextSection.getBoundingClientRect().top - pageRect.top;
+                gapY = (bottom + nextTop) / 2;
+            } else {
+                gapY = section
+                    ? (bottom + section.getBoundingClientRect().bottom - pageRect.top) / 2
+                    : bottom + 12;
+            }
         }
 
         const elLeft = el.getBoundingClientRect().left - pageRect.left;

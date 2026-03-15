@@ -120,6 +120,7 @@ h2:first-of-type {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 32px;
+    align-items: start;
 }
 
 .skills-group {
