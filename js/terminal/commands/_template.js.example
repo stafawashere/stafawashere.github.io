@@ -1,0 +1,46 @@
+/* command template. copy to commands/<name>.js, edit, and add one <script> line
+ * for it in index.html. help, man, tab-completion and "did you mean" pick it up.
+ * ends in .example so the page doesn't load it.
+ */
+
+defineCommand({
+  name:    'hello',           // what the user types
+  aliases: ['hi', 'hey'],     // optional extra names
+  group:   'core',            // 'core', 'system' (hidden), or 'root'. omit to keep it out of help
+  summary: 'say hello',       // shown in help / man
+  // usage: 'hello <name>',   // optional help label, defaults to name
+  // root:  true,             // only runnable after the konami unlock
+  // clears:true,             // wipes the screen, prints nothing
+  // bare:  true,             // no trailing blank line after output
+
+  run(ctx) {
+    const o = ctx.out;
+
+    o.line('plain text line');
+    o.line(o.dim('dim '), o.accent('purple '), o.ok('green '), o.warn('yellow '), o.error('red'));
+    o.blank();
+
+    // args & flags, e.g. `hello world --loud -n=3`
+    o.line(o.dim('args:  '), o.txt(JSON.stringify(ctx.args)));   // ["world"]
+    o.line(o.dim('flags: '), o.txt(JSON.stringify(ctx.flags)));  // { loud:true, n:"3" }
+
+    o.line(o.cmd('run `whoami`', 'whoami'), o.dim('   '), o.link('open site', 'https://example.com'));
+
+    o.heading('a heading');
+    o.kv('role', 'developer');
+    o.table([['a', '1'], ['bb', '22']]);
+    o.list(['one', 'two', 'three']);
+    o.rule();
+
+    return o;   // an Output, an array of lines, or a string
+  },
+
+  // run can be async for animations, see commands/hack.js:
+  //
+  //   async run(ctx) {
+  //     await ctx.type('booting...', { color: ctx.C.ok });
+  //     await ctx.sleep(300);
+  //     ctx.print(ctx.out.line('done').lines);
+  //     return ctx.out.line('all set');
+  //   }
+});

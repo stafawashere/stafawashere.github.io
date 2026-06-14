@@ -1,0 +1,89 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  font-family: var(--font);
+}
+
+/* fixed so it doesn't repaint on scroll */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(var(--purple-rgb), 0.16), transparent 62%),
+    radial-gradient(ellipse 60% 50% at 88% 8%, rgba(86, 128, 255, 0.05), transparent 55%),
+    radial-gradient(ellipse 70% 60% at 8% 95%, rgba(var(--purple-rgb), 0.05), transparent 60%),
+    radial-gradient(rgba(var(--lilac-rgb), 0.045) 1px, transparent 1.6px),
+    linear-gradient(rgba(255, 255, 255, 0.013) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.013) 1px, transparent 1px),
+    linear-gradient(rgba(var(--purple-rgb), 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--purple-rgb), 0.032) 1px, transparent 1px);
+  background-size:
+    220px 220px,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    26px 26px,
+    26px 26px,
+    26px 26px,
+    260px 260px,
+    260px 260px;
+}
+
+/* vignette: above the canvas, below the content */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 128% 88% at 50% 30%, transparent 56%, rgba(3, 3, 6, 0.62) 100%),
+    linear-gradient(180deg, rgba(8, 9, 12, 0) 70%, rgba(5, 5, 8, 0.5) 100%);
+}
+
+::selection {
+  background: rgba(var(--purple-rgb), 0.4);
+  color: #fff;
+}
+
+#root {
+  position: relative;
+  z-index: 2;
+  color: var(--text-bright);
+  font-family: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: transparent;
+}
+
+#circuit-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media print {
+  @page { margin: 0.5cm; }
+  html, body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  section, article, figure, table { break-inside: avoid; }
+  *, *::before, *::after {
+    animation-delay: -99s !important;
+    animation-duration: .001s !important;
+    animation-iteration-count: 1 !important;
+    animation-fill-mode: both !important;
+    animation-play-state: running !important;
+    transition-duration: 0s !important;
+  }
+}

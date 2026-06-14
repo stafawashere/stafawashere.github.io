@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mahfuj Mustafa</title>
+  <link rel="icon" type="image/svg+xml" href="icons/icon-chip.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/terminal.css">
+  <link rel="stylesheet" href="css/palette.css">
+</head>
+<body>
+
+  <canvas id="circuit-canvas"></canvas>
+
+  <div id="root">
+
+    <nav id="nav">
+      <button id="nav-logo" aria-label="Scroll to top">
+        <span class="tilde">~</span><span class="slash">/</span><span class="handle">mahfujmustafa</span>
+      </button>
+
+      <div id="nav-spacer"></div>
+
+      <div id="nav-links"></div>
+
+      <button id="nav-search" aria-label="Open command palette (⌘K)">
+        <span class="label">search</span>
+        <kbd>⌘K</kbd>
+      </button>
+    </nav>
+
+
+    <header id="hero" id="top">
+      <div class="hero-glow"></div>
+
+      <div class="hero-meta">
+        <span>(347) 844-4127</span>
+        <span>contact<span>@</span>mahfujmustafa.dev</span>
+        <span>New York City, NY</span>
+        <span class="available">
+          <span class="dot"></span>available for work
+        </span>
+      </div>
+
+      <div id="hero-prompt" role="button" tabindex="0" title="open the shell">
+        <div class="hero-prompt-host">
+          mahfuj@portfolio <span class="tilde">~</span> %
+        </div>
+        <div class="hero-prompt-cmd">
+          <span class="dollar">$</span>
+          <span id="hero-cmd-text"></span><span class="blink-cursor"></span>
+        </div>
+      </div>
+
+      <h1 id="hero-name" data-cnode="core"><span id="hero-l1">MAHFUJ</span><br><span id="hero-l2">MUSTAFA</span></h1>
+
+      <div class="hero-role">
+        <span class="label">role:</span>
+        <span class="value" id="hero-rotor"></span><span class="role-cursor"></span>
+      </div>
+
+      <p id="hero-bio">
+        I'm a <strong>17-year-old high school student</strong> in NYC who breaks things
+        to understand them. Security research, reverse engineering, full-stack web,
+        Discord bots, API wrappers, automation — and live games that have reached
+        <span class="count" id="hero-count">0M+ player visits</span>.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-primary" id="hero-work-btn">view work <span>→</span></button>
+        <button class="btn-secondary" id="hero-contact-btn">get in touch</button>
+        <a href="https://github.com/stafawashere" target="_blank" rel="noopener"
+           aria-label="GitHub" title="GitHub" class="btn-icon" style="height:47px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="scroll-hint">
+        <span class="scroll-hint-line"></span>scroll to explore
+      </div>
+    </header>
+
+
+    <div id="terminal-window" data-screen-label="shell-window">
+      <div id="terminal-card">
+
+        <div id="term-titlebar">
+          <div class="term-traffic">
+            <button class="traffic-btn traffic-close" id="win-close" title="close">×</button>
+            <button class="traffic-btn traffic-min"   id="win-min"   title="minimize">–</button>
+            <button class="traffic-btn traffic-max"   id="win-max"   title="maximize" id="win-max-btn">+</button>
+          </div>
+          <div id="term-title">
+            <span>visitor</span><span>@</span><span>mahfujmustafa.dev: ~ — zsh</span>
+          </div>
+          <div id="term-dims">96×17</div>
+        </div>
+
+        <div id="term-content">
+
+          <div id="term-body">
+            <div id="term-prompt-row">
+              <span id="prompt-user"  style="color:#7fd1b9;font-weight:700;">visitor</span><span style="color:#6f7180;">@</span><span id="prompt-host" style="color:#7fd1b9;font-weight:600;">mahfujmustafa.dev</span><span style="color:#6f7180;">:</span><span id="prompt-cwd" style="color:var(--lilac);font-weight:600;">~</span><span id="prompt-sym" style="color:var(--purple);font-weight:700;">$ </span><input id="term-input" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="terminal input">
+            </div>
+          </div>
+
+          <div id="term-chips">
+            <span class="chips-label">try:</span>
+          </div>
+
+          <div id="term-grip" title="drag to resize">
+            <span class="grip-handle"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <section id="skills" class="content-section section-reveal">
+      <div class="section-header" data-section="skills">
+        <span class="section-label"><span class="section-arrow">&gt;</span> skills</span>
+        <span class="section-divider"></span>
+        <span class="section-count">01 / 05</span>
+      </div>
+      <div class="section-body" id="skills-body">
+        <div class="section-body-inner">
+          <div class="section-body-content">
+            <div class="skills-grid" id="skills-content">
+              <div>
+                <div class="skill-group-label">// domains</div>
+                <div class="tags" id="skills-domains"></div>
+              </div>
+              <div>
+                <div class="skill-group-label">// frameworks &amp; tools</div>
+                <div class="tags" id="skills-tools"></div>
+                <div class="skill-group-label sub">// languages</div>
+                <div class="tags" id="skills-langs"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="experience" class="content-section section-reveal">
+      <div class="section-header" data-section="experience">
+        <span class="section-label"><span class="section-arrow">&gt;</span> experience</span>
+        <span class="section-divider"></span>
+        <span class="section-count">02 / 05</span>
+      </div>
+      <div class="section-body" id="experience-body">
+        <div class="section-body-inner">
+          <div class="section-body-content">
+            <div class="experience-list" id="experience-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="work" class="content-section section-reveal">
+      <div class="section-header" data-section="work">
+        <span class="section-label"><span class="section-arrow">&gt;</span> projects</span>
+        <span class="section-divider"></span>
+        <span class="section-count">03 / 05</span>
+      </div>
+      <div class="section-body" id="work-body">
+        <div class="section-body-inner">
+          <div class="section-body-content">
+            <div class="projects-grid" id="work-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="education" class="content-section section-reveal">
+      <div class="section-header" data-section="education">
+        <span class="section-label"><span class="section-arrow">&gt;</span> education</span>
+        <span class="section-divider"></span>
+        <span class="section-count">04 / 05</span>
+      </div>
+      <div class="section-body" id="education-body">
+        <div class="section-body-inner">
+          <div class="section-body-content">
+            <div class="education-grid" id="education-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="contact" class="content-section section-reveal">
+      <div class="section-header" data-section="contact">
+        <span class="section-label"><span class="section-arrow">&gt;</span> contact</span>
+        <span class="section-divider"></span>
+        <span class="section-count">05 / 05</span>
+      </div>
+      <div class="section-body" id="contact-body">
+        <div class="section-body-inner">
+          <div class="section-body-content">
+            <div class="contact-card">
+              <div class="contact-card-glow"></div>
+              <div class="contact-inner">
+                <div class="contact-cmd">$ ./contact --start</div>
+                <h2 class="contact-heading">Let's build<br>something solid.</h2>
+                <p class="contact-sub">
+                  Open to freelance work and full-time roles. Whether it's breaking a system,
+                  shipping a product, or wiring up automation — let's talk.
+                </p>
+                <div class="contact-actions">
+                  <a href="mailto:contact@mahfujmustafa.dev" class="btn-primary">
+                    email me <span>→</span>
+                  </a>
+                  <a href="https://github.com/stafawashere" target="_blank" rel="noopener"
+                     aria-label="GitHub" title="GitHub" class="btn-secondary" style="padding:13px 16px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:block;" aria-hidden="true">
+                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="footer">
+              <span>© 2026 Mahfuj Mustafa — New York City, NY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- triggered by konami code -->
+    <div id="root-flash" hidden>
+      <div class="root-scan-line"></div>
+      <div class="root-scanlines"></div>
+      <div class="root-text">
+        <div class="root-eyebrow">// privilege escalation</div>
+        <div class="root-headline">ROOT ACCESS GRANTED</div>
+        <div class="root-sub">uid=0(root) · welcome to the inside</div>
+      </div>
+    </div>
+
+
+    <div id="palette-overlay" hidden>
+      <div id="palette-box">
+        <div id="palette-search">
+          <span class="palette-dollar">$</span>
+          <input id="palette-input" type="text" placeholder="jump to a section or link…"
+                 autocomplete="off" spellcheck="false">
+          <kbd class="palette-esc">esc</kbd>
+        </div>
+        <div id="palette-list"></div>
+        <div id="palette-empty" hidden>no matches.</div>
+        <div id="palette-footer">
+          <span><span class="palette-key">↑↓</span> navigate</span>
+          <span><span class="palette-key">↵</span> select</span>
+          <span><span class="palette-key">esc</span> close</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- each data file adds one dataset, all merge into PORTFOLIO -->
+  <script defer src="js/data/profile.js"></script>
+  <script defer src="js/data/skills.js"></script>
+  <script defer src="js/data/experience.js"></script>
+  <script defer src="js/data/projects.js"></script>
+  <script defer src="js/data/education.js"></script>
+
+  <script defer src="js/circuit.js"></script>
+
+  <!-- new command: add js/terminal/commands/<name>.js (see _template.js.example) and a script line below -->
+  <script defer src="js/terminal/banners.js"></script>
+  <script defer src="js/terminal/framework/registry.js"></script>
+  <script defer src="js/terminal/framework/output.js"></script>
+  <script defer src="js/terminal/framework/shell.js"></script>
+
+  <!-- order here is the order shown in `help` -->
+  <script defer src="js/terminal/commands/help.js"></script>
+  <script defer src="js/terminal/commands/whoami.js"></script>
+  <script defer src="js/terminal/commands/about.js"></script>
+  <script defer src="js/terminal/commands/ls.js"></script>
+  <script defer src="js/terminal/commands/projects.js"></script>
+  <script defer src="js/terminal/commands/cat.js"></script>
+  <script defer src="js/terminal/commands/open.js"></script>
+  <script defer src="js/terminal/commands/skills.js"></script>
+  <script defer src="js/terminal/commands/experience.js"></script>
+  <script defer src="js/terminal/commands/education.js"></script>
+  <script defer src="js/terminal/commands/contact.js"></script>
+  <script defer src="js/terminal/commands/sudo.js"></script>
+  <script defer src="js/terminal/commands/neofetch.js"></script>
+  <script defer src="js/terminal/commands/social.js"></script>
+  <script defer src="js/terminal/commands/date.js"></script>
+  <script defer src="js/terminal/commands/echo.js"></script>
+  <script defer src="js/terminal/commands/clear.js"></script>
+  <script defer src="js/terminal/commands/vim.js"></script>
+  <script defer src="js/terminal/commands/rm.js"></script>
+  <script defer src="js/terminal/commands/hack.js"></script>
+  <script defer src="js/terminal/commands/ping.js"></script>
+  <script defer src="js/terminal/commands/coffee.js"></script>
+  <script defer src="js/terminal/commands/sl.js"></script>
+  <script defer src="js/terminal/commands/theme.js"></script>
+  <script defer src="js/terminal/commands/man.js"></script>
+  <script defer src="js/terminal/commands/history.js"></script>
+  <script defer src="js/terminal/commands/pwd.js"></script>
+  <script defer src="js/terminal/commands/secret.js"></script>
+  <script defer src="js/terminal/commands/exit.js"></script>
+  <script defer src="js/terminal/commands/flag.js"></script>
+  <script defer src="js/terminal/commands/rootkit.js"></script>
+  <script defer src="js/terminal/commands/extras.js"></script>
+  <script defer src="js/terminal/commands/settings.js"></script>
+
+  <script defer src="js/hero.js"></script>
+  <script defer src="js/palette.js"></script>
+  <script defer src="js/window.js"></script>
+  <script defer src="js/main.js"></script>
+
+</body>
+</html>
