@@ -43,9 +43,9 @@ window.PORTFOLIO.projects = [
     id:   'portfolio',
     name: 'mahfujmustafa.dev',
     type: 'Portfolio Website',
-    date: 'MAR 2025',
+    date: 'JUN 2026',
     url:  'https://github.com/stafawashere/stafawashere.github.io',
-    tech: ['JavaScript'],
-    desc: 'Personal portfolio built with EJS templating, custom terminal-inspired CSS, and automated builds.',
+    tech: ['JavaScript', 'HTML5 Canvas'],
+    desc: 'Zero-framework static site: a fully interactive terminal shell with 35+ commands and an animated circuit-board canvas.',
   },
 ];
