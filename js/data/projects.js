@@ -1,5 +1,3 @@
-// id is used by the terminal cat/open commands, keep it unique
-
 window.PORTFOLIO = window.PORTFOLIO || {};
 
 window.PORTFOLIO.projects = [
@@ -10,7 +8,7 @@ window.PORTFOLIO.projects = [
     date: 'MAR 2026',
     url:  'https://github.com/stafawashere/dms',
     tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma'],
-    desc: 'Distributor management system with role-based admin & reseller portals, per-user inventory tracking, bulk pricing tiers, flexible sale pricing, and revenue analytics.',
+    desc: 'A web app for managing distributors and the resellers under them. Admins and resellers each get their own portal, with inventory tracking, bulk pricing tiers, and a dashboard for sales and revenue.',
   },
   {
     id:   'allusion',
@@ -19,7 +17,7 @@ window.PORTFOLIO.projects = [
     date: 'FEB 2026',
     url:  'https://github.com/stafawashere/Allusion',
     tech: ['Lua'],
-    desc: 'Reverse-engineered Rivals\' client to find vulnerabilities across anti-cheat, combat, and rendering systems. Responsibly disclosed before open-sourcing.',
+    desc: 'I pulled apart the game Rivals to find weaknesses in its anti-cheat, combat, and rendering. Everything was reported to the developers before I made any of it public.',
   },
   {
     id:   'disky',
@@ -28,7 +26,7 @@ window.PORTFOLIO.projects = [
     date: 'MAY 2024',
     url:  'https://github.com/stafawashere/Disky',
     tech: ['Python', 'WebSockets'],
-    desc: 'A Discord API wrapper built from scratch over raw WebSockets & HTTP — gateway events, session management, and browser fingerprinting, no existing libraries.',
+    desc: 'A Discord library I built from scratch, talking straight to Discord over WebSockets and HTTP instead of leaning on existing wrappers. It handles the connection, sessions, and events all on its own.',
   },
   {
     id:   'ledger',
@@ -37,7 +35,16 @@ window.PORTFOLIO.projects = [
     date: 'FEB 2026',
     url:  'https://github.com/stafawashere/ledger',
     tech: ['Python', 'TinyDB'],
-    desc: 'Tracks balance, debts & inventory via slash commands and interactive UI — modular cog architecture, TinyDB storage, full audit history with filtering & export.',
+    desc: 'A Discord bot for keeping track of balances, debts, and inventory. You run it with slash commands and buttons, and it keeps a full history you can filter and export whenever you need.',
+  },
+  {
+    id:   'psychedelic-model',
+    name: 'Psychedelic Model',
+    type: 'ML Research',
+    date: 'JUN 2026',
+    url:  'https://github.com/stafawashere/psychedelic-model',
+    tech: ['Python', 'PyTorch'],
+    desc: 'An experiment in making trippy images by changing how an AI model sees, instead of just adding filters on top. It loosens the model\'s grip on reality until its own learned patterns take over the picture.',
   },
   {
     id:   'portfolio',
@@ -46,6 +53,6 @@ window.PORTFOLIO.projects = [
     date: 'JUN 2026',
     url:  'https://github.com/stafawashere/stafawashere.github.io',
     tech: ['JavaScript', 'HTML5 Canvas'],
-    desc: 'Zero-framework static site: a fully interactive terminal shell with 35+ commands and an animated circuit-board canvas.',
+    desc: 'This site. No frameworks, just plain JavaScript — including a terminal you can actually type into with 35+ commands, and the animated circuit board running behind everything.',
   },
 ];

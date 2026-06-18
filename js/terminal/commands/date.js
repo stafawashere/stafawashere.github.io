@@ -1,4 +1,3 @@
-// date command
 defineCommand({
   name: 'date', aliases: ['time'], group: 'core',
   summary: 'current date & time',

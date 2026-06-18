@@ -1,4 +1,3 @@
-// :q is handled by the shell's vim trap, not here
 defineCommand({
   name: 'vim', aliases: ['vi', 'nano', 'emacs'], usage: 'vim', group: 'system',
   summary: 'enter the inescapable editor (:q to flee)',

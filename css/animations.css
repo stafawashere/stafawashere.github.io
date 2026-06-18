@@ -46,7 +46,6 @@
   50%       { filter: drop-shadow(0 1px 22px rgba(var(--lilac-rgb), 0.62)); }
 }
 
-/* animation-timeline needs chrome 115+ / firefox 110+ */
 .section-reveal {
   animation: revealUp .7s both;
   animation-timeline: view();

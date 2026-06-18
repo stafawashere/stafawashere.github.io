@@ -1,4 +1,3 @@
-// social: links and handles
 defineCommand({
   name: 'social', aliases: ['links'], group: 'core',
   summary: 'links & handles',

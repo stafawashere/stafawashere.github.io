@@ -1,4 +1,3 @@
-// data lives in js/data/education.js
 defineCommand({
   name: 'education', aliases: ['edu', 'school'], group: 'core',
   summary: 'where I study',

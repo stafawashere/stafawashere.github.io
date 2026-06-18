@@ -38,7 +38,6 @@ Object.assign(window.PORTFOLIO, {
     { label: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/9d86ff' },
   ],
 
-  // keys must match the tech labels used in project data
   techIcons: {
     'Next.js':    'nextdotjs',
     'React':      'react',
@@ -47,6 +46,7 @@ Object.assign(window.PORTFOLIO, {
     'Prisma':     'prisma',
     'Lua':        'lua',
     'Python':     'python',
+    'PyTorch':    'pytorch',
     'JavaScript': 'javascript',
     'EJS':        'ejs',
     'CSS':        'css3',

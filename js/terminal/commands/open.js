@@ -1,4 +1,3 @@
-// open a project, github, or email in a new tab
 defineCommand({
   name: 'open', aliases: ['xdg-open', 'start'], group: 'core',
   summary: 'open <project|github|email> in a new tab',

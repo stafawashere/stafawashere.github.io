@@ -1,4 +1,3 @@
-// skills command
 defineCommand({
   name: 'skills', aliases: ['stack'], group: 'core',
   summary: 'domains, languages & tools',

@@ -1,4 +1,3 @@
-// built from the command registry
 defineCommand({
   name: 'help', aliases: ['commands', '?'],
   summary: 'list the commands (try `help --all`)',

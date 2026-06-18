@@ -1,5 +1,3 @@
-// small runnable commands that don't get their own help row
-
 defineCommand({
   name: 'github', aliases: ['gh'],
   run(ctx) {

@@ -1,5 +1,3 @@
-// every js/data file merges its slice into the same global PORTFOLIO object
-
 window.PORTFOLIO = window.PORTFOLIO || {};
 
 Object.assign(window.PORTFOLIO, {
@@ -10,7 +8,7 @@ Object.assign(window.PORTFOLIO, {
   location:     'New York City, NY',
   github:       'https://github.com/stafawashere',
   githubHandle: 'stafawashere',
-  playerVisits: 78,   // millions
+  playerVisits: 78,
   available:    true,
 
   rotor: [

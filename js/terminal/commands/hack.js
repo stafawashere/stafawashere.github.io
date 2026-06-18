@@ -1,4 +1,3 @@
-// async command: streams output over time then returns a final Output
 defineCommand({
   name: 'hack', aliases: ['matrix'], group: 'system',
   summary: 'definitely "hack the mainframe" (matrix too)',

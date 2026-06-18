@@ -1,9 +1,3 @@
-/* framework runtime: dom rendering, input loop, command dispatch.
- * commands live in commands/*.js and get a ctx from makeContext below.
- * a command may return an Output, array of lines, string, or nothing
- * (if it streamed via ctx.print/ctx.type). sync or promise both work.
- */
-
 class Shell {
   constructor(bodyEl, inputEl, onRoot) {
     this.body   = bodyEl;
@@ -18,15 +12,12 @@ class Shell {
     this.hindex  = 0;
     this.registry = CommandRegistry;
 
-    // p/acc point at the css var() not a resolved hex, so an accent change
-    // repaints already-rendered output with no re-render
     this.C = {
       txt:  '#c3c5cd', dim:  '#6f7180', faint:'#4f5159', p:   'var(--lilac, #9d86ff)',
       acc:  'var(--purple, #6847de)', ok: '#65d6a6', err: '#f0726b', warn:'#e8c06e',
       w:    '#f1f2f6', host: '#7fd1b9',
     };
 
-    // Terminal-facing views of the portfolio data (js/data/*).
     this.projects = PORTFOLIO.projects.map(p => ({
       id: p.id, name: p.name, type: p.type, date: p.date,
       stack: p.tech.join(' · '), url: p.url, blurb: p.desc,
@@ -82,8 +73,6 @@ class Shell {
     };
   }
 
-  // collect a command's lines synchronously, for aliases like ls -> projects.
-  // assumes the delegated command isn't async
   dispatchLines(name, argline) {
     const def = this.registry.find(name);
     if (!def || (def.root && !this.root)) return this.notFoundLines(name);
@@ -91,7 +80,6 @@ class Shell {
     return this.normalize(def.run(ctx), ctx);
   }
 
-  // Turn whatever a command returned into an array of lines.
   normalize(ret, ctx) {
     if (ret == null) return ctx.out.lines;
     if (ret instanceof Output) return ret.lines;
@@ -100,7 +88,7 @@ class Shell {
     return [];
   }
 
-  run(raw) { this.exec(raw); }   // public entry point — fire-and-forget
+  run(raw) { this.exec(raw); }
 
   async exec(raw) {
     if (this.busy) return;
@@ -111,7 +99,6 @@ class Shell {
     this.appendLine(this.promptLine(input));
     if (trimmed) { this.history.push(trimmed); this.hindex = this.history.length; }
 
-    // The vim trap swallows everything until escaped.
     if (this.inVim) {
       if (/^:(q!?|wq|x)$/i.test(trimmed)) {
         this.inVim = false;
@@ -357,6 +344,5 @@ class Shell {
   }
 }
 
-// main.js still does `new Terminal(...)`; keep that name working.
 window.Shell = Shell;
 window.Terminal = Shell;

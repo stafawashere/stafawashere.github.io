@@ -58,7 +58,7 @@
       span.className = 'tag lang';
       const img = iconImg(l.icon, 14);
       if (img) {
-        // stash the simpleicons slug so applyAccent can recolour it
+
         const slug = /simpleicons\.org\/([^/]+)\//.exec(l.icon || '');
         if (slug) img.dataset.iconSlug = slug[1];
         span.appendChild(img);
@@ -312,7 +312,6 @@
     };
   }
 
-  // color-space helpers for the accent picker
   function rgbToHex(r, g, b) {
     const c = n => ('0' + Math.max(0, Math.min(255, Math.round(n))).toString(16)).slice(-2);
     return '#' + c(r) + c(g) + c(b);
@@ -344,7 +343,6 @@
   function hsvToHex(h, s, v) { const c = hsvToRgb(h, s, v); return rgbToHex(c.r, c.g, c.b); }
   function hexToHsv(hex) { const c = hexToRgb(hex) || { r: 104, g: 71, b: 222 }; return rgbToHsv(c.r, c.g, c.b); }
 
-  // recolor the site by overriding the purple/lilac tokens on :root
   function applyAccent(hex) {
     const rgb = hexToRgb(hex);
     if (!rgb) return;
@@ -354,16 +352,15 @@
     root.setProperty('--purple-rgb', rgb.r + ', ' + rgb.g + ', ' + rgb.b);
     root.setProperty('--lilac',      'rgb(' + lilac.r + ', ' + lilac.g + ', ' + lilac.b + ')');
     root.setProperty('--lilac-rgb',  lilac.r + ', ' + lilac.g + ', ' + lilac.b);
-    // simpleicons bakes colour into the url, so re-fetch each icon
+
     const lilacHex = rgbToHex(lilac.r, lilac.g, lilac.b).slice(1);
     document.querySelectorAll('img[data-icon-slug]').forEach(img => {
       img.src = 'https://cdn.simpleicons.org/' + img.dataset.iconSlug + '/' + lilacHex;
     });
-    // canvas caches the colors, so repaint
+
     if (circuitSyncColors) circuitSyncColors();
   }
 
-  // styles for the slider + color picker, tinted via var(--purple)
   function injectTweakStyles() {
     if (document.getElementById('curie-tweak-style')) return;
     const s = document.createElement('style');
@@ -409,7 +406,6 @@
     document.head.appendChild(s);
   }
 
-  // hsv picker: sat/val box, hue strip, hex field, presets. fires onChange live
   function createColorPicker(initialHex, onChange) {
     const clmp = (n, a, b) => (n < a ? a : n > b ? b : n);
     let hsv = hexToHsv(initialHex);
@@ -478,7 +474,6 @@
     return { el: root, set(hx) { hsv = hexToHsv(hx); render(); } };
   }
 
-  // cfg is the shared config the circuit reads live, mutated in place so changes apply without a reload
   function buildTweakPanel(cfg, replayBoot) {
     if (document.getElementById('curie-tweaks')) return;
     injectTweakStyles();
@@ -487,8 +482,6 @@
       try { localStorage.setItem('curieAnimCfg', JSON.stringify(cfg)); } catch (e) {}
     }
 
-    // ranges + defaults live in window.CURIE_ANIM_SCHEMA (circuit.js), not here.
-    // this list is just ui: label, description, step, unit. groups run in animation-flow order
     const SCHEMA = window.CURIE_ANIM_SCHEMA || {};
     const FIELDS = [
       { group: 'BOOT · TIMELINE', desc: 'The load-in sequence, in play order' },
@@ -547,8 +540,6 @@
       { k: 'accent',          label: 'Accent color',         color: true, def: '#6847de', apply: 'accent', help: 'Recolours the whole site and the canvas live.' },
     ];
 
-    // warn if a schema key has no control, or a control (other than accent)
-    // has no schema entry
     (function checkPanelSync() {
       const panelKeys = FIELDS.filter(f => f.k).map(f => f.k);
       Object.keys(SCHEMA).forEach(k => {
@@ -559,7 +550,6 @@
       });
     })();
 
-    // drawer sits top-right, under the nav bar (the gear that opens it lives in the nav)
     const drawer = document.createElement('div');
     drawer.id = 'curie-drawer';
     drawer.style.cssText = [
@@ -570,7 +560,6 @@
       'color: #c3c5cd; font-family: var(--font); font-size: 12px;',
     ].join('');
 
-    // which tab each group lives under
     const GROUP_TABS = {
       'BOOT · TIMELINE': 'Boot', 'BOOT · UN-LIGHT': 'Boot', 'BOOT · SPARK': 'Boot',
       'PULSE': 'Pulse', 'RAIL GLOW': 'Pulse',
@@ -580,7 +569,6 @@
       'LAYOUT': 'Layout', 'APPEARANCE': 'Layout',
     };
 
-    // title bar
     const title = document.createElement('div');
     title.style.cssText = 'display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:0 0 4px;';
     const titleT = document.createElement('div');
@@ -592,17 +580,14 @@
     title.appendChild(titleT); title.appendChild(titleS);
     drawer.appendChild(title);
 
-    // clamp for display only; the engine clamps again on read
     const clampNum = (v, sc) => {
       v = +v;
       if (!isFinite(v)) v = sc.def;
       return v < sc.min ? sc.min : v > sc.max ? sc.max : v;
     };
-    // "safe min-max" hint shown under each slider
+
     const rangeHint = (sc, unit) => 'safe ' + sc.min + '–' + sc.max + (unit || '');
 
-    // controls split into tabbed panes, one per GROUP_TABS value. tab bar is
-    // built after the panes exist; a pane can hold several groups.
     const tabBar = document.createElement('div');
     tabBar.style.cssText = 'display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 14px;';
     drawer.appendChild(tabBar);
@@ -612,7 +597,7 @@
 
     const tabOrder = [];
     const paneOf   = {};
-    const tabCount = {};   // groups seen per pane, drives first-group spacing
+    const tabCount = {};
     function paneFor(tab) {
       if (!paneOf[tab]) {
         const pane = document.createElement('div');
@@ -625,8 +610,6 @@
       return paneOf[tab];
     }
 
-    // boot-tab changes re-run the boot, debounced 5s so dragging a slider
-    // doesn't restart it on every tick. titleS shows a queued hint meanwhile.
     const REPLAY_DELAY_MS = 5000;
     let replayTimer = null;
     function scheduleBootReplay() {
@@ -642,7 +625,7 @@
     }
 
     let currentPane = null;
-    let currentTab  = null;   // tab the fields below the latest group header belong to
+    let currentTab  = null;
 
     FIELDS.forEach(f => {
       if (f.group) {
@@ -650,7 +633,7 @@
         currentTab  = tab;
         currentPane = paneFor(tab);
         const wrap = document.createElement('div');
-        // First group in a pane sits flush; later ones get a divider + breathing room.
+
         wrap.style.cssText = tabCount[tab]++ === 0
           ? 'margin: 2px 0 12px;'
           : 'margin: 24px 0 12px; padding-top: 16px; border-top: 1px solid #1b1c22;';
@@ -668,11 +651,10 @@
         return;
       }
 
-      const sc = SCHEMA[f.k];                 // numeric/bool keys are schema-backed
+      const sc = SCHEMA[f.k];
       const def = sc && sc.def !== undefined ? sc.def : f.def;
-      const isBoot = currentTab === 'Boot';   // boot-tab change, debounced replay
+      const isBoot = currentTab === 'Boot';
 
-      // one block per control: label and value, the control, then a description
       const block = document.createElement('div');
       block.style.cssText = 'margin: 0 0 16px;';
 
@@ -684,9 +666,8 @@
       head.appendChild(lbl);
       block.appendChild(head);
 
-      let after = null;  // optional block appended below (e.g. the colour picker)
+      let after = null;
 
-      // Run a control's live side effect (e.g. accent recolor).
       function runApply(v) {
         if (f.apply === 'accent') applyAccent(v);
       }
@@ -754,7 +735,6 @@
         block.appendChild(inp);
       }
 
-      // One-line description, with the safe range appended for numeric controls.
       if (f.help || sc) {
         const cap = document.createElement('div');
         cap.style.cssText = 'font-size: 10.5px; color: #6f7180; margin-top: 6px; line-height: 1.45; display: flex; justify-content: space-between; gap: 12px;';
@@ -774,7 +754,6 @@
       (currentPane || drawer).appendChild(block);
     });
 
-    // Build the tab buttons now that panes exist; clicking swaps the active pane.
     const tabBtns = {};
     function selectTab(tab) {
       tabOrder.forEach(t => {
@@ -800,29 +779,28 @@
       tabBtns[tab] = b;
       tabBar.appendChild(b);
     });
-    // Restore the last-used tab if it still exists, else the first.
+
     let startTab = tabOrder[0];
     try { const saved = localStorage.getItem('curieSettingsTab'); if (saved && paneOf[saved]) startTab = saved; } catch (e) {}
     if (startTab) selectTab(startTab);
 
-    // Reset + replay buttons
     const btns = document.createElement('div');
     btns.style.cssText = 'display: flex; gap: 8px; margin-top: 12px;';
     const reset = document.createElement('button');
     reset.textContent = 'reset';
     reset.style.cssText = 'flex: 1; background: #1b1c22; border: 1px solid #2a2b34; color: #c3c5cd; border-radius: 6px; padding: 6px; cursor: pointer; font-family: inherit; font-size: 11px;';
     reset.addEventListener('click', () => {
-      // Clear keys in place so the circuit's live reference resets too.
+
       Object.keys(cfg).forEach(k => delete cfg[k]);
       try { localStorage.removeItem('curieAnimCfg'); } catch (e) {}
-      applyAccent('#6847de');  // restore default accent (clearing cfg won't undo CSS vars)
-      // Tear down the current gear + drawer, then rebuild from scratch.
+      applyAccent('#6847de');
+
       const oldGear = document.getElementById('curie-gear');
       const oldDrawer = document.getElementById('curie-drawer');
       if (oldGear) oldGear.remove();
       if (oldDrawer) oldDrawer.remove();
       buildTweakPanel(cfg, replayBoot);
-      // Re-open the drawer after rebuild so the reset feels responsive.
+
       const d = document.getElementById('curie-drawer');
       if (d) d.style.display = 'block';
     });
@@ -834,8 +812,6 @@
     btns.appendChild(replay);
     drawer.appendChild(btns);
 
-    // gear lives in the nav next to the search box, hidden until the user runs
-    // `settings` in the terminal (persisted via curieSettingsButton)
     const gear = document.createElement('button');
     gear.id = 'curie-gear';
     gear.title = 'animation settings';
@@ -867,10 +843,8 @@
       if (drawer.style.display !== 'block') { gear.style.color = '#6f7180'; gear.style.borderColor = 'var(--border-nav, #2a2b34)'; }
     });
 
-    // don't let drawer clicks reach the document closer below
     drawer.addEventListener('click', e => e.stopPropagation());
 
-    // close on outside click or escape
     document.addEventListener('click', () => {
       if (drawer.style.display === 'block') setOpen(false);
     });
@@ -878,7 +852,6 @@
       if (e.key === 'Escape' && drawer.style.display === 'block') setOpen(false);
     });
 
-    // put the gear next to the search box, or fall back to fixed top-right
     const navBar = document.getElementById('nav');
     const navSearch = document.getElementById('nav-search');
     if (navBar && navSearch && navSearch.parentNode === navBar) {
@@ -894,8 +867,6 @@
     applySettingsButtonVisibility();
   }
 
-  // localStorage['curieSettingsButton']: '1' = shown. absent/anything else is
-  // hidden, so the gear stays out of the way until the user reveals it once.
   function settingsButtonShown() {
     try { return localStorage.getItem('curieSettingsButton') === '1'; } catch (e) { return false; }
   }
@@ -903,13 +874,12 @@
     const g = document.getElementById('curie-gear');
     if (g) g.style.display = settingsButtonShown() ? 'flex' : 'none';
   }
-  // called by the terminal `settings` command. flips + persists, returns the
-  // new visibility
+
   function toggleSettingsButton() {
     const next = !settingsButtonShown();
     try { localStorage.setItem('curieSettingsButton', next ? '1' : '0'); } catch (e) {}
     applySettingsButtonVisibility();
-    if (!next) {                                   // hiding, so close the drawer too
+    if (!next) {
       const d = document.getElementById('curie-drawer');
       if (d) d.style.display = 'none';
     }
@@ -921,15 +891,12 @@
   let animCfg = {};
   try { animCfg = JSON.parse(localStorage.getItem('curieAnimCfg') || '{}') || {}; } catch (e) {}
 
-  // coerce + clamp a saved config to the schema so a stale or hand-edited value
-  // can't persist out of bounds. the engine clamps on read too; this keeps the
-  // stored object and the slider values in range.
   function sanitizeAnimCfg(c) {
     const S = window.CURIE_ANIM_SCHEMA;
     if (!S || !c || typeof c !== 'object') return c || {};
     let changed = false;
     Object.keys(S).forEach(k => {
-      if (!(k in c)) return;                 // unset, engine falls back to the default
+      if (!(k in c)) return;
       const s = S[k];
       if (s.type === 'bool') {
         const b = !!c[k];
@@ -946,10 +913,8 @@
   }
   animCfg = sanitizeAnimCfg(animCfg);
 
-  // Set by the circuit once initialized; lets applyAccent() repaint the canvas.
   let circuitSyncColors = null;
 
-  // apply the saved accent before anything paints
   if (animCfg.accent) applyAccent(animCfg.accent);
 
   const canvas = document.getElementById('circuit-canvas');
@@ -959,7 +924,7 @@
     const circuit = initCircuit(canvas, () => animCfg, () => true);
     replayBoot        = circuit.replayBoot;
     circuitSyncColors = circuit.syncColors;
-    circuitSyncColors();  // pick up the accent applied above
+    circuitSyncColors();
   }
 
   const termBody  = document.getElementById('term-body');
@@ -1018,7 +983,6 @@
     });
   }
 
-  // Global keyboard: ⌘K for palette, palette navigation
   window.addEventListener('keydown', e => {
     const k = (e.key || '').toLowerCase();
     if ((e.metaKey || e.ctrlKey) && k === 'k') { e.preventDefault(); palette.toggle(); return; }
@@ -1039,7 +1003,7 @@
   buildProjects();
   buildEducation();
   buildContact();
-  // re-apply the accent now the icons exist so they recolour too
+
   if (animCfg.accent) applyAccent(animCfg.accent);
   buildChips(term);
   initSections();

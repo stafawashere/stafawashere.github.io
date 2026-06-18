@@ -1,6 +1,3 @@
-// ascii banners + neofetch readout, split out of terminal.js
-// each fn takes the palette C and returns a detached node for { node }
-
 const TerminalBanners = {
   asciiName: [
     '███╗   ███╗ █████╗ ██╗  ██╗███████╗██╗   ██╗     ██╗',
@@ -20,7 +17,6 @@ const TerminalBanners = {
     '╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ',
   ],
 
-  // gradient uses C.acc/C.p so it follows the accent picker
   name(C, animate) {
     const wrap = document.createElement('div');
     wrap.style.cssText = 'padding: 2px 0 2px;';
@@ -69,7 +65,6 @@ const TerminalBanners = {
     return wrap;
   },
 
-  // red banner shown after the konami unlock
   root(C) {
     const wrap = document.createElement('div');
     wrap.style.cssText = 'padding: 2px 0 2px;';

@@ -1,7 +1,3 @@
-// builds command output. each command gets a fresh ctx.out and chains calls onto it.
-// a line is { segs:[segment] } or { node: HTMLElement }. a segment is
-// { text, style, cmd?, open? } where cmd makes it click-to-run and open makes it a link.
-
 class Output {
   constructor(palette) {
     this.C = palette;
@@ -15,7 +11,6 @@ class Output {
 
   push(line) { this.lines.push(line); return this; }
 
-  // A styled text segment. color/weight optional.
   seg(text, color, weight) {
     return {
       text:  text == null ? '' : String(text),
@@ -23,7 +18,6 @@ class Output {
     };
   }
 
-  // A line from mixed parts: strings become default text, segments pass through.
   line(...parts) {
     const segs = parts.length
       ? parts.map(p => (typeof p === 'string' || typeof p === 'number') ? this.seg(p) : p)
@@ -46,7 +40,6 @@ class Output {
   error(t, w)  { return this.seg(t, this.C.err, w); }
   color(t, c, w) { return this.seg(t, c, w); }
 
-  // Interactive segments.
   link(text, url, color, weight) {
     return Object.assign(this.seg(text, color || this.C.p, weight || 600), { open: url });
   }
@@ -56,12 +49,10 @@ class Output {
 
   heading(text) { return this.line(this.bold(text)); }
 
-  // A horizontal rule drawn from a repeated character.
   rule(width, char, color) {
     return this.line(this.seg(String(char || '─').repeat(width || 48), color || this.C.faint));
   }
 
-  // Aligned "key   value" row, neofetch-style.
   kv(key, value, opts) {
     opts = opts || {};
     const w = opts.keyWidth || 12;
@@ -73,7 +64,6 @@ class Output {
     );
   }
 
-  // A bulleted list. `items` are strings or segments.
   list(items, bullet, color) {
     (items || []).forEach(it => this.line(
       this.seg('  ' + (bullet || '•') + ' ', color || this.C.p),
@@ -82,8 +72,6 @@ class Output {
     return this;
   }
 
-  // An auto-aligned table. `rows` is an array of arrays; cells are strings or
-  // segments (segments keep their color, just get padded to the column width).
   table(rows, opts) {
     opts = opts || {};
     const gap = opts.gap == null ? 2 : opts.gap;

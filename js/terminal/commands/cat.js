@@ -1,4 +1,3 @@
-// cat reads a project file, or about/secret
 defineCommand({
   name: 'cat', aliases: ['less', 'more', 'read'], group: 'core',
   summary: 'cat <project> — read a project file',

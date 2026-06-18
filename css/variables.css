@@ -33,7 +33,6 @@
   --max-width: 1080px;
   --nav-height: 56px;
 
-  /* graph-paper texture for content cards */
   --dot-grid: radial-gradient(rgba(var(--lilac-rgb), 0.055) 1px, transparent 1.6px);
   --dot-grid-size: 22px 22px;
 }

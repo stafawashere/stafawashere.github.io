@@ -1,4 +1,3 @@
-// ls projects, ls skills etc. just delegate to the matching command
 defineCommand({
   name: 'ls', aliases: ['dir', 'll'], group: 'core',
   summary: 'list the filesystem — try `ls projects`',

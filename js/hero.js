@@ -59,7 +59,6 @@ function animateHeroCount(el, target) {
   requestAnimationFrame(step);
 }
 
-// scramble-reveal, needs #hero-l1 and #hero-l2 spans in the h1
 function bootHeroName(h1El) {
   const glyphs = '!<>-_\\/[]{}=+*^?#$%01ABCDEFGHKXZ';
   const startDelay = 140, dur = 510;
@@ -77,7 +76,7 @@ function bootHeroName(h1El) {
     return word.split('').map((ch, i) => {
       const lock = 0.32 + (i / word.length) * 0.68;
       if (t >= lock) return ch;
-      if (t < lock - 0.42) return ' '; // nbsp, keeps the width from collapsing
+      if (t < lock - 0.42) return ' ';
       return glyphs[(Math.random() * glyphs.length) | 0];
     }).join('');
   }

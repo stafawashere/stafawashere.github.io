@@ -1,35 +1,30 @@
-// canvas drawing the pcb rail, section pads, data packets, and the cpu chip by the hero heading
-
-// defaults + safe [min,max] for every tunable. cfg() clamps to these at read time so a
-// stale localStorage value can't break the animation, and the tweak panel in js/main.js
-// builds its sliders from this same object. don't hard-code a default at a cfg() call site.
 const CURIE_ANIM_SCHEMA = {
   bootDurationMs:  { def: 1350,  min: 400,   max: 3000 },
-  bootArriveFrac:  { def: 0.62,  min: 0.2,   max: 0.95 },  // divisor; <1 so comet arrives
-  bootIngressMs:   { def: 360,   min: 80,    max: 1200 },  // divisor
+  bootArriveFrac:  { def: 0.62,  min: 0.2,   max: 0.95 },
+  bootIngressMs:   { def: 360,   min: 80,    max: 1200 },
   bootFillMs:      { def: 980,   min: 120,   max: 1600 },
-  coreFullFrac:    { def: 0.9,   min: 0.5,   max: 1.0  },  // reach-frac that arms the hold
+  coreFullFrac:    { def: 0.9,   min: 0.5,   max: 1.0  },
   bootHoldMs:      { def: 0,     min: 0,     max: 2500 },
   bootRailOutMs:   { def: 400,   min: 60,    max: 1000 },
-  bootEgressMs:    { def: 360,   min: 80,    max: 1200 },  // divisor
-  bootConnOutMs:   { def: 360,   min: 80,    max: 1200 },  // divisor
-  bootRetractEase: { def: 0.088, min: 0.02,  max: 0.25 },  // per-frame ease; <1
+  bootEgressMs:    { def: 360,   min: 80,    max: 1200 },
+  bootConnOutMs:   { def: 360,   min: 80,    max: 1200 },
+  bootRetractEase: { def: 0.088, min: 0.02,  max: 0.25 },
   bootCometTail:   { def: 235,   min: 40,    max: 300  },
   bootCometWidth:  { def: 3,     min: 1,     max: 8    },
   bootCometHead:   { def: 4.4,   min: 1,     max: 10   },
-  bootBurstMs:     { def: 1240,  min: 200,   max: 1600 },  // divisor
-  bootBurstFadeIn: { def: 0.16,  min: 0.02,  max: 0.5  },  // divisor; min>0 or NaN frame
+  bootBurstMs:     { def: 1240,  min: 200,   max: 1600 },
+  bootBurstFadeIn: { def: 0.16,  min: 0.02,  max: 0.5  },
   bootBurstReach:  { def: 320,   min: 60,    max: 420  },
   bootBurstHead:   { def: 2.2,   min: 1,     max: 8    },
-  railSparkTrail:  { def: 0.4,   min: 0.4,   max: 2    },  // divisor; must be > 0
+  railSparkTrail:  { def: 0.4,   min: 0.4,   max: 2    },
   railGlow:        { def: true,  type: 'bool' },
   railGlowReach:   { def: 172,   min: 40,    max: 400  },
-  railFillMs:      { def: 720,   min: 120,   max: 1600 },  // divisor
+  railFillMs:      { def: 720,   min: 120,   max: 1600 },
   hoverRadius:     { def: 60,    min: 40,    max: 240  },
-  highlightReach:  { def: 232,   min: 80,    max: 400  },  // divisor (hp); must be > 0
-  branchDone:      { def: 0.62,  min: 0.1,   max: 0.9  },  // divides by bd and (1-bd); strictly (0,1)
+  highlightReach:  { def: 232,   min: 80,    max: 400  },
+  branchDone:      { def: 0.62,  min: 0.1,   max: 0.9  },
   coreSize:        { def: 32,    min: 16,    max: 48   },
-  retractEase:     { def: 0.088, min: 0.02,  max: 0.25 },  // per-frame ease; <1
+  retractEase:     { def: 0.088, min: 0.02,  max: 0.25 },
   nodeRailEase:    { def: 0.2,   min: 0.02,  max: 0.5  },
   nodeColEase:     { def: 0.09,  min: 0.02,  max: 0.4  },
   nodeRailLen:     { def: 35,    min: 10,    max: 80   },
@@ -46,13 +41,14 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
 
   const SECTIONS = ['#skills', '#experience', '#work', '#education', '#contact'];
 
-  // colors come from the --purple-rgb / --lilac-rgb css tokens so the accent picker
-  // recolors the canvas. syncColors() runs at init and on every accent change.
+  const FPS_CAP      = 60;
+  const FRAME_MIN_MS = 1000 / FPS_CAP - 2;
+
   let PURPLE = '104, 71, 222';
   let LILAC  = '157, 134, 255';
   let PRGB   = [104, 71, 222];
   let LRGB   = [157, 134, 255];
-  // near-white tints derived from lilac so they shift with the accent
+
   let TINT_SOFT = '216, 206, 255';
   let TINT_TAIL = '234, 226, 255';
   let TINT_CORE = '240, 235, 255';
@@ -73,7 +69,6 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
   }
   syncColors();
 
-  // blend purple to lilac by p (0..1), returns "r, g, b"
   function lerpCol(p) {
     p = p < 0 ? 0 : p > 1 ? 1 : p;
     return Math.round(PRGB[0] + (LRGB[0] - PRGB[0]) * p) + ',' +
@@ -83,7 +78,7 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
 
   const st = {
     mx: -9999, my: -9999, tmx: -9999, tmy: -9999,
-    lastY: window.scrollY, energy: 0, alpha: 0, last: 0, par: 0,
+    lastY: window.scrollY, energy: 0, alpha: 0, last: 0, lastPaint: 0, par: 0,
     scrollTs: -9999, interactive: false,
     heroR: 0, railProg: 0, _dt: 1,
     boot: 0, bootStart: -1, _bootIgnited: false,
@@ -100,9 +95,13 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
   const tapPulses  = [];
   const spark      = {};
   let   lastActive = -1;
+  let   rafId      = 0;
+  let   gen        = 0;
+  let   heroIO     = null;
+  let   geomCache  = null;
+  let   geomDirty  = true;
+  let   frameTick  = 0;
 
-  // per-element ctx.shadowBlur is too slow, so emitters queue here and get painted
-  // once per frame onto a half-res buffer with additive blending, blurred, composited back
   let DPR = Math.min(window.devicePixelRatio || 1, 2);
   const BS = 0.5;
   const bloomC   = document.createElement('canvas');
@@ -178,9 +177,6 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     ctx.restore();
   }
 
-  // read a tunable, coerced and clamped to its schema range so a stale localStorage
-  // value (e.g. branchDone: 1, which divides by zero) can't reach the render path.
-  // d is only used for keys absent from the schema (none today).
   function cfg(k, d) {
     const s = CURIE_ANIM_SCHEMA[k];
     const animCfg = getAnimCfg();
@@ -279,6 +275,13 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
   }
 
   function geom() {
+    if (!geomDirty && geomCache) return geomCache;
+    const g = computeGeom();
+    if (g) { geomCache = g; geomDirty = false; }
+    return g;
+  }
+
+  function computeGeom() {
     const colEl = document.querySelector('#skills');
     if (!colEl) return null;
     const cr  = colEl.getBoundingClientRect();
@@ -341,7 +344,6 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     bloomDot(x, y, 2.6, TINT_CORE, 0.96 * env);
   }
 
-  // prog (0..1) blends the tap/pad from idle purple to active lilac
   function drawTap(busX, padX, y, prog) {
     const col = lerpCol(prog);
     const a   = 0.3 + prog * 0.55;
@@ -362,8 +364,6 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     if (prog > 0.05) bloomRect(x - 3, y - 3, 6, 6, col, clamp(0.4 + prog * 0.6, 0, 1));
   }
 
-  // short vertical rail straddling the active node, on a faster ease so it leads
-  // the colour highlight expanding into the node
   function drawNodeRail(x, y, prog) {
     if (prog <= 0.01) return;
     const half = cfg('nodeRailLen') * prog;
@@ -391,30 +391,23 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     st.coreX = cx; st.coreY = cy;
 
     const maxR    = cfg('highlightReach');
-    // gate live hover on bootDone: a cursor resting on the chip mid-boot would hold
-    // the core up so the boot exit never finishes, leaving _exiting stuck true and
-    // bootDone stuck false, which shows just the bare chip
+
     const liveHover = st.bootDone && dist(cx, cy) < cfg('hoverRadius');
     const hovered = liveHover || st._coreFilling || performance.now() < st.coreHoldUntil;
     if (!hovered) { st._coreLit = false; st._railLit = false; }
 
-    // through a staged exit the core stays lit until the un-highlight reaches it
-    // (connEgress === 1), holding at exitCore0 so a half-lit core doesn't brighten
-    // back to full before fading
     const exitHoldCore  = st._exiting && st.connEgress < 1;
     const target        = hovered ? maxR : (exitHoldCore ? st.exitCore0 : 0);
     const expanding     = target > st.heroR;
-    // core fade eases at bootRetractEase for both boot and hover so they match
+
     const bootRetract   = !expanding && st._exiting;
-    const fillEaseOut   = (frac) => maxR * (1 - Math.pow(1 - frac, 3));   // easeOutCubic
+    const fillEaseOut   = (frac) => maxR * (1 - Math.pow(1 - frac, 3));
     if (st._coreFilling) {
-      // time-based ease-out, not an exponential follow whose slow tail reads as a
-      // dead hold; lands cleanly on maxR in exactly bootFillMs
+
       const fillMs = cfg('bootFillMs');
       st.heroR = fillEaseOut(clamp((performance.now() - st.fillStart) / fillMs, 0, 1));
     } else if (expanding) {
-      // same easeOutCubic as the boot reveal, progress-driven so a re-entered hover
-      // resumes along the identical curve instead of snapping
+
       const fillMs = cfg('bootFillMs');
       const dtMs   = st._dt * (1000 / 60);
       const frac   = 1 - Math.pow(1 - clamp(st.heroR / maxR, 0, 1), 1 / 3);
@@ -434,8 +427,6 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
       [[cx + s, cy - 15], [cx + s + 26, cy - 41], [cx + s + 74, cy - 41]],
     ];
 
-    // connFrac (0..1) overrides branch 0, the core-to-rail connector. stays fully
-    // lit during boot, shrinks rail to core on exit with no leading bright tip.
     const drawBranches = (lit, frac, connFrac) => {
       if (frac == null) frac = 1;
       branches.forEach((b, bi) => {
@@ -449,8 +440,7 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
         const eu   = clamp((f - 0.8) / 0.2, 0, 1);
         const endA = f >= 1 ? 1 : eu * eu * (3 - 2 * eu);
         if (endA > 0.01) { ctx.save(); ctx.globalAlpha *= endA; via(end[0], end[1], true); ctx.restore(); }
-        // leading bright tip only while growing, never on exit, so un-highlight
-        // reads as a quiet drain rather than a second spark
+
         if (f < 1 && f > 0.002 && !isConn && !st._exiting) {
           const tip  = seg[seg.length - 1];
           const tipA = clamp(f / 0.12, 0, 1) * (1 - endA);
@@ -481,12 +471,10 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
 
     drawBranches(false); drawChip(false);
 
-    // on boot the energy doesn't radiate from the core. the comet hits the connector
-    // then travels from the rail into the core; only on arrival does the chip ignite.
     const bootSweep = st._bootArrived && !st.bootDone;
     if (bootSweep && !st._bootIgnited) {
-      const conn = branches[0];                 // [coreSide, railSide]
-      const rev  = [conn[1], conn[0]];          // [railSide, coreSide]
+      const conn = branches[0];
+      const rev  = [conn[1], conn[0]];
       const gi   = st.bootIngress || 0;
       const seg  = partialPoly(rev, gi);
       strokePoly(seg, LILAC, 0.6, 1.7, true);
@@ -508,25 +496,19 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
       st.burstStart = performance.now();
     }
     if (hp > 0.004) {
-      // on boot reveal the connector is already at full alpha from the ingress, so
-      // skip the alpha ramp on the way in or the connector flickers for one frame at
-      // ignition. exit keeps the ramp so the core fades out gracefully.
+
       const bootReveal = bootSweep && !st._bootExited;
       const fade  = bootReveal ? 1 : clamp(hp / 0.16, 0, 1);
       ctx.save(); ctx.globalAlpha *= fade;
       const bFrac = clamp(hp / BRANCH_DONE, 0, 1);
-      // on exit the connector and branches retract together as egress runs 0 to 1.
-      // bFrac holds steady while the core is held, so bFrac*(1-egress) retracts from
-      // whatever extent they were lit to (full boot or partial hover) without snapping.
+
       const exitFrac   = bFrac * clamp(1 - st.egress, 0, 1);
       const exitConn   = bFrac * clamp(1 - st.connEgress, 0, 1);
       const branchFrac = st._exiting ? exitFrac : bFrac;
-      // connector: solid through boot, grows with branches on hover, retracts on its
-      // own window (exitConn) so its un-highlight speed is independently tunable
+
       const connFrac   = st._exiting ? exitConn : (bootSweep ? 1 : null);
       drawBranches(true, branchFrac, connFrac);
-      // chip reveal is a circular clip. hover grows from the core centre; boot grows
-      // from the rail-side connector (cx + s) so the glow sweeps left into the core.
+
       const clipCx = bootSweep ? cx + s : cx;
       const chipR  = hp * (bootSweep ? s * 2 + 22 : s + 16);
       if (chipR > 1.5) {
@@ -593,16 +575,11 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     ctx.restore();
   }
 
-  // vertical pulse along the rail: two fronts launch from the core (aligned
-  // with the chip) toward the rail's top and bottom edges. same on boot and
-  // hover, only the core glow direction differs.
   function drawRailBurst(x, coreY, vh, bt) {
     const ease      = 1 - Math.pow(1 - bt, 2.2);
     const upFront   = coreY * (1 - ease);
     const downFront = coreY + (vh - coreY) * ease;
-    // Smooth fade-IN over the first slice of the pulse so the sparks well up out
-    // of the core instead of popping in at full brightness, then fade out as they
-    // travel. fadeIn uses smoothstep for an eased ramp; fadeOut is the tail decay.
+
     const fin       = clamp(bt / cfg('bootBurstFadeIn'), 0, 1);
     const fadeIn    = fin * fin * (3 - 2 * fin);
     const fadeOut   = Math.pow(1 - bt, 0.7);
@@ -626,21 +603,36 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     ctx.restore();
   }
 
-  // staged un-light: rail recedes (A), connector retracts rail to core (B),
-  // core fades (C). same path for the boot exit and every hover-out.
   function beginExit(ts) {
     st._exiting  = true;
     st.exitStart = ts;
-    st.exitRail0 = st.railProg;   // rail glow level the recede eases down from
-    st.exitCore0 = st.heroR;      // core level held through stages A & B
+    st.exitRail0 = st.railProg;
+    st.exitCore0 = st.heroR;
     st.egress    = 0;
     st.connEgress = 0;
-    st.stageB    = -1;            // stamped when stage A (rail) finishes receding
+    st.stageB    = -1;
   }
 
-  function frame(ts) {
-    if (!isAlive()) return;
-    if (document.hidden) { requestAnimationFrame(frame); return; }
+  function schedule() {
+    if (rafId) cancelAnimationFrame(rafId);
+    const myGen = ++gen;
+    rafId = requestAnimationFrame((ts) => frame(ts, myGen));
+  }
+
+  function kick() {
+    if (rafId || !isAlive() || document.hidden) return;
+    st.last = 0; st.lastPaint = 0;
+    schedule();
+  }
+
+  function frame(ts, myGen) {
+    if (myGen !== gen) return;
+    rafId = 0;
+    if (!isAlive() || document.hidden) return;
+
+    if (st.lastPaint && ts - st.lastPaint < FRAME_MIN_MS) { schedule(); return; }
+    st.lastPaint = ts;
+    if ((frameTick++ % 20) === 0) geomDirty = true;
 
     const dt = clamp((ts - (st.last || ts)) / 16.67, 0.3, 6);
     st.last = ts; st._dt = dt;
@@ -658,18 +650,21 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     st.lastY = sy;
     st.energy += (clamp(dv / 26, 0, 1) - st.energy) * 0.12 * dt;
     if (dv > 0.5) st.scrollTs = ts;
-    // glow tracks the pointer in viewport space so it survives scroll. don't
-    // blank it during scroll or it disappears until scrolling stops.
+
     st.interactive   = st.mx > -9000;
 
     const g = geom();
-    requestAnimationFrame(frame);
-    if (!g) return;
+    if (!g) { schedule(); return; }
 
     st.alpha += ((g.enabled ? 1 : 0) - st.alpha) * 0.1 * dt;
     ctx.clearRect(0, 0, g.vw, g.vh);
-    if (st.alpha < 0.02) return;
+    if (st.alpha < 0.02) {
+
+      if (g.enabled) schedule();
+      return;
+    }
     ctx.globalAlpha = st.alpha;
+    let nodesEasing = false;
 
     if (st.bootStart < 0) st.bootStart = ts;
     const bootT  = clamp((ts - st.bootStart) / cfg('bootDurationMs'), 0, 1);
@@ -681,48 +676,37 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     if (bootT < arriveFrac && g.hero) {
       cometY = g.vh - (bootT / arriveFrac) * (g.vh - g.hero.y);
     }
-    // comet reached the connector, energy now flows in from the rail
+
     if (bootT >= arriveFrac && !st._bootArrived) {
       st._bootArrived = true;
       st.ingressStart = ts;
       st.burstStart   = ts;
     }
-    // front travels the connector from rail to core. on landing the core
-    // ignites and starts filling (radial reveal grows).
+
     if (st._bootArrived && !st._bootIgnited) {
       st.bootIngress = clamp((ts - st.ingressStart) / cfg('bootIngressMs'), 0, 1);
       if (st.bootIngress >= 1) {
         st._bootIgnited  = true;
-        st._coreFilling  = true;     // hold timer waits for the fill to finish
-        st.fillStart     = ts;       // drives the timed reveal in drawHero
+        st._coreFilling  = true;
+        st.fillStart     = ts;
       }
     }
-    // hold counts from when the core looks full, not from ignition (freezes the
-    // reveal) or the full fill clock (its easeOutCubic tail creeps 90 to 100%
-    // long after the chip finishes, reads as a hold even at 0ms). arm at
-    // coreFullFrac of the reach; =1 uses the full clock, lower trims the tail.
+
     if (st._coreFilling) {
       const fillMs   = cfg('bootFillMs');
       const fullFrac = cfg('coreFullFrac');
-      const fullT    = (1 - Math.pow(1 - fullFrac, 1 / 3)) * fillMs;   // inverse easeOutCubic
+      const fullT    = (1 - Math.pow(1 - fullFrac, 1 / 3)) * fillMs;
       if (ts - st.fillStart >= fullT) {
         st._coreFilling  = false;
         st.coreHoldUntil = ts + cfg('bootHoldMs');
       }
     }
-    // hold over: un-light in the same order as the light-up (rail, connector,
-    // core), each stage finishing before the next.
-    //   A. rail glow recedes (railTarget forced 0 below)
-    //   B. connector un-lights from rail back toward core
-    //   C. once that reaches the core, the core fades
-    // no second spark, just a quiet retraction.
+
     if (st._bootIgnited && !st._bootExited && st.coreHoldUntil > 0 && ts >= st.coreHoldUntil) {
       st._bootExited = true;
       beginExit(ts);
     }
-    // post-boot, leaving the core or scrolling away runs the same retraction
-    // via beginExit and the egress machine below. re-entering mid-retract
-    // cancels it and the live light-up resumes.
+
     if (st.bootDone && g.hero && g.hero.visible) {
       const coreHover = dist(st.coreX, st.coreY) < cfg('hoverRadius');
       if (coreHover) {
@@ -732,23 +716,17 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
       }
     }
     if (st._exiting) {
-      // stage B starts the instant the rail glow has actually receded, gated on
-      // the live rail level not a fixed window. kills the lag after the rail
-      // finishes and the freeze when leaving mid-expand before it ever lit
-      // (railProg ~0, so handoff fires on frame one). branches and the connector
-      // drain on separate windows so the connector speed can be tuned alone
-      // (bootConnOutMs, defaults to the branch window).
-      const egMs   = cfg('bootEgressMs');     // branch un-light window
-      const connMs = cfg('bootConnOutMs');    // connector un-light window
+
+      const egMs   = cfg('bootEgressMs');
+      const connMs = cfg('bootConnOutMs');
       if (st.stageB < 0 && st.railProg <= 0.03) st.stageB = ts;
       st.egress     = st.stageB < 0 ? 0 : clamp((ts - st.stageB) / egMs, 0, 1);
       st.connEgress = st.stageB < 0 ? 0 : clamp((ts - st.stageB) / connMs, 0, 1);
-      // C: un-light reached the core via the connector, it fades (heroR
-      // released in drawHero). done once both have drained and faded.
+
       if (st.egress >= 1 && st.connEgress >= 1 && st.heroR < 1) {
         st._exiting = false;
         st.egress = 0; st.connEgress = 0; st.heroR = 0; st.railProg = 0; st.stageB = -1;
-        if (!st.bootDone) {                 // boot finished once, start the dots
+        if (!st.bootDone) {
           st.bootDone  = true;
           st.dotsStart = performance.now();
         }
@@ -773,33 +751,22 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
 
     drawRail(rbx, g.vh, st.energy);
 
-    // rail glow chases the core highlight on the same easeOutCubic as the core
-    // fill (one railFillMs for boot and hover), not an exponential follow.
     const _coreHp    = clamp(st.heroR / cfg('highlightReach'), 0, 1);
     const railBoot   = st._bootArrived && !st.bootDone;
     if (st._exiting && st.stageB < 0) {
-      // stage A: rail glow recedes to 0. window scales with how much glow there
-      // is (half-lit recedes in half the time, unlit is instant) and uses an
-      // ease-in (1 - k*k) so it keeps shrinking to the handoff instead of
-      // lingering dim, which read as a gap before stage B.
+
       const railMs = cfg('bootRailOutMs') * clamp(st.exitRail0, 0.0001, 1);
       const k = clamp((ts - st.exitStart) / railMs, 0, 1);
       st.railProg = st.exitRail0 * (1 - k * k);
     } else if (st._exiting) {
-      st.railProg = 0;                                  // stage B onward, pinned
+      st.railProg = 0;
     } else {
-      // on hover the rail stays dark until the core energy reaches it (_coreHp
-      // crosses branchDone and the pulse fires), then ramps 0 to 1 over the rest
-      // of the core travel so it fills behind the pulse front (rail lights when
-      // the spark lands, not before). on boot the energy arrives from the rail,
-      // so ingress lights the glow ahead of the core via the Math.max below.
+
       const bd = cfg('branchDone');
       let railTarget = clamp((_coreHp - bd) / (1 - bd), 0, 1);
       if (railBoot) railTarget = Math.max(railTarget, st.bootIngress || 0);
       if (railTarget > st.railProg && railTarget > 0.0001) {
-        // grow on the same easeOutCubic-over-railFillMs as the core fill (same
-        // for boot and hover), progress-driven against the current target so a
-        // rising target keeps climbing the same curve instead of snapping.
+
         const railFillMs = cfg('railFillMs');
         const dtMs = st._dt * (1000 / 60);
         const frac = 1 - Math.pow(1 - clamp(st.railProg / railTarget, 0, 1), 1 / 3);
@@ -807,15 +774,9 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
       } else {
         st.railProg += (railTarget - st.railProg) * cfg('retractEase') * st._dt;
       }
-      // while the pulse travels, grow the glow reach in lockstep with the
-      // spark's progress (same ease curve as drawRailBurst) so the glow reads as
-      // an after-image trailing the sparks and grows smoothly instead of
-      // snapping. driving it off the spark's normalised progress, not pixel
-      // distance, is what keeps it smooth. railSparkTrail tunes the trail: <1
-      // hugs the spark (fills a touch ahead), >1 lags for a longer after-image.
-      // Math.max keeps it monotonic so the glow never dips below the eased growth.
+
       if (burstT != null && burstT < 1) {
-        const sEase  = 1 - Math.pow(1 - burstT, 2.2);     // matches drawRailBurst
+        const sEase  = 1 - Math.pow(1 - burstT, 2.2);
         const trail  = cfg('railSparkTrail');
         const glowFr = clamp(sEase / trail, 0, 1);
         st.railProg  = Math.max(st.railProg, glowFr);
@@ -845,14 +806,10 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
       if (!n.visible) continue;
       if (cometY != null && Math.abs(n.y - cometY) < 28) spark[n.i] = 1;
       const isA = n.i === g.active;
-      // Hovering a node plays the same focus animation as the scroll-active one,
-      // even when it isn't the focused section. Covers the pad and the rail tap.
+
       const hovered = dist(rpx, n.y) < 70 || dist(rbx, n.y) < 70;
       const tgt = (isA || hovered) ? 1 : 0;
 
-      // two eased tracks: the rail springs in faster (0.2) so it appears first,
-      // the colour highlight follows slower (0.09). reads as rail first, colour
-      // expanding out into the node.
       const railE = st.nodeRail[n.i] || 0;
       st.nodeRail[n.i] = railE + (tgt - railE) * cfg('nodeRailEase') * dt;
       const colE = st.nodeCol[n.i] || 0;
@@ -860,9 +817,10 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
       if (!isA && !hovered && st.nodeRail[n.i] < 0.004) st.nodeRail[n.i] = 0;
       if (!isA && !hovered && st.nodeCol[n.i]  < 0.004) st.nodeCol[n.i]  = 0;
 
+      if (Math.abs(tgt - st.nodeRail[n.i]) > 0.004 || Math.abs(tgt - st.nodeCol[n.i]) > 0.004) nodesEasing = true;
+
       const prog = Math.max(st.nodeCol[n.i], spark[n.i] || 0);
-      // The vertical glow lives on the main rail (rbx); colour then expands
-      // along the tap into the node pad at rpx.
+
       drawNodeRail(rbx, n.y, st.nodeRail[n.i]);
       drawTap(rbx, rpx, n.y, prog);
       drawPad(rpx, n.y, prog);
@@ -907,6 +865,20 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
 
     flushBloom(g.vw, g.vh);
     ctx.globalAlpha = 1;
+
+    let alive = !st.bootDone || st._exiting
+             || (g.hero && g.hero.visible)
+             || st.heroR > 0.001 || st.railProg > 0.001
+             || st.energy > 0.005
+             || dataPackets.length > 0 || tapPulses.length > 0
+             || nodesEasing;
+    if (!alive) { for (const k in spark) { alive = true; break; } }
+    if (!alive && st.interactive) {
+      const parTarget = clamp((st.mx - g.vw / 2) * -cfg('parallaxAmt'), -9, 9);
+      alive = Math.abs(st.tmx - st.mx) > 0.5 || Math.abs(st.tmy - st.my) > 0.5
+           || Math.abs(parTarget - st.par) > 0.01;
+    }
+    if (alive) schedule();
   }
 
   function replayBoot() {
@@ -930,8 +902,7 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
     st.railProg      = 0;
     st.burstStart    = null;
     st._coreLit      = false;
-    // Fully clear the staged-exit machine too, so replaying from a half-exited or
-    // hovered state starts clean (these are otherwise only reset inside beginExit).
+
     st.connEgress    = 0;
     st.stageB        = -1;
     st._railLit      = false;
@@ -939,23 +910,40 @@ function initCircuit(canvas, getAnimCfg, isAlive) {
 
   resize();
   st.bootStart = performance.now();
-  requestAnimationFrame(frame);
+  schedule();
 
-  const onResize = () => resize();
-  const onMove   = (e) => { st.tmx = e.clientX; st.tmy = e.clientY; };
-  const onLeave  = () => { st.tmx = -9999; st.tmy = -9999; };
+  const onResize = () => { geomDirty = true; resize(); kick(); };
+  const onMove   = (e) => { st.tmx = e.clientX; st.tmy = e.clientY; kick(); };
+  const onLeave  = () => { st.tmx = -9999; st.tmy = -9999; kick(); };
+  const onScroll = () => { geomDirty = true; kick(); };
+  const onVis    = () => kick();
 
-  window.addEventListener('resize',    onResize);
-  window.addEventListener('mousemove', onMove, { passive: true });
-  window.addEventListener('mouseout',  onLeave);
+  window.addEventListener('resize',     onResize);
+  window.addEventListener('mousemove',  onMove, { passive: true });
+  window.addEventListener('mouseout',   onLeave);
+  window.addEventListener('scroll',     onScroll, { passive: true });
+  document.addEventListener('visibilitychange', onVis);
+
+  const heroEl = document.querySelector('[data-cnode="core"]');
+  if (heroEl && 'IntersectionObserver' in window) {
+    heroIO = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) kick();
+    }, { rootMargin: '60px' });
+    heroIO.observe(heroEl);
+  }
 
   return {
-    replayBoot,
-    syncColors,
+
+    replayBoot() { replayBoot(); kick(); },
+    syncColors() { syncColors(); kick(); },
     destroy() {
-      window.removeEventListener('resize',    onResize);
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseout',  onLeave);
+      window.removeEventListener('resize',     onResize);
+      window.removeEventListener('mousemove',  onMove);
+      window.removeEventListener('mouseout',   onLeave);
+      window.removeEventListener('scroll',     onScroll);
+      document.removeEventListener('visibilitychange', onVis);
+      if (heroIO) { heroIO.disconnect(); heroIO = null; }
+      if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
     },
   };
 }

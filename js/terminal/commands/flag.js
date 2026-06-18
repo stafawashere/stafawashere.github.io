@@ -1,4 +1,3 @@
-// root-only, shell refuses it until konami unlock
 defineCommand({
   name: 'flag', group: 'root', root: true,
   summary: 'cat the CTF flag',

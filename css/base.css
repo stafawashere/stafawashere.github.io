@@ -4,41 +4,73 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  position: relative;
   background-color: var(--bg);
   font-family: var(--font);
 }
 
-/* fixed so it doesn't repaint on scroll */
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background-color: var(--bg);
   background-image:
+
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(var(--purple-rgb), 0.16), transparent 62%),
-    radial-gradient(ellipse 60% 50% at 88% 8%, rgba(86, 128, 255, 0.05), transparent 55%),
-    radial-gradient(ellipse 70% 60% at 8% 95%, rgba(var(--purple-rgb), 0.05), transparent 60%),
     radial-gradient(rgba(var(--lilac-rgb), 0.045) 1px, transparent 1.6px),
     linear-gradient(rgba(255, 255, 255, 0.013) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.013) 1px, transparent 1px),
     linear-gradient(rgba(var(--purple-rgb), 0.032) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--purple-rgb), 0.032) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(var(--purple-rgb), 0.032) 1px, transparent 1px),
+
+    radial-gradient(95vw 72vh at 50% -10vh, rgba(var(--purple-rgb), 0.09), transparent 72%),
+    radial-gradient(90vw 68vh at 84% 82vh,  rgba(86, 128, 255, 0.045), transparent 74%),
+    radial-gradient(92vw 70vh at 10% 178vh, rgba(150, 96, 240, 0.05),  transparent 74%),
+    radial-gradient(92vw 70vh at 90% 286vh, rgba(var(--purple-rgb), 0.05), transparent 74%),
+    radial-gradient(92vw 70vh at 14% 396vh, rgba(var(--lilac-rgb), 0.04), transparent 74%),
+    radial-gradient(92vw 70vh at 86% 506vh, rgba(120, 82, 210, 0.05),  transparent 74%),
+    radial-gradient(92vw 70vh at 20% 616vh, rgba(86, 128, 255, 0.04),  transparent 74%),
+
+    linear-gradient(180deg,
+      rgba(var(--purple-rgb), 0.05) 0%,
+      rgba(70, 50, 140, 0.04) 30%,
+      rgba(100, 64, 176, 0.045) 55%,
+      rgba(56, 46, 128, 0.04) 78%,
+      rgba(var(--purple-rgb), 0.05) 100%);
   background-size:
     220px 220px,
-    100% 100%,
-    100% 100%,
-    100% 100%,
     26px 26px,
     26px 26px,
     26px 26px,
     260px 260px,
-    260px 260px;
+    260px 260px,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+  background-repeat:
+    repeat,
+    repeat,
+    repeat,
+    repeat,
+    repeat,
+    repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat;
 }
 
-/* vignette: above the canvas, below the content */
 body::after {
   content: "";
   position: fixed;

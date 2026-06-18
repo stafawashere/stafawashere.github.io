@@ -1,4 +1,3 @@
-// manual pages built from each core command's summary
 defineCommand({
   name: 'man', group: 'system',
   summary: 'man <cmd> — manual pages',

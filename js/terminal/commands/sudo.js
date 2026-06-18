@@ -18,7 +18,6 @@ defineCommand({
   },
 });
 
-// help-only entry so it shows in `help --all`
 defineCommand({
   name: 'sudo hire', usage: 'sudo hire', group: 'system',
   summary: 'escalate privileges — opens a pre-filled email',

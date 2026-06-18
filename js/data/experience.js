@@ -1,5 +1,3 @@
-// newest first. terminal shows points[0] as the summary, site lists all
-
 window.PORTFOLIO = window.PORTFOLIO || {};
 
 window.PORTFOLIO.experiences = [

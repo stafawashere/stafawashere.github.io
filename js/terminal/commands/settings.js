@@ -1,4 +1,3 @@
-// toggles the settings gear; choice persists in localStorage so it survives reloads
 defineCommand({
   name: 'settings', aliases: ['gear', 'tweaks'], group: 'system',
   summary: 'show / hide the animation settings button',
