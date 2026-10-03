@@ -18,7 +18,6 @@ class Palette {
       { id: 'contact',    label: 'Contact',                         hint: 'section',  icon: '#', type: 'scroll' },
       { label: 'GitHub — stafawashere',             hint: 'external', icon: '↗', type: 'link', url: 'https://github.com/stafawashere' },
       { label: 'Email — contact@mahfujmustafa.dev', hint: 'external', icon: '↗', type: 'link', url: 'mailto:contact@mahfujmustafa.dev' },
-      { label: 'Call — (347) 844-4127',             hint: 'external', icon: '↗', type: 'link', url: 'tel:+13478444127' },
     ];
 
     this.input.addEventListener('input', () => {

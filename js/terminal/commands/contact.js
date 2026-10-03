@@ -7,7 +7,6 @@ defineCommand({
       .line(o.ok('● '), o.txt('available for work'), o.dim('  —  freelance & full-time'))
       .blank()
       .line(o.dim('email   '), o.link('contact@mahfujmustafa.dev', 'mailto:contact@mahfujmustafa.dev'), o.color('  ↗', ctx.C.acc))
-      .line(o.dim('phone   '), o.txt('(347) 844-4127'))
       .line(o.dim('github  '), o.link('github.com/stafawashere', 'https://github.com/stafawashere'), o.color('  ↗', ctx.C.acc))
       .line(o.dim('where   '), o.txt('New York City, NY'))
       .blank()
