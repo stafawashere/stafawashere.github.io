@@ -9,7 +9,7 @@ window.PORTFOLIO.projects = [
     url:  'https://github.com/stafawashere/psychedelic-model-research',
     tech: ['Python', 'PyTorch'],
     featured: true,
-    desc: 'An experiment that drives a diffusion model with only knobs mapped to real brain variables like sensory precision and cortical gain, then watches whether the visual arc of a DMT trip emerges on its own. Nothing is drawn by hand.',
+    desc: 'An experiment that drives a diffusion model with only knobs mapped to real brain variables like sensory precision and cortical gain, then watches whether the visual arc of a DMT trip emerges on its own. Nothing is drawn by hand, the metrics were locked in before the first run, and the write-up reports what never showed up alongside what did.',
   },
   {
     id:   'distribution-network',
@@ -20,15 +20,6 @@ window.PORTFOLIO.projects = [
     tech: ['TypeScript', 'PostgreSQL'],
     featured: true,
     desc: 'A platform for distributors and the resellers beneath them, where each side logs into its own scoped portal, with inventory tracking, bulk pricing tiers, and a sales-and-revenue dashboard.',
-  },
-  {
-    id:   'shhh-nyc',
-    name: 'shhhNYC',
-    type: 'Full-Stack Web App',
-    date: 'APR 2026',
-    url:  'https://github.com/stafawashere/shhhNYC',
-    tech: ['TypeScript', 'Next.js', 'Python', 'PostgreSQL'],
-    desc: 'A map that predicts how loud a NYC cafe or workspace will be before you show up. It blends 311 noise complaints, construction permits, live subway and traffic feeds, hourly foot traffic, and review text into one score per venue, with background jobs keeping it fresh.',
   },
   {
     id:   'inspect-workflow',
@@ -55,7 +46,7 @@ window.PORTFOLIO.projects = [
     date: 'MAY 2026',
     url:  'https://github.com/stafawashere/trashy-apocalypse',
     tech: ['Python'],
-    desc: 'A top-down zombie survival shooter my team and I built on Python\'s Arcade library for AP CSP, and our school\'s entry at the annual arts event. You spray through waves of the undead across a trashed wasteland, a layered audio engine, and a high-score board.',
+    desc: 'A top-down zombie survival shooter for AP CSP where I led the team and wrote all of the code, built on Python\'s Arcade library and our school\'s entry at the annual arts event. You spray through waves of the undead across a trashed wasteland, a layered audio engine, and a high-score board.',
   },
   {
     id:   'allusion',

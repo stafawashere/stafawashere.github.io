@@ -10,6 +10,6 @@ defineCommand({
       .line('full-stack web, Discord bots, API wrappers and automation — and I ship')
       .line('live games that have reached ', ctx.out.bold('78M+ player visits'), '.')
       .blank()
-      .line(ctx.out.dim('Currently: '), ctx.out.accent('Programmer @ Merge Box', 400), ctx.out.dim('  ·  freelancing'));
+      .line(ctx.out.dim('Currently: '), ctx.out.accent('independent research in computational neuroscience', 400));
   },
 });

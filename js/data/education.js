@@ -2,17 +2,17 @@ window.PORTFOLIO = window.PORTFOLIO || {};
 
 window.PORTFOLIO.education = [
   {
-    name:  'Arts & Technology',
+    name:  'High School for Arts and Technology',
     kind:  'High School',
     dates: '2023 – 2027',
     url:   'https://www.hsartstech.org/',
-    note:  'High School program focused on Arts, Technology, and Programming. 66th St Amsterdam, NY.',
+    note:  'Public high school focused on arts, technology, and programming. Scored 4s on the AP Computer Science Principles, Precalculus, and US History exams. 122 Amsterdam Ave, NY.',
   },
   {
     name:  'Borough of Manhattan Community College',
     kind:  'College',
-    dates: '2026 – 2027',
+    dates: '2025 – 2027',
     url:   'https://www.bmcc.cuny.edu/',
-    note:  'FutureReady dual enrollment in Computer Science Principles (CSC 101) and AP Computer Science A. 199 Chambers St, NY.',
+    note:  'FutureReady NYC dual enrollment. Finished CSC 101, Principles of Information and Computer Science, with a 100. 199 Chambers St, NY.',
   },
 ];
