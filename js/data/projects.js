@@ -22,6 +22,15 @@ window.PORTFOLIO.projects = [
     desc: 'A platform for distributors and the resellers beneath them, where each side logs into its own scoped portal, with inventory tracking, bulk pricing tiers, and a sales-and-revenue dashboard.',
   },
   {
+    id:   'shhh-nyc',
+    name: 'shhhNYC',
+    type: 'Full-Stack Web App',
+    date: 'APR 2026',
+    url:  'https://github.com/stafawashere/shhhNYC',
+    tech: ['TypeScript', 'Next.js', 'Python', 'PostgreSQL'],
+    desc: 'A map that predicts how loud a NYC cafe or workspace will be before you show up. It blends 311 noise complaints, construction permits, live subway and traffic feeds, hourly foot traffic, and review text into one score per venue, with background jobs keeping it fresh.',
+  },
+  {
     id:   'inspect-workflow',
     name: 'Inspect Workflow',
     type: 'Developer Tool',
