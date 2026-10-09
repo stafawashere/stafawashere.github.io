@@ -9,7 +9,7 @@ window.PORTFOLIO.projects = [
     url:  'https://github.com/stafawashere/psychedelic-model-research',
     tech: ['Python', 'PyTorch'],
     featured: true,
-    desc: 'An experiment that drives a diffusion model with only knobs mapped to real brain variables like sensory precision and cortical gain, then watches whether the visual arc of a DMT trip emerges on its own. Nothing is drawn by hand, the metrics were locked in before the first run, and the write-up reports what never showed up alongside what did.',
+    desc: 'An experiment that drives a diffusion model with only knobs mapped to real brain variables like sensory precision and cortical gain, then tests whether the visual sequence reported in DMT research (geometry, then forms, then figures) emerges on its own. Nothing is drawn by hand, the metrics were locked in before the first run, and the write-up reports what never showed up alongside what did.',
   },
   {
     id:   'distribution-network',

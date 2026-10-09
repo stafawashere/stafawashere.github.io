@@ -48,7 +48,7 @@ defineCommand({
       .line(o.accent('17 y/o security researcher & full-stack developer — New York City', 400))
       .blank()
       .line(o.txt('"I break things to understand them."'))
-      .line(o.bold('78M+ '), o.dim('player visits shipped  ·  '), o.ok('● '), o.txt('available for work'));
+      .line(o.bold('78M+ '), o.dim('player visits shipped  ·  '), o.ok('● '), o.txt('class of 2027'));
   },
 });
 
@@ -219,7 +219,7 @@ defineCommand({
   run(ctx) {
     const o = ctx.out;
     return o
-      .line(o.ok('● '), o.txt('available for work'), o.dim('  —  freelance & full-time'))
+      .line(o.ok('● '), o.txt('open to research & internships'), o.dim('  ·  class of 2027'))
       .blank()
       .line(o.dim('email   '), o.link('contact@mahfujmustafa.dev', 'mailto:contact@mahfujmustafa.dev'), o.color('  ↗', ctx.C.acc))
       .line(o.dim('github  '), o.link('github.com/stafawashere', 'https://github.com/stafawashere'), o.color('  ↗', ctx.C.acc))

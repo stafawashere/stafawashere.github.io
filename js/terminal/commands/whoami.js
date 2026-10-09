@@ -14,6 +14,6 @@ defineCommand({
       .line(o.accent('17 y/o security researcher & full-stack developer — New York City', 400))
       .blank()
       .line(o.txt('"I break things to understand them."'))
-      .line(o.bold('78M+ '), o.dim('player visits shipped  ·  '), o.ok('● '), o.txt('available for work'));
+      .line(o.bold('78M+ '), o.dim('player visits shipped  ·  '), o.ok('● '), o.txt('class of 2027'));
   },
 });

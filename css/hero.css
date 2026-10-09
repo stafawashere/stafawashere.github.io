@@ -252,7 +252,7 @@
   height: 24px;
 }
 
-/* line the "available for work" status dot up with the meta-circuit's
+/* line the "class of 2027" status dot up with the meta-circuit's
    right-end terminal ring, which sits 9.5px in from the row's right edge.
    The dot is 7px, so its right edge needs to land 6px in (9.5 − 3.5). */
 .hero-meta .available .dot {
