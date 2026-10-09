@@ -46,7 +46,7 @@ window.PORTFOLIO.projects = [
     date: 'MAY 2026',
     url:  'https://github.com/stafawashere/trashy-apocalypse',
     tech: ['Python'],
-    desc: 'A top-down zombie survival shooter my team built for AP CSP on Python\'s Arcade library, where I led the coding, and our school\'s entry at the annual arts event. You spray through waves of the undead across a trashed wasteland, a layered audio engine, and a high-score board.',
+    desc: 'A top-down zombie survival shooter my team built for AP CSP on Python\'s Arcade library, where I led the coding, and our school\'s entry at the annual arts event. You hold to spray down zombies that keep spawning across a trashed wasteland, with a layered audio engine and a saved best score.',
   },
   {
     id:   'allusion',
