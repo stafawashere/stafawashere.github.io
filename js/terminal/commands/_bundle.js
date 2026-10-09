@@ -143,14 +143,24 @@ defineCommand({
 /* ===== commands/open.js ===== */
 defineCommand({
   name: 'open', aliases: ['xdg-open', 'start'], group: 'core',
-  summary: 'open <project|github|email> in a new tab',
+  summary: 'open <project|github|linkedin|orcid|email> in a new tab',
   run(ctx) {
     const o = ctx.out, argl = ctx.argl;
-    if (!argl) return o.line(o.dim('usage: '), o.accent('open <project|github|email>', 600));
+    if (!argl) return o.line(o.dim('usage: '), o.accent('open <project|github|linkedin|orcid|email>', 600));
 
     if (/git|^gh$/.test(argl)) {
       ctx.openUrl('https://github.com/stafawashere');
       return o.line(o.dim('opening '), o.accent('github.com/stafawashere ↗', 400));
+    }
+    if (/linkedin|^li$/.test(argl)) {
+      const p = ctx.data.portfolio;
+      ctx.openUrl(p.linkedin);
+      return o.line(o.dim('opening '), o.accent('linkedin.com/in/' + p.linkedinHandle + ' ↗', 400));
+    }
+    if (/orcid/.test(argl)) {
+      const p = ctx.data.portfolio;
+      ctx.openUrl(p.orcid);
+      return o.line(o.dim('opening '), o.accent('orcid.org/' + p.orcidId + ' ↗', 400));
     }
     if (/mail|email|contact/.test(argl)) {
       ctx.openUrl('mailto:contact@mahfujmustafa.dev');
@@ -218,13 +228,15 @@ defineCommand({
   name: 'contact', aliases: ['reach'], group: 'core',
   summary: 'how to reach me',
   run(ctx) {
-    const o = ctx.out;
+    const o = ctx.out, p = ctx.data.portfolio;
     return o
       .line(o.ok('● '), o.txt('open to research & internships'), o.dim('  ·  class of 2027'))
       .blank()
-      .line(o.dim('email   '), o.link('contact@mahfujmustafa.dev', 'mailto:contact@mahfujmustafa.dev'), o.color('  ↗', ctx.C.acc))
-      .line(o.dim('github  '), o.link('github.com/stafawashere', 'https://github.com/stafawashere'), o.color('  ↗', ctx.C.acc))
-      .line(o.dim('where   '), o.txt('New York City, NY'))
+      .line(o.dim('email     '), o.link('contact@mahfujmustafa.dev', 'mailto:contact@mahfujmustafa.dev'), o.color('  ↗', ctx.C.acc))
+      .line(o.dim('github    '), o.link('github.com/stafawashere', 'https://github.com/stafawashere'), o.color('  ↗', ctx.C.acc))
+      .line(o.dim('linkedin  '), o.link('linkedin.com/in/' + p.linkedinHandle, p.linkedin), o.color('  ↗', ctx.C.acc))
+      .line(o.dim('orcid     '), o.link('orcid.org/' + p.orcidId, p.orcid), o.color('  ↗', ctx.C.acc))
+      .line(o.dim('where     '), o.txt('New York City, NY'))
       .blank()
       .line(o.color('→ ', ctx.C.acc), o.accent('sudo hire'), o.dim(' if you’re serious.'));
   },
@@ -274,9 +286,11 @@ defineCommand({
   name: 'social', aliases: ['links'], group: 'core',
   summary: 'links & handles',
   run(ctx) {
-    const o = ctx.out, acc = ctx.C.acc;
+    const o = ctx.out, acc = ctx.C.acc, p = ctx.data.portfolio;
     return o
       .line(o.dim('GitHub    '), o.link('github.com/stafawashere', 'https://github.com/stafawashere'), o.color('  ↗', acc))
+      .line(o.dim('LinkedIn  '), o.link('linkedin.com/in/' + p.linkedinHandle, p.linkedin), o.color('  ↗', acc))
+      .line(o.dim('ORCID     '), o.link('orcid.org/' + p.orcidId, p.orcid), o.color('  ↗', acc))
       .line(o.dim('Email     '), o.link('contact@mahfujmustafa.dev', 'mailto:contact@mahfujmustafa.dev'), o.color('  ↗', acc));
   },
 });
@@ -473,6 +487,24 @@ defineCommand({
   run(ctx) {
     ctx.openUrl('https://github.com/stafawashere');
     return ctx.out.line(ctx.out.dim('opening '), ctx.out.accent('github.com/stafawashere', 400), ctx.out.color('  ↗', ctx.C.acc));
+  },
+});
+
+defineCommand({
+  name: 'linkedin', aliases: ['li'],
+  run(ctx) {
+    const p = ctx.data.portfolio;
+    ctx.openUrl(p.linkedin);
+    return ctx.out.line(ctx.out.dim('opening '), ctx.out.accent('linkedin.com/in/' + p.linkedinHandle, 400), ctx.out.color('  ↗', ctx.C.acc));
+  },
+});
+
+defineCommand({
+  name: 'orcid',
+  run(ctx) {
+    const p = ctx.data.portfolio;
+    ctx.openUrl(p.orcid);
+    return ctx.out.line(ctx.out.dim('opening '), ctx.out.accent('orcid.org/' + p.orcidId, 400), ctx.out.color('  ↗', ctx.C.acc));
   },
 });
 

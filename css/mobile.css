@@ -95,6 +95,16 @@
       margin-left: 0;
    }
 
+   .hero-actions { flex-wrap: wrap; }
+
+   .hero-actions .btn-primary,
+   .hero-actions .btn-secondary { flex: 1 1 calc(50% - 5px); }
+
+   .hero-actions .btn-icon {
+      flex: 1 1 0;
+      width: auto;
+   }
+
    .scroll-hint { margin-top: 56px; }
 
    .content-section { padding: 56px 24px; }
@@ -125,6 +135,25 @@
 
    .edu-dates { top: 22px; right: 20px; }
 
+   .records-grid { grid-template-columns: 1fr; }
+
+   .record-card {
+      gap: 16px;
+      padding: 20px;
+   }
+
+   .record-chip {
+      width: 56px;
+      height: 56px;
+      margin-top: 0;
+   }
+
+   .record-cta {
+      grid-column: 1 / -1;
+      justify-self: stretch;
+      height: 46px;
+   }
+
    #contact { padding-top: 64px; }
 
    .contact-card { padding: 36px 24px; }
@@ -142,12 +171,13 @@
 
    .contact-buttons {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       align-items: stretch;
    }
 
    .contact-buttons .btn-cta {
-      flex: 1;
+      flex: 1 1 100%;
       min-width: 0;
       justify-content: center;
       text-align: center;
@@ -156,9 +186,9 @@
    }
 
    .contact-buttons .btn-cta-secondary {
-      flex: 0 0 52px;
-      width: 52px;
-      height: auto;
+      flex: 1 1 0;
+      width: auto;
+      height: 46px;
       align-self: stretch;
       margin-top: 0;
       padding: 0;
@@ -280,6 +310,32 @@
    .edu-card:active .edu-name::after {
       opacity: 1;
       transform: translate(0, 0);
+   }
+
+   .record-card:active {
+      border-color: color-mix(in srgb, var(--purple) 34%, var(--bg-card));
+      background-color: var(--bg-card-alt);
+   }
+
+   .record-card:active::before {
+      opacity: 1;
+      width: 3px;
+      transform: scaleY(1);
+   }
+
+   .record-card:active::after { opacity: 1; }
+
+   .record-card:active .record-pin,
+   .record-card:active .record-die { stroke: var(--lilac); }
+
+   .record-card:active .record-glyph { fill: #fff; }
+
+   .record-card:active .record-name { color: var(--lilac); }
+
+   .record-card:active .record-cta {
+      color: var(--lilac);
+      border-color: var(--purple);
+      background: rgba(var(--purple-rgb), 0.08);
    }
 
    .chip-btn:active {

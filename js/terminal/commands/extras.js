@@ -7,6 +7,24 @@ defineCommand({
 });
 
 defineCommand({
+  name: 'linkedin', aliases: ['li'],
+  run(ctx) {
+    const p = ctx.data.portfolio;
+    ctx.openUrl(p.linkedin);
+    return ctx.out.line(ctx.out.dim('opening '), ctx.out.accent('linkedin.com/in/' + p.linkedinHandle, 400), ctx.out.color('  ↗', ctx.C.acc));
+  },
+});
+
+defineCommand({
+  name: 'orcid',
+  run(ctx) {
+    const p = ctx.data.portfolio;
+    ctx.openUrl(p.orcid);
+    return ctx.out.line(ctx.out.dim('opening '), ctx.out.accent('orcid.org/' + p.orcidId, 400), ctx.out.color('  ↗', ctx.C.acc));
+  },
+});
+
+defineCommand({
   name: 'whoareyou',
   run(ctx) { return ctx.runCommand('whoami'); },
 });

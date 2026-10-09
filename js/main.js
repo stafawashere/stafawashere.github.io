@@ -299,7 +299,7 @@
     if (!touchOnly.matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const SELECTOR = '.project-card, .exp-card, .edu-card, .tag';
+    const SELECTOR = '.project-card, .exp-card, .edu-card, .record-card, .tag';
     const FOCAL_FRAC = 0.42;
     const MIN_VISIBLE = 0.65;
     const STICKINESS = 0.72;
@@ -420,6 +420,114 @@
       card.appendChild(note);
       grid.appendChild(card);
     });
+  }
+
+  // Profile marks drawn as chips on the board, after icons/icon-chip.svg.
+  // Pins are listed clockwise so the hover light runs around the package.
+  const CHIP_PINS = [
+    [26, 11, 26, 17], [32, 11, 32, 17], [38, 11, 38, 17],
+    [47, 26, 53, 26], [47, 32, 53, 32], [47, 38, 53, 38],
+    [38, 47, 38, 53], [32, 47, 32, 53], [26, 47, 26, 53],
+    [11, 38, 17, 38], [11, 32, 17, 32], [11, 26, 17, 26],
+  ];
+
+  const LINKEDIN_GLYPH = 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452z';
+
+  const ORCID_GLYPH = 'M6.5 4.5a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2zM5.1 9h2.8v10.5H5.1zM10 9h3.6c3.3 0 5.4 2.2 5.4 5.25s-2.1 5.25-5.4 5.25H10zm2.7 2.5V17h.8c1.7 0 2.7-1.1 2.7-2.75s-1-2.75-2.7-2.75z';
+
+  function chipSvg(glyph) {
+    const pins = CHIP_PINS.map((pin, order) =>
+      '<line class="record-pin" style="--n:' + order + '" x1="' + pin[0] + '" y1="' + pin[1] + '" x2="' + pin[2] + '" y2="' + pin[3] + '"/>'
+    ).join('');
+
+    return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
+      '<g>' + pins + '</g>' +
+      '<rect class="record-die" x="18" y="18" width="28" height="28" rx="6"/>' +
+      '<path class="record-glyph" fill-rule="evenodd" transform="translate(22.3 22.3) scale(0.81)" d="' + glyph + '"/>' +
+      '</svg>';
+  }
+
+  function recordCard(record) {
+    const card = document.createElement('a');
+    card.className = 'record-card';
+    card.href      = record.href;
+    card.target    = '_blank';
+    card.rel       = 'me noopener';
+    card.setAttribute('aria-label', PORTFOLIO.name + ' on ' + record.site + ' (opens in a new tab)');
+
+    const chip = document.createElement('span');
+    chip.className = 'record-chip';
+    chip.innerHTML = chipSvg(record.glyph);
+
+    const body = document.createElement('span');
+    body.className = 'record-body';
+
+    const name = document.createElement('span');
+    name.className   = 'record-name';
+    name.textContent = PORTFOLIO.name;
+
+    const kind = document.createElement('span');
+    kind.className   = 'record-kind';
+    kind.textContent = record.site;
+
+    const note = document.createElement('span');
+    note.className   = 'record-note';
+    note.textContent = record.note;
+
+    const url = document.createElement('span');
+    url.className = 'record-url';
+    url.append(record.path);
+    const id = document.createElement('span');
+    id.className   = 'record-id';
+    id.textContent = record.id;
+    url.appendChild(id);
+
+    const cta = document.createElement('span');
+    cta.className = 'record-cta';
+    cta.innerHTML = record.cta + ' <span class="arrow">↗</span>';
+
+    body.appendChild(name);
+    body.appendChild(kind);
+    body.appendChild(note);
+    body.appendChild(url);
+
+    card.appendChild(chip);
+    card.appendChild(body);
+    card.appendChild(cta);
+    return card;
+  }
+
+  function buildRecords() {
+    const grid = document.getElementById('education-content');
+    if (!grid) return;
+
+    const records = [
+      {
+        site:  'LinkedIn',
+        href:  PORTFOLIO.linkedin,
+        path:  'linkedin.com/in/',
+        id:    PORTFOLIO.linkedinHandle,
+        glyph: LINKEDIN_GLYPH,
+        note:  'High school student in New York City, class of 2027. Check this page against my profile.',
+        cta:   'view profile',
+      },
+      {
+        site:  'ORCID',
+        href:  PORTFOLIO.orcid,
+        path:  'orcid.org/',
+        id:    PORTFOLIO.orcidId,
+        glyph: ORCID_GLYPH,
+        note:  'My ORCID iD, a permanent ID that links a researcher to their work.',
+        cta:   'view record',
+      },
+    ].filter(record => record.href);
+
+    if (!records.length) return;
+
+    const row = document.createElement('div');
+    row.className = 'records-grid';
+    records.forEach(record => row.appendChild(recordCard(record)));
+    grid.after(row);
   }
 
   function syncBackgroundHeight() {
@@ -1616,6 +1724,7 @@
   buildProjects();
   initCardGleam();
   buildEducation();
+  buildRecords();
   buildContact();
 
   applyAccent(animCfg.accent || '#5b8cff');

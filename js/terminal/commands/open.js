@@ -1,13 +1,23 @@
 defineCommand({
   name: 'open', aliases: ['xdg-open', 'start'], group: 'core',
-  summary: 'open <project|github|email> in a new tab',
+  summary: 'open <project|github|linkedin|orcid|email> in a new tab',
   run(ctx) {
     const o = ctx.out, argl = ctx.argl;
-    if (!argl) return o.line(o.dim('usage: '), o.accent('open <project|github|email>', 600));
+    if (!argl) return o.line(o.dim('usage: '), o.accent('open <project|github|linkedin|orcid|email>', 600));
 
     if (/git|^gh$/.test(argl)) {
       ctx.openUrl('https://github.com/stafawashere');
       return o.line(o.dim('opening '), o.accent('github.com/stafawashere ↗', 400));
+    }
+    if (/linkedin|^li$/.test(argl)) {
+      const p = ctx.data.portfolio;
+      ctx.openUrl(p.linkedin);
+      return o.line(o.dim('opening '), o.accent('linkedin.com/in/' + p.linkedinHandle + ' ↗', 400));
+    }
+    if (/orcid/.test(argl)) {
+      const p = ctx.data.portfolio;
+      ctx.openUrl(p.orcid);
+      return o.line(o.dim('opening '), o.accent('orcid.org/' + p.orcidId + ' ↗', 400));
     }
     if (/mail|email|contact/.test(argl)) {
       ctx.openUrl('mailto:contact@mahfujmustafa.dev');

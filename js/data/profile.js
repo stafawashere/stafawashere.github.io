@@ -7,6 +7,10 @@ Object.assign(window.PORTFOLIO, {
   location:     'New York City, NY',
   github:       'https://github.com/stafawashere',
   githubHandle: 'stafawashere',
+  linkedin:     'https://www.linkedin.com/in/mahfujm527/',
+  linkedinHandle: 'mahfujm527',
+  orcid:        'https://orcid.org/0009-0002-1782-2580',
+  orcidId:      '0009-0002-1782-2580',
   playerVisits: 78,
   available:    true,
 

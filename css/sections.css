@@ -743,6 +743,207 @@
   margin: 0;
 }
 
+.records-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.record-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  align-items: start;
+  gap: 16px 20px;
+  padding: 22px 26px 24px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--bg-card);
+  background-image: var(--dot-grid);
+  background-size: var(--dot-grid-size);
+  color: var(--text-bright);
+  text-decoration: none;
+  transition: border-color .22s ease,
+              background-color .22s ease,
+              transform .28s cubic-bezier(0.3, 1.25, 0.5, 1),
+              box-shadow .28s ease;
+}
+
+.record-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg,
+              transparent,
+              rgba(var(--purple-rgb), 0.5) 18%,
+              rgba(var(--purple-rgb), 0.5) 82%,
+              transparent);
+  opacity: 0.28;
+  transform: scaleY(0.72);
+  transition: opacity .28s ease, width .28s ease, transform .32s cubic-bezier(.22, 1, .36, 1);
+}
+
+.record-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(40% 120% at 0% 50%,
+              rgba(var(--purple-rgb), 0.12), transparent 70%);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) {
+  border-color: color-mix(in srgb, var(--purple) 34%, var(--bg-card));
+  background-color: var(--bg-card-alt);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -30px rgba(0, 0, 0, 0.7),
+              0 10px 26px -18px rgba(var(--purple-rgb), 0.32);
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible)::before {
+  opacity: 1;
+  width: 3px;
+  transform: scaleY(1);
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible)::after { opacity: 1; }
+
+.record-card:focus-visible {
+  outline: 2px solid var(--lilac);
+  outline-offset: 3px;
+}
+
+.record-chip {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin-top: -4px;
+}
+
+.record-chip svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.record-pin {
+  stroke: rgba(var(--lilac-rgb), 0.26);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  transition: stroke .2s ease;
+}
+
+.record-die {
+  fill: var(--bg-card-alt);
+  stroke: rgba(var(--lilac-rgb), 0.5);
+  stroke-width: 1.6;
+  transition: stroke .22s ease;
+}
+
+.record-glyph {
+  fill: var(--text-bright);
+  transition: fill .22s ease;
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) .record-pin {
+  stroke: var(--lilac);
+  transition-delay: calc(var(--n) * 28ms);
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) .record-die { stroke: var(--lilac); }
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) .record-glyph { fill: #fff; }
+
+.record-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.record-name {
+  margin-bottom: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-bright);
+  transition: color .15s;
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) .record-name { color: var(--lilac); }
+
+.record-kind {
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.record-note {
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #9c9ea9;
+  text-wrap: pretty;
+}
+
+.record-url {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  overflow-wrap: anywhere;
+}
+
+.record-id {
+  color: var(--lilac);
+  white-space: nowrap;
+}
+
+.record-cta {
+  grid-column: 2;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(var(--lilac-rgb), 0.22);
+  border-radius: 9px;
+  font-size: 13px;
+  white-space: nowrap;
+  color: var(--text-bright);
+  transition: color .15s, border-color .15s, background .15s;
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) .record-cta {
+  color: var(--lilac);
+  border-color: var(--purple);
+  background: rgba(var(--purple-rgb), 0.08);
+}
+
+.record-card:is(:hover, .is-autofocus, :focus-visible) .record-cta .arrow { transform: translate(1px, -1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .record-card,
+  .record-card *,
+  .record-card::before,
+  .record-card::after { transition: none; }
+
+  .record-card:is(:hover, .is-autofocus, :focus-visible)::before { transform: scaleY(1); }
+
+  .record-card:is(:hover, .is-autofocus, :focus-visible),
+  .record-card:is(:hover, .is-autofocus, :focus-visible) .record-cta .arrow { transform: none; }
+}
+
 #contact { padding-top: 90px; padding-bottom: 40px; }
 
 .contact-card {
