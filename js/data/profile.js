@@ -11,9 +11,9 @@ Object.assign(window.PORTFOLIO, {
   available:    true,
 
   rotor: [
-    'security researcher',
+    'security analyst',
     'reverse engineer',
-    'full-stack engineer',
+    'student developer',
     'live-ops developer',
     'bot architect',
   ],

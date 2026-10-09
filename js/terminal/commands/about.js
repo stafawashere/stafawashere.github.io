@@ -6,7 +6,7 @@ defineCommand({
       .line(ctx.out.dim('about.txt'))
       .blank()
       .line('I’m a 17-year-old high school student in NYC who breaks things to')
-      .line('understand them. I work across security research, reverse engineering,')
+      .line('understand them. I work across security analysis, reverse engineering,')
       .line('full-stack web, Discord bots, API wrappers and automation — and I ship')
       .line('live games that have reached ', ctx.out.bold('78M+ player visits'), '.')
       .blank()
