@@ -508,7 +508,7 @@
         path:  'linkedin.com/in/',
         id:    PORTFOLIO.linkedinHandle,
         glyph: LINKEDIN_GLYPH,
-        note:  'High school student in New York City, class of 2027. Check this page against my profile.',
+        note:  'Same stuff as this site, laid out like a resume. Feel free to connect.',
         cta:   'view profile',
       },
       {
@@ -517,7 +517,7 @@
         path:  'orcid.org/',
         id:    PORTFOLIO.orcidId,
         glyph: ORCID_GLYPH,
-        note:  'My ORCID iD, a permanent ID that links a researcher to their work.',
+        note:  'My researcher ID. Anything I publish gets linked here.',
         cta:   'view record',
       },
     ].filter(record => record.href);
