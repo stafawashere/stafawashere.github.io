@@ -139,6 +139,108 @@
       if (window.CURIE_WEBKIT) document.documentElement.classList.add('is-webkit');
     })();
   </script>
+  <script>
+    /* Lays out and sizes the hero name. It runs in the frame callbacks while
+       the page is still parsing, so the first frame that shows the hero
+       already has the final geometry and nothing below it jumps later. The
+       end of <body> calls it once more with the whole document parsed, and
+       hero.js refits through it on load, fonts.ready and resize. */
+    (function () {
+      // Pacifico advance widths at font-size 200, used until the font has
+      // loaded so the fallback-font paint already gets the final geometry.
+      var PACIFICO_WIDTHS = { Mahfuj: 647.17, Mustafa: 757.57 };
+
+      function lineLength(line, word) {
+        var fontReady = !document.fonts || document.fonts.check('200px Pacifico');
+        if (!fontReady) return PACIFICO_WIDTHS[word];
+
+        var kept = line.textContent;
+        if (kept !== word) line.textContent = word;
+        var length = line.getComputedTextLength();
+        if (kept !== word) line.textContent = kept;
+
+        return length;
+      }
+
+      function circuitMaxRight() {
+        var vw = document.documentElement.clientWidth;
+        var skills = document.getElementById('skills');
+        if (!skills || vw <= 560) return Infinity;
+
+        var padR = Math.min(skills.getBoundingClientRect().right, vw - 30);
+        var rightBusX = Math.min(vw - 16, padR + 46);
+        var chipHardMax = rightBusX - 74;
+        var chipClearance = 120;
+
+        return chipHardMax - chipClearance;
+      }
+
+      function layoutTitle(svg) {
+        var stacked = document.documentElement.clientWidth <= 640;
+        var line1 = svg.querySelector('.t-line1');
+        var line2 = svg.querySelector('.t-line2');
+        if (!line1 || !line2) return;
+
+        var len1 = lineLength(line1, 'Mahfuj');
+        var len2 = lineLength(line2, 'Mustafa');
+        var line2Copies = svg.querySelectorAll('.t-line2');
+
+        if (stacked) {
+          for (var i = 0; i < line2Copies.length; i++) {
+            line2Copies[i].setAttribute('x', 10);
+            line2Copies[i].setAttribute('y', 515);
+          }
+          svg.setAttribute('viewBox', '0 -40 ' + Math.ceil(Math.max(len1, len2) + 20) + ' 660');
+          return;
+        }
+
+        var x2 = Math.round(10 + len1 + 55);
+        for (var j = 0; j < line2Copies.length; j++) {
+          line2Copies[j].setAttribute('x', x2);
+          line2Copies[j].setAttribute('y', 225);
+        }
+        svg.setAttribute('viewBox', '0 -40 ' + Math.ceil(x2 + len2 + 10) + ' 370');
+      }
+
+      function fitHeroTitle() {
+        var svg = document.getElementById('hero-name-svg');
+        var hint = document.querySelector('.scroll-hint');
+        if (!svg || !hint) return;
+
+        layoutTitle(svg);
+
+        var vb = svg.viewBox.baseVal;
+        var aspect = vb.width / vb.height;
+        var bottomMargin = 28;
+        var minWidth = 300;
+
+        svg.parentElement.style.paddingTop = '0px';
+
+        for (var pass = 0; pass < 3; pass++) {
+          var svgRect = svg.getBoundingClientRect();
+          var viewportMaxW = document.documentElement.clientWidth - svgRect.left - 40;
+          var circuitMaxW = circuitMaxRight() - svgRect.left;
+          var maxW = Math.min(viewportMaxW, circuitMaxW);
+          var hintBottom = hint.getBoundingClientRect().bottom + window.scrollY;
+
+          var room = (window.innerHeight - bottomMargin) - hintBottom;
+          var targetH = svgRect.height + room;
+          var targetW = Math.min(maxW, Math.max(minWidth, targetH * aspect));
+
+          svg.style.width = Math.round(targetW) + 'px';
+          svg.style.maxWidth = 'none';
+        }
+      }
+
+      function fitWhileParsing() {
+        fitHeroTitle();
+        if (document.readyState === 'loading') requestAnimationFrame(fitWhileParsing);
+      }
+
+      window.fitHeroTitle = fitHeroTitle;
+      requestAnimationFrame(fitWhileParsing);
+    })();
+  </script>
   <link rel="preload" href="/fonts/pacifico-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css">
@@ -628,28 +730,67 @@
 
   </div>
 
-  <script defer src="js/data/profile.js"></script>
-  <script defer src="js/data/skills.js"></script>
-  <script defer src="js/data/experience.js"></script>
-  <script defer src="js/data/projects.js"></script>
-  <script defer src="js/data/education.js"></script>
+  <script>window.fitHeroTitle();</script>
 
-  <script defer src="js/circuit.js"></script>
-  <script defer src="js/meta-circuit.js"></script>
+  <!-- The app scripts run after the first contentful paint instead of as plain
+       defer scripts, so the hero shows before main.js and circuit.js get to work.
+       async=false keeps them executing in this order. The commands bundle is the 33
+       per-command scripts concatenated (F12); rebuild it with gen_bundle.py
+       after editing a command. -->
+  <script>
+  (function () {
+    var appScripts = [
+      'js/data/profile.js',
+      'js/data/skills.js',
+      'js/data/experience.js',
+      'js/data/projects.js',
+      'js/data/education.js',
+      'js/circuit.js',
+      'js/meta-circuit.js',
+      'js/terminal/banners.js',
+      'js/terminal/framework/registry.js',
+      'js/terminal/framework/output.js',
+      'js/terminal/framework/shell.js',
+      'js/terminal/commands/_bundle.js',
+      'js/hero.js',
+      'js/palette.js',
+      'js/window.js',
+      'js/main.js'
+    ];
+    var started = false;
 
-  <script defer src="js/terminal/banners.js"></script>
-  <script defer src="js/terminal/framework/registry.js"></script>
-  <script defer src="js/terminal/framework/output.js"></script>
-  <script defer src="js/terminal/framework/shell.js"></script>
+    function runAppScripts() {
+      if (started) return;
+      started = true;
 
-  <!-- F12: 33 per-command scripts concatenated into one bundle to cut request/compile overhead.
-       Regenerate js/terminal/commands/_bundle.js from the source files if you edit a command. -->
-  <script defer src="js/terminal/commands/_bundle.js"></script>
+      appScripts.forEach(function (src) {
+        var script = document.createElement('script');
+        script.src = src;
+        script.async = false;
+        document.body.appendChild(script);
+      });
+    }
 
-  <script defer src="js/hero.js"></script>
-  <script defer src="js/palette.js"></script>
-  <script defer src="js/window.js"></script>
-  <script defer src="js/main.js"></script>
+    var types = window.PerformanceObserver && PerformanceObserver.supportedEntryTypes;
+    var canWatchPaint = !!types && types.indexOf('paint') !== -1;
+
+    if (canWatchPaint) {
+      new PerformanceObserver(function (list, observer) {
+        var painted = list.getEntriesByName('first-contentful-paint').length > 0;
+        if (!painted) return;
+
+        observer.disconnect();
+        setTimeout(runAppScripts, 0);
+      }).observe({ type: 'paint', buffered: true });
+    } else {
+      requestAnimationFrame(function () { setTimeout(runAppScripts, 0); });
+    }
+
+    // A background tab never paints, so this still boots a page opened
+    // behind another one.
+    setTimeout(runAppScripts, 1500);
+  })();
+  </script>
 
   <!-- section titles rendered in the hero's liquid (Pacifico) skin, reusing the
        shared #liquid-* filters/gradient from the hero SVG. viewBox is measured

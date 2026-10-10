@@ -135,8 +135,6 @@ function initLiquidTitle() {
   const svg = document.getElementById('hero-name-svg');
   if (!svg) return;
 
-  const hint = document.querySelector('.scroll-hint');
-
   // The rect only moves on scroll, on resize, or when fitTitleToViewport
   // rewrites the title width — reading it per pointer frame forced a full
   // synchronous layout of a filtered subtree for moves that get rejected below.
@@ -145,77 +143,11 @@ function initLiquidTitle() {
   window.addEventListener('scroll', invalidateRect, { passive: true });
   window.addEventListener('resize', invalidateRect, { passive: true });
 
-  function circuitMaxRight() {
-    const vw = document.documentElement.clientWidth;
-    const skills = document.getElementById('skills');
-    if (!skills || vw <= 560) return Infinity;
-
-    const padR = Math.min(skills.getBoundingClientRect().right, vw - 30);
-    const rightBusX = Math.min(vw - 16, padR + 46);
-    const chipHardMax = rightBusX - 74;
-    const chipClearance = 120;
-
-    return chipHardMax - chipClearance;
-  }
-
-  function layoutTitle() {
-    const stacked = document.documentElement.clientWidth <= 640;
-    const line1 = svg.querySelector('.t-line1');
-    const line2 = svg.querySelector('.t-line2');
-    if (!line1 || !line2) return;
-
-    const keep1 = line1.textContent;
-    const keep2 = line2.textContent;
-    if (keep1 !== 'Mahfuj') line1.textContent = 'Mahfuj';
-    if (keep2 !== 'Mustafa') line2.textContent = 'Mustafa';
-    const len1 = line1.getComputedTextLength();
-    const len2 = line2.getComputedTextLength();
-    if (keep1 !== 'Mahfuj') line1.textContent = keep1;
-    if (keep2 !== 'Mustafa') line2.textContent = keep2;
-
-    if (stacked) {
-      svg.querySelectorAll('.t-line2').forEach((el) => {
-        el.setAttribute('x', 10);
-        el.setAttribute('y', 515);
-      });
-      svg.setAttribute('viewBox', '0 -40 ' + Math.ceil(Math.max(len1, len2) + 20) + ' 660');
-    } else {
-      const x2 = Math.round(10 + len1 + 55);
-      svg.querySelectorAll('.t-line2').forEach((el) => {
-        el.setAttribute('x', x2);
-        el.setAttribute('y', 225);
-      });
-      svg.setAttribute('viewBox', '0 -40 ' + Math.ceil(x2 + len2 + 10) + ' 370');
-    }
-  }
-
+  // The layout itself lives in an inline script in the <head> of index.html so
+  // the first frame already has it; this refits through it and drops the
+  // cached rect.
   function fitTitleToViewport() {
-    if (!hint) return;
-
-    layoutTitle();
-
-    const vb = svg.viewBox.baseVal;
-    const aspect = vb.width / vb.height;
-    const bottomMargin = 28;
-    const minWidth = 300;
-
-    svg.parentElement.style.paddingTop = '0px';
-
-    for (let pass = 0; pass < 3; pass++) {
-      const svgRect = svg.getBoundingClientRect();
-      const viewportMaxW = document.documentElement.clientWidth - svgRect.left - 40;
-      const circuitMaxW = circuitMaxRight() - svgRect.left;
-      const maxW = Math.min(viewportMaxW, circuitMaxW);
-      const hintBottom = hint.getBoundingClientRect().bottom + window.scrollY;
-
-      const room = (window.innerHeight - bottomMargin) - hintBottom;
-      const targetH = svgRect.height + room;
-      const targetW = Math.min(maxW, Math.max(minWidth, targetH * aspect));
-
-      svg.style.width = Math.round(targetW) + 'px';
-      svg.style.maxWidth = 'none';
-    }
-
+    if (window.fitHeroTitle) window.fitHeroTitle();
     invalidateRect();
   }
 
