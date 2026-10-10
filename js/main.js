@@ -281,7 +281,7 @@
     // Scroll-active gate: the ambient blur/blend animations (card glow drift,
     // contact glow, hero glow) mutate large mix-blend-mode layers every frame;
     // during a scroll that combines with compositor work into visible jank.
-    // Pause them while the page is actually moving — invisible to the eye,
+    // Pause them while the page is actually moving, which is invisible to the eye,
     // and they resume ~150ms after the last scroll event.
     let settleTimer = 0;
     const root = document.documentElement;
@@ -307,7 +307,7 @@
     let current = null;
     let throttled = false;
     let trailing = false;
-    // F8: DOM is static after build — query the scorable nodes once instead of
+    // F8: DOM is static after build, so query the scorable nodes once instead of
     // re-running querySelectorAll on every (throttled) scroll/resize pass.
     let cards = null;
 
@@ -676,10 +676,10 @@
       titleBoot.setProgress(coreProgress);
       if (coreLit) { titleBoot.finish(); return; }
 
-      // Safety net: if the circuit never drives the reveal at all (unexpected —
+      // Safety net: if the circuit never drives the reveal at all (unexpected,
       // e.g. hooks not wired), self-drive on a local clock after a grace window
-      // so the title can't sit scrambling forever. A live circuit — even a slow one
-      // — will have emitted progress by then, so we defer to it and skip this.
+      // so the title can't sit scrambling forever. A live circuit, even a slow one,
+      // will have emitted progress by then, so we defer to it and skip this.
       const grace = coreLitMs() + 2000;
       setTimeout(() => {
         if (!coreLit && coreProgress <= 0) startLocalBootFeed();
@@ -695,7 +695,7 @@
 
     if (document.fonts && document.fonts.load) {
       document.fonts.load('200px Pacifico').then(beginTitle, beginTitle);
-      // hard safety net — stays a direct call so a throttled rAF (background
+      // hard safety net, stays a direct call so a throttled rAF (background
       // tab) can't leave the title unbooted
       setTimeout(startTitle, 300);
     } else {
@@ -815,7 +815,7 @@
 
   function buildContact() {
     const footerEl = document.getElementById('contact-footer');
-    if (footerEl) footerEl.textContent = '© 2026 ' + PORTFOLIO.name + ' — ' + PORTFOLIO.location;
+    if (footerEl) footerEl.textContent = '© ' + new Date().getFullYear() + ' ' + PORTFOLIO.name + ' | ' + PORTFOLIO.location;
   }
 
   function hexToRgb(hex) {
@@ -906,7 +906,7 @@
     root.setProperty('--lilac-rgb',  lilac.r + ', ' + lilac.g + ', ' + lilac.b);
 
     // Tag/tech icons are CSS masks tinted with currentColor, so they track
-    // --lilac automatically — no per-image recolor needed here.
+    // --lilac automatically, so no per-image recolor needed here.
 
     syncLiquidTitleAccent(rgb);
 
@@ -917,7 +917,7 @@
     if (window.MetaCircuit && window.MetaCircuit.syncColors) window.MetaCircuit.syncColors();
   }
 
-  /* ── settings: "board.cfg" — a draggable tuner window ──────────────────
+  /* ── settings: "board.cfg", a draggable tuner window ──────────────────
      Rebuilt from scratch in the terminal-window family (traffic dot, mono
      type, quiet chrome). Sections sit in a left rail with circuit-pad
      indicators; panes show only label + value + slider, and every
@@ -1609,7 +1609,7 @@
     bootFeedRAF = requestAnimationFrame(step);
   }
 
-  // Mobile (≤560px) never loads the chip — the circuit board is disabled and
+  // Mobile (≤560px) never loads the chip. The circuit board is disabled and
   // invisible there (a static CSS trace stands in). So there's nothing to sync
   // to: drive the title on a short local clock so it reveals quickly, and let
   // the rotor + meta-circuit start off the same `curie:title-ready` beat.
@@ -1622,7 +1622,7 @@
   let replayBoot;
 
   if (canvas && MOBILE_NO_CHIP) {
-    // chip not loaded on mobile — fast local title reveal, no circuit engine
+    // chip not loaded on mobile, so a fast local title reveal, no circuit engine
     if (canvas) canvas.style.display = 'none';
     startLocalBootFeed(MOBILE_TITLE_MS);
     replayBoot = () => {
@@ -1647,7 +1647,7 @@
       if (!eventDriven) startLocalBootFeed();
     };
   } else {
-    // no circuit on the page — still let the title reveal on a local clock
+    // no circuit on the page, but still let the title reveal on a local clock
     startLocalBootFeed();
   }
 
