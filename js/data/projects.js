@@ -85,13 +85,13 @@ window.PORTFOLIO.projects = [
     desc: 'A Discord library I built from scratch, talking straight to Discord over WebSockets and HTTP instead of leaning on existing wrappers. It handles the connection, sessions, and events all on its own.',
   },
   {
-    id:   'how-to-pray',
-    name: 'How to Pray',
+    id:   'sujood',
+    name: 'Sujood',
     type: 'Reference Site',
     date: 'AUG 2026',
-    url:  'https://github.com/stafawashere/howtopray',
+    url:  'https://github.com/stafawashere/sujood.online',
     tech: ['JavaScript', 'HTML5'],
-    desc: 'A walkthrough of the eight positions of salah in the order they happen, live at howtopray.mahfujmustafa.dev. Each stage carries the Arabic, the transliteration, and a play button that streams the actual recitation, so you can hear a line instead of guessing at it from spelling.',
+    desc: 'A walkthrough of the eight positions of salah in the order they happen, live at sujood.online. Each stage carries the Arabic, the transliteration, and a play button that streams the actual recitation, so you can hear a line instead of guessing at it from spelling.',
   },
   {
     id:   'portfolio',
