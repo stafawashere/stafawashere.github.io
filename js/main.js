@@ -89,6 +89,11 @@
     const supportingEl  = document.getElementById('skills-supporting');
     if (!specialtiesEl || !coreEl || !supportingEl) return;
 
+    // index.html ships a static copy of these lists for crawlers; build fresh from data.
+    specialtiesEl.replaceChildren();
+    coreEl.replaceChildren();
+    supportingEl.replaceChildren();
+
     PORTFOLIO.specialties.forEach(s => {
       const span = document.createElement('span');
       span.className   = 'tag is-highlight';
@@ -118,6 +123,8 @@
   function buildExperience() {
     const list = document.getElementById('experience-content');
     if (!list) return;
+
+    list.replaceChildren();
 
     PORTFOLIO.experiences.forEach(x => {
       const card = document.createElement('div');
@@ -163,6 +170,8 @@
   function buildProjects() {
     const grid = document.getElementById('work-content');
     if (!grid) return;
+
+    grid.replaceChildren();
 
     PORTFOLIO.projects.forEach((p, index) => {
       const card = document.createElement('a');
@@ -390,6 +399,8 @@
   function buildEducation() {
     const grid = document.getElementById('education-content');
     if (!grid) return;
+
+    grid.replaceChildren();
 
     PORTFOLIO.education.forEach(e => {
       const card = document.createElement('div');
