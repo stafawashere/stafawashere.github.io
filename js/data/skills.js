@@ -42,6 +42,7 @@ Object.assign(window.PORTFOLIO, {
     'HTML5':      'html5',
     'EJS':        'ejs',
     'CSS':        'css3',
+    'Bash':       'gnubash',
     'WebSockets': null,
     'TinyDB':     null,
     'Arcade':     null,
