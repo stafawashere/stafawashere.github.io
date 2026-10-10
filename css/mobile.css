@@ -274,6 +274,8 @@
 }
 
 @media (hover: none) {
+   .footer-links a:active { color: var(--lilac); }
+
    .tag:active {
       border-color: var(--purple);
       color: var(--lilac);
@@ -372,5 +374,14 @@
    .nav-link:active {
       color: var(--text-bright);
       background: rgba(255, 255, 255, 0.04);
+   }
+}
+
+/* Inline padding grows the hit area without moving the line box. */
+@media (pointer: coarse) {
+   .exp-org,
+   .contact-email,
+   .footer-links a {
+      padding-block: 12px;
    }
 }

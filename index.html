@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mahfuj Mustafa | Student Developer and Security Analyst</title>
-  <meta name="description" content="Mahfuj Mustafa, student developer and security analyst in New York City, interested in CS, ML, and neuroscience. Web platforms, Discord bots, developer tools, and game reverse engineering.">
+  <meta name="description" content="Mahfuj Mustafa, student developer and security analyst in New York City. Security research, reverse engineering, ML, and developer tools.">
   <meta name="author" content="Mahfuj Mustafa">
   <meta name="theme-color" content="#020202">
   <link rel="canonical" href="https://mahfujmustafa.dev/">
@@ -30,28 +30,75 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "ProfilePage",
+        "@id": "https://mahfujmustafa.dev/#profilepage",
+        "url": "https://mahfujmustafa.dev/",
+        "name": "Mahfuj Mustafa | Student Developer and Security Analyst",
+        "description": "Mahfuj Mustafa, student developer and security analyst in New York City. Security research, reverse engineering, ML, and developer tools.",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://mahfujmustafa.dev/#website"
+        },
+        "mainEntity": {
+          "@id": "https://mahfujmustafa.dev/#person"
+        }
+      },
+      {
         "@type": "Person",
         "@id": "https://mahfujmustafa.dev/#person",
         "name": "Mahfuj Mustafa",
         "url": "https://mahfujmustafa.dev/",
         "image": "https://mahfujmustafa.dev/og-image.jpg",
-        "email": "mailto:contact@mahfujmustafa.dev",
+        "email": "contact@mahfujmustafa.dev",
         "jobTitle": "Student Developer and Security Analyst",
+        "description": "Mahfuj Mustafa is a student developer and security analyst in New York City. Mahfuj is in the class of 2027 at the High School of Arts and Technology and takes college courses at the Borough of Manhattan Community College through FutureReady NYC dual enrollment. From 2024 to 2026 Mahfuj programmed live operations at Merge Box, shipping and maintaining Roblox games with more than 78 million combined player visits. Through the NYC DOE Workplace Challenge Program, Mahfuj helped build a security strategy for the LinkNYC public Wi-Fi network in a six-week team challenge. Projects here include Allusion, security research into the game Rivals that was reported to its developers before going public, Psychedelic Model, an ML and neuroscience experiment built on a diffusion model, and developer tools such as Inspect Workflow and Taskbench. Interests: computer science, machine learning, and neuroscience.",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "New York",
           "addressRegion": "NY",
           "addressCountry": "US"
         },
-        "knowsAbout": ["Full-stack development", "Security analysis", "Reverse engineering", "Discord bots", "JavaScript", "Python"],
-        "sameAs": ["https://github.com/stafawashere", "https://www.linkedin.com/in/mahfujm527/", "https://orcid.org/0009-0002-1782-2580"]
+        "affiliation": [
+          {
+            "@type": "HighSchool",
+            "name": "High School of Arts and Technology",
+            "url": "https://www.hsartstech.org/"
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Borough of Manhattan Community College",
+            "url": "https://www.bmcc.cuny.edu/"
+          }
+        ],
+        "knowsAbout": [
+          "Security analysis",
+          "Reverse engineering",
+          "Full-stack development",
+          "Machine learning",
+          "Neuroscience",
+          "Discord bots",
+          "Roblox live operations",
+          "JavaScript",
+          "TypeScript",
+          "Python",
+          "PyTorch",
+          "Lua"
+        ],
+        "sameAs": [
+          "https://github.com/stafawashere",
+          "https://www.linkedin.com/in/mahfujm527/",
+          "https://orcid.org/0009-0002-1782-2580"
+        ]
       },
       {
         "@type": "WebSite",
         "@id": "https://mahfujmustafa.dev/#website",
         "url": "https://mahfujmustafa.dev/",
         "name": "Mahfuj Mustafa",
-        "publisher": { "@id": "https://mahfujmustafa.dev/#person" }
+        "inLanguage": "en",
+        "publisher": {
+          "@id": "https://mahfujmustafa.dev/#person"
+        }
       }
     ]
   }
@@ -143,7 +190,8 @@
         </div>
       </div>
 
-      <h1 id="hero-name" data-cnode="core" aria-label="Mahfuj Mustafa">
+      <h1 id="hero-name" data-cnode="core">
+        <span class="visually-hidden">Mahfuj Mustafa</span>
         <svg id="hero-name-svg" viewBox="0 -40 1480 370" aria-hidden="true">
           <defs>
             <linearGradient id="liquid-skin" x1="0" y1="0" x2="0.1" y2="1">
@@ -352,7 +400,7 @@
     <section id="skills" class="content-section">
       <div class="section-header" data-section="skills">
         <div class="node-id">
-          <span class="node-title" data-word="skills" aria-label="skills"></span>
+          <h2 class="node-title" data-word="skills"><span class="visually-hidden">Skills</span></h2>
         </div>
         <div class="node-trace" aria-hidden="true"></div>
       </div>
@@ -407,7 +455,7 @@
     <section id="work" class="content-section">
       <div class="section-header" data-section="work">
         <div class="node-id">
-          <span class="node-title" data-word="projects" aria-label="projects"></span>
+          <h2 class="node-title" data-word="projects"><span class="visually-hidden">Projects</span></h2>
         </div>
         <div class="node-trace" aria-hidden="true"></div>
       </div>
@@ -416,17 +464,17 @@
           <div class="section-body-content">
             <div class="projects-grid" id="work-content">
               <!-- static:projects -->
-              <a class="project-card is-featured" href="https://github.com/stafawashere/psychedelic-model-research" target="_blank" rel="noopener" style="--i: 0;"><span class="card-fx"></span><span class="project-flag">FEATURED</span><span class="project-date">JUN 2026 - JUL 2026</span><span class="project-name">Psychedelic <span class="arrow-wrap">Model&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">ML &amp; Neuroscience Research</div><p class="project-desc">An experiment that drives a diffusion model with only knobs mapped to real brain variables like sensory precision and cortical gain, then tests whether the visual sequence reported in DMT research (geometry, then forms, then figures) emerges on its own. Nothing is drawn by hand, the metrics were locked in before the first run, and the write-up reports what never showed up alongside what did.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/pytorch&quot;); width: 15px; height: 15px;"></span>PyTorch</span></div></a>
-              <a class="project-card is-featured" href="https://github.com/stafawashere/dms" target="_blank" rel="noopener" style="--i: 1;"><span class="card-fx"></span><span class="project-flag">FEATURED</span><span class="project-date">MAR 2026</span><span class="project-name">Distribution <span class="arrow-wrap">Network&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Full-Stack Web App</div><p class="project-desc">A platform for distributors and the resellers beneath them, where each side logs into its own scoped portal, with inventory tracking, bulk pricing tiers, and a sales-and-revenue dashboard.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/typescript&quot;); width: 15px; height: 15px;"></span>TypeScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/postgresql&quot;); width: 15px; height: 15px;"></span>PostgreSQL</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/inspectworkflow" target="_blank" rel="noopener" style="--i: 2;"><span class="card-fx"></span><span class="project-date">JUL 2026</span><span class="project-name">Inspect <span class="arrow-wrap">Workflow&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Developer Tool</div><p class="project-desc">A local viewer that turns raw Claude Code JSONL logs into readable conversations, grouping subagents and workflow runs as they actually happened. It follows live transcripts over SSE, all from one dependency-free Python file and a single HTML page.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/html5&quot;); width: 15px; height: 15px;"></span>HTML5</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/taskbench-extension" target="_blank" rel="noopener" style="--i: 3;"><span class="card-fx"></span><span class="project-date">JUL 2026</span><span class="project-name"><span class="arrow-wrap">Taskbench&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">VS Code Extension</div><p class="project-desc">A VS Code extension that turns the Explorer sidebar into a command workbench: one-click shell tasks with live status you can stop mid-run, background servers and watchers included. Everything lives in a plain JSON file, so your whole team's tasks ride along in version control.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/spicetify-release" target="_blank" rel="noopener" style="--i: 4;"><span class="card-fx"></span><span class="project-date">OCT 2026</span><span class="project-name">Spicetify <span class="arrow-wrap">Extensions&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Spotify Client Mods</div><p class="project-desc">Extensions I wrote for my own Spotify on the Comfy theme, starting with a fix for the layout a Spotify update broke. The album cover tints the whole app and spins as a disc that pulses on the beat, and I profiled the client over DevTools to bring that disc from half a CPU core down to 13%.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/gnubash&quot;); width: 15px; height: 15px;"></span>Bash</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/trashy-apocalypse" target="_blank" rel="noopener" style="--i: 5;"><span class="card-fx"></span><span class="project-date">MAY 2026</span><span class="project-name">Trashy <span class="arrow-wrap">Apocalypse&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Arcade</div><p class="project-desc">A top-down zombie survival shooter my team built for AP CSP on Python's Arcade library, where I led the coding, and our school's entry at the annual arts event. You hold to spray down zombies that keep spawning across a trashed wasteland, with a layered audio engine and a saved best score.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/Allusion" target="_blank" rel="noopener" style="--i: 6;"><span class="card-fx"></span><span class="project-date">FEB 2026</span><span class="project-name"><span class="arrow-wrap">Allusion&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Security Research</div><p class="project-desc">I pulled apart the game Rivals to find weaknesses in its anti-cheat, combat, and rendering. Everything was reported to the developers before I made any of it public.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/lua&quot;); width: 15px; height: 15px;"></span>Lua</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/ledger" target="_blank" rel="noopener" style="--i: 7;"><span class="card-fx"></span><span class="project-date">FEB 2026</span><span class="project-name"><span class="arrow-wrap">Ledger&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Discord Bot</div><p class="project-desc">A Discord bot for tracking balances, debts, and inventory, driven by slash commands and buttons, with a full history you can filter and export.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/Disky" target="_blank" rel="noopener" style="--i: 8;"><span class="card-fx"></span><span class="project-date">MAY 2024</span><span class="project-name"><span class="arrow-wrap">Disky&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Discord API Wrapper</div><p class="project-desc">A Discord library I built from scratch, talking straight to Discord over WebSockets and HTTP instead of leaning on existing wrappers. It handles the connection, sessions, and events all on its own.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/sujood.online" target="_blank" rel="noopener" style="--i: 9;"><span class="card-fx"></span><span class="project-date">AUG 2026</span><span class="project-name"><span class="arrow-wrap">Sujood&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Reference Site</div><p class="project-desc">A walkthrough of the eight positions of salah in the order they happen, live at sujood.online. Each stage carries the Arabic, the transliteration, and a play button that streams the actual recitation, so you can hear a line instead of guessing at it from spelling.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/html5&quot;); width: 15px; height: 15px;"></span>HTML5</span></div></a>
-              <a class="project-card" href="https://github.com/stafawashere/stafawashere.github.io" target="_blank" rel="noopener" style="--i: 10;"><span class="card-fx"></span><span class="project-date">JUN 2026</span><span class="project-name"><span class="arrow-wrap">mahfujmustafa.dev&nbsp;<span class="arrow">&#8599;</span></span></span><div class="project-type">Portfolio Website</div><p class="project-desc">This site. No frameworks, just plain JavaScript, including a terminal you can actually type into with 35+ commands, and the animated circuit board running behind everything.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/html5&quot;); width: 15px; height: 15px;"></span>HTML5</span></div></a>
+              <a class="project-card is-featured" href="/projects/psychedelic-model/" style="--i: 0;"><span class="card-fx"></span><span class="project-flag">FEATURED</span><span class="project-date">JUN 2026 - JUL 2026</span><h3 class="project-name">Psychedelic <span class="arrow-wrap">Model&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">ML &amp; Neuroscience Research</div><p class="project-desc">An experiment that drives a diffusion model with only knobs mapped to real brain variables like sensory precision and cortical gain, then tests whether the visual sequence reported in DMT research (geometry, then forms, then figures) emerges on its own. Nothing is drawn by hand, the metrics were locked in before the first run, and the write-up reports what never showed up alongside what did.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/pytorch&quot;); width: 15px; height: 15px;"></span>PyTorch</span></div></a>
+              <a class="project-card is-featured" href="https://github.com/stafawashere/dms" target="_blank" rel="noopener" style="--i: 1;"><span class="card-fx"></span><span class="project-flag">FEATURED</span><span class="project-date">MAR 2026</span><h3 class="project-name">Distribution <span class="arrow-wrap">Network&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Full-Stack Web App</div><p class="project-desc">A platform for distributors and the resellers beneath them, where each side logs into its own scoped portal, with inventory tracking, bulk pricing tiers, and a sales-and-revenue dashboard.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/typescript&quot;); width: 15px; height: 15px;"></span>TypeScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/postgresql&quot;); width: 15px; height: 15px;"></span>PostgreSQL</span></div></a>
+              <a class="project-card" href="/projects/inspect-workflow/" style="--i: 2;"><span class="card-fx"></span><span class="project-date">JUL 2026</span><h3 class="project-name">Inspect <span class="arrow-wrap">Workflow&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Developer Tool</div><p class="project-desc">A local viewer that turns raw Claude Code JSONL logs into readable conversations, grouping subagents and workflow runs as they actually happened. It follows live transcripts over SSE, all from one dependency-free Python file and a single HTML page.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/html5&quot;); width: 15px; height: 15px;"></span>HTML5</span></div></a>
+              <a class="project-card" href="/projects/taskbench/" style="--i: 3;"><span class="card-fx"></span><span class="project-date">JUL 2026</span><h3 class="project-name"><span class="arrow-wrap">Taskbench&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">VS Code Extension</div><p class="project-desc">A VS Code extension that turns the Explorer sidebar into a command workbench: one-click shell tasks with live status you can stop mid-run, background servers and watchers included. Everything lives in a plain JSON file, so your whole team's tasks ride along in version control.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span></div></a>
+              <a class="project-card" href="https://github.com/stafawashere/spicetify-release" target="_blank" rel="noopener" style="--i: 4;"><span class="card-fx"></span><span class="project-date">OCT 2026</span><h3 class="project-name">Spicetify <span class="arrow-wrap">Extensions&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Spotify Client Mods</div><p class="project-desc">Extensions I wrote for my own Spotify on the Comfy theme, starting with a fix for the layout a Spotify update broke. The album cover tints the whole app and spins as a disc that pulses on the beat, and I profiled the client over DevTools to bring that disc from half a CPU core down to 13%.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/gnubash&quot;); width: 15px; height: 15px;"></span>Bash</span></div></a>
+              <a class="project-card" href="https://github.com/stafawashere/trashy-apocalypse" target="_blank" rel="noopener" style="--i: 5;"><span class="card-fx"></span><span class="project-date">MAY 2026</span><h3 class="project-name">Trashy <span class="arrow-wrap">Apocalypse&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Arcade</div><p class="project-desc">A top-down zombie survival shooter my team built for AP CSP on Python's Arcade library, where I led the coding, and our school's entry at the annual arts event. You hold to spray down zombies that keep spawning across a trashed wasteland, with a layered audio engine and a saved best score.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span></div></a>
+              <a class="project-card" href="/projects/allusion/" style="--i: 6;"><span class="card-fx"></span><span class="project-date">FEB 2026</span><h3 class="project-name"><span class="arrow-wrap">Allusion&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Security Research</div><p class="project-desc">I pulled apart the game Rivals to find weaknesses in its anti-cheat, combat, and rendering. Everything was reported to the developers before I made any of it public.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/lua&quot;); width: 15px; height: 15px;"></span>Lua</span></div></a>
+              <a class="project-card" href="https://github.com/stafawashere/ledger" target="_blank" rel="noopener" style="--i: 7;"><span class="card-fx"></span><span class="project-date">FEB 2026</span><h3 class="project-name"><span class="arrow-wrap">Ledger&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Discord Bot</div><p class="project-desc">A Discord bot for tracking balances, debts, and inventory, driven by slash commands and buttons, with a full history you can filter and export.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span></div></a>
+              <a class="project-card" href="https://github.com/stafawashere/Disky" target="_blank" rel="noopener" style="--i: 8;"><span class="card-fx"></span><span class="project-date">MAY 2024</span><h3 class="project-name"><span class="arrow-wrap">Disky&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Discord API Wrapper</div><p class="project-desc">A Discord library I built from scratch, talking straight to Discord over WebSockets and HTTP instead of leaning on existing wrappers. It handles the connection, sessions, and events all on its own.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/python&quot;); width: 15px; height: 15px;"></span>Python</span></div></a>
+              <a class="project-card" href="https://github.com/stafawashere/sujood.online" target="_blank" rel="noopener" style="--i: 9;"><span class="card-fx"></span><span class="project-date">AUG 2026</span><h3 class="project-name"><span class="arrow-wrap">Sujood&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Reference Site</div><p class="project-desc">A walkthrough of the eight positions of salah in the order they happen, live at sujood.online. Each stage carries the Arabic, the transliteration, and a play button that streams the actual recitation, so you can hear a line instead of guessing at it from spelling.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/html5&quot;); width: 15px; height: 15px;"></span>HTML5</span></div></a>
+              <a class="project-card" href="https://github.com/stafawashere/stafawashere.github.io" target="_blank" rel="noopener" style="--i: 10;"><span class="card-fx"></span><span class="project-date">JUN 2026</span><h3 class="project-name"><span class="arrow-wrap">mahfujmustafa.dev&nbsp;<span class="arrow">&#8599;</span></span></h3><div class="project-type">Portfolio Website</div><p class="project-desc">This site. No frameworks, just plain JavaScript, including a terminal you can actually type into with 35+ commands, and the animated circuit board running behind everything.</p><div class="project-tech"><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/javascript&quot;); width: 15px; height: 15px;"></span>JavaScript</span><span class="tech-badge"><span class="tech-ico" aria-hidden="true" style="--ico: url(&quot;https://cdn.simpleicons.org/html5&quot;); width: 15px; height: 15px;"></span>HTML5</span></div></a>
               <!-- /static:projects -->
             </div>
           </div>
@@ -437,7 +485,7 @@
     <section id="experience" class="content-section">
       <div class="section-header" data-section="experience">
         <div class="node-id">
-          <span class="node-title" data-word="experience" aria-label="experience"></span>
+          <h2 class="node-title" data-word="experience"><span class="visually-hidden">Experience</span></h2>
         </div>
         <div class="node-trace" aria-hidden="true"></div>
       </div>
@@ -446,10 +494,10 @@
           <div class="section-body-content">
             <div class="experience-list" id="experience-content">
               <!-- static:experience -->
-              <div class="exp-card"><div><a class="exp-org" href="https://www.link.nyc/home.html" target="_blank" rel="noopener">NYC DOE Workplace Challenge <span class="arrow-wrap">Program&nbsp;<span class="arrow">&#8599;</span></span></a><div class="exp-role">Security Analyst</div><div class="exp-dates">MAR 2026 &#8211; APR 2026</div></div><ul class="exp-points"><li>Analyzed threats and built a security strategy for LinkNYC's 1,700+ terminal public Wi-Fi network in a 6-week team challenge.</li><li>Built a five-layer defense-in-depth framework, benchmarked against NIST, ISO 27001, IEC 62443, and OWASP IoT standards.</li><li>Mapped the threat landscape into physical, cyber, and content-hijacking pillars with a P0&#8211;P3 risk matrix.</li><li>Authored incident-response and crisis-communication playbooks and presented findings to an industry stakeholder.</li></ul></div>
-              <div class="exp-card"><div><a class="exp-org" href="https://mergebox.net/" target="_blank" rel="noopener">Merge <span class="arrow-wrap">Box&nbsp;<span class="arrow">&#8599;</span></span></a><div class="exp-role">Programmer, Live Operations</div><div class="exp-dates">FEB 2024 &#8211; AUG 2026</div></div><ul class="exp-points"><li>Shipped and maintained Roblox titles with 78M+ combined player visits.</li><li>Collaborated with a dev team to keep a live catalog of games running.</li><li>Ran weekly Live Operations consisting of debugging, patching, and shipping new mechanics.</li><li>Audited live games to improve server performance and reliability.</li></ul></div>
-              <div class="exp-card"><div><a class="exp-org" href="https://muslimummah.org/" target="_blank" rel="noopener"><span class="arrow-wrap">MUNA&nbsp;<span class="arrow">&#8599;</span></span></a><div class="exp-role">Associate Member, Manhattan Youth Sub-Chapter</div><div class="exp-dates">2022 &#8211; PRESENT</div></div><ul class="exp-points"><li>Plan weekly youth gatherings alongside the chapter President.</li><li>Organize monthly community events such as barbecues, picnics, and gatherings.</li><li>Collect and record donations; mentor youth one-on-one.</li><li>Helped renovate MUNA's first Manhattan masjid ahead of its 50+ attendee opening.</li></ul></div>
-              <div class="exp-card"><div><a class="exp-org" href="https://github.com/stafawashere" target="_blank" rel="noopener"><span class="arrow-wrap">Freelance&nbsp;<span class="arrow">&#8599;</span></span></a><div class="exp-role">Programmer</div><div class="exp-dates">2021 &#8211; AUG 2026</div></div><ul class="exp-points"><li>Built full Roblox games, from single mechanics to complete frameworks.</li><li>Developed custom, optimized Discord bots for community servers.</li><li>Automated marketplace and trading-platform workflows with custom tooling.</li><li>Designed and shipped REST APIs for client applications.</li></ul></div>
+              <div class="exp-card"><div><h3 class="card-heading"><a class="exp-org" href="https://www.link.nyc/home.html" target="_blank" rel="noopener">NYC DOE Workplace Challenge <span class="arrow-wrap">Program&nbsp;<span class="arrow">&#8599;</span></span></a></h3><div class="exp-role">Security Analyst</div><div class="exp-dates">MAR 2026 &#8211; APR 2026</div></div><ul class="exp-points"><li>Analyzed threats and built a security strategy for LinkNYC's 1,700+ terminal public Wi-Fi network in a 6-week team challenge.</li><li>Built a five-layer defense-in-depth framework, benchmarked against NIST, ISO 27001, IEC 62443, and OWASP IoT standards.</li><li>Mapped the threat landscape into physical, cyber, and content-hijacking pillars with a P0&#8211;P3 risk matrix.</li><li>Authored incident-response and crisis-communication playbooks and presented findings to an industry stakeholder.</li></ul></div>
+              <div class="exp-card"><div><h3 class="card-heading"><a class="exp-org" href="https://mergebox.net/" target="_blank" rel="noopener">Merge <span class="arrow-wrap">Box&nbsp;<span class="arrow">&#8599;</span></span></a></h3><div class="exp-role">Programmer, Live Operations</div><div class="exp-dates">FEB 2024 &#8211; AUG 2026</div></div><ul class="exp-points"><li>Shipped and maintained Roblox titles with 78M+ combined player visits.</li><li>Collaborated with a dev team to keep a live catalog of games running.</li><li>Ran weekly Live Operations consisting of debugging, patching, and shipping new mechanics.</li><li>Audited live games to improve server performance and reliability.</li></ul></div>
+              <div class="exp-card"><div><h3 class="card-heading"><a class="exp-org" href="https://muslimummah.org/" target="_blank" rel="noopener"><span class="arrow-wrap">MUNA&nbsp;<span class="arrow">&#8599;</span></span></a></h3><div class="exp-role">Associate Member, Manhattan Youth Sub-Chapter</div><div class="exp-dates">2022 &#8211; PRESENT</div></div><ul class="exp-points"><li>Plan weekly youth gatherings alongside the chapter President.</li><li>Organize monthly community events such as barbecues, picnics, and gatherings.</li><li>Collect and record donations; mentor youth one-on-one.</li><li>Helped renovate MUNA's first Manhattan masjid ahead of its 50+ attendee opening.</li></ul></div>
+              <div class="exp-card"><div><h3 class="card-heading"><a class="exp-org" href="https://github.com/stafawashere" target="_blank" rel="noopener"><span class="arrow-wrap">Freelance&nbsp;<span class="arrow">&#8599;</span></span></a></h3><div class="exp-role">Programmer</div><div class="exp-dates">2021 &#8211; AUG 2026</div></div><ul class="exp-points"><li>Built full Roblox games, from single mechanics to complete frameworks.</li><li>Developed custom, optimized Discord bots for community servers.</li><li>Automated marketplace and trading-platform workflows with custom tooling.</li><li>Designed and shipped REST APIs for client applications.</li></ul></div>
               <!-- /static:experience -->
             </div>
           </div>
@@ -460,7 +508,7 @@
     <section id="education" class="content-section">
       <div class="section-header" data-section="education">
         <div class="node-id">
-          <span class="node-title" data-word="education" aria-label="education"></span>
+          <h2 class="node-title" data-word="education"><span class="visually-hidden">Education</span></h2>
         </div>
         <div class="node-trace" aria-hidden="true"></div>
       </div>
@@ -469,8 +517,8 @@
           <div class="section-body-content">
             <div class="education-grid" id="education-content">
               <!-- static:education -->
-              <div class="edu-card"><span class="edu-dates">2023 &#8211; 2027</span><a class="edu-name" href="https://www.hsartstech.org/" target="_blank" rel="noopener">High School of Arts and Technology</a><div class="edu-kind">High School</div><p class="edu-note">Public high school focused on arts, technology, and programming. Scored 4s on the AP Computer Science Principles, Precalculus, and US History exams. 122 Amsterdam Ave, NY.</p></div>
-              <div class="edu-card"><span class="edu-dates">2025 &#8211; 2027</span><a class="edu-name" href="https://www.bmcc.cuny.edu/" target="_blank" rel="noopener">Borough of Manhattan Community College</a><div class="edu-kind">College</div><p class="edu-note">FutureReady NYC dual enrollment. Finished CSC 101, Principles of Information and Computer Science, with a 100. 199 Chambers St, NY.</p></div>
+              <div class="edu-card"><span class="edu-dates">2023 &#8211; 2027</span><h3 class="card-heading"><a class="edu-name" href="https://www.hsartstech.org/" target="_blank" rel="noopener">High School of Arts and Technology</a></h3><div class="edu-kind">High School</div><p class="edu-note">Public high school focused on arts, technology, and programming. Scored 4s on the AP Computer Science Principles, Precalculus, and US History exams. 122 Amsterdam Ave, NY.</p></div>
+              <div class="edu-card"><span class="edu-dates">2025 &#8211; 2027</span><h3 class="card-heading"><a class="edu-name" href="https://www.bmcc.cuny.edu/" target="_blank" rel="noopener">Borough of Manhattan Community College</a></h3><div class="edu-kind">College</div><p class="edu-note">FutureReady NYC dual enrollment. Finished CSC 101, Principles of Information and Computer Science, with a 100. 199 Chambers St, NY.</p></div>
               <!-- /static:education -->
             </div>
           </div>
@@ -481,7 +529,7 @@
     <section id="contact" class="content-section section-reveal">
       <div class="section-header" data-section="contact">
         <div class="node-id">
-          <span class="node-title" data-word="contact" aria-label="contact"></span>
+          <h2 class="node-title" data-word="contact"><span class="visually-hidden">Contact</span></h2>
         </div>
         <div class="node-trace" aria-hidden="true"></div>
       </div>
@@ -494,14 +542,14 @@
                 <div class="contact-topline">
                   <div class="contact-status"><span class="status-dot"></span>open to research, internships &amp; projects</div>
                 </div>
-                <h2 class="contact-heading" aria-label="Let's build something solid.">Let's build<br>something
+                <h3 class="contact-heading" aria-label="Let's build something solid.">Let's build<br>something
                   <svg id="contact-solid-svg" class="liquid-word" viewBox="2 30 426 206" aria-hidden="true">
                     <g fill="url(#liquid-skin)" stroke="url(#liquid-skin)" stroke-width="2"
                        stroke-linejoin="round" stroke-linecap="round"
                        font-family="'Pacifico',cursive" paint-order="stroke fill">
                       <text x="10" y="225" font-size="200" filter="url(#liquid-static)">solid</text>
                     </g>
-                  </svg>.</h2>
+                  </svg>.</h3>
                 <p class="contact-sub">
                   Research, internships, or a project worth building. If it involves breaking
                   things, building things, or both, I want to hear about it.
@@ -534,8 +582,16 @@
               </div>
             </div>
 
+            <p class="about-blurb">
+              Mahfuj Mustafa is a student developer and security analyst in New York City. Mahfuj is in the class of 2027 at the High School of Arts and Technology and takes college courses at the Borough of Manhattan Community College through FutureReady NYC dual enrollment. From 2024 to 2026 Mahfuj programmed live operations at Merge Box, shipping and maintaining Roblox games with more than 78 million combined player visits. Through the NYC DOE Workplace Challenge Program, Mahfuj helped build a security strategy for the LinkNYC public Wi-Fi network in a six-week team challenge. Projects here include Allusion, security research into the game Rivals that was reported to its developers before going public, Psychedelic Model, an ML and neuroscience experiment built on a diffusion model, and developer tools such as Inspect Workflow and Taskbench. Interests: computer science, machine learning, and neuroscience.
+            </p>
+
             <div class="footer">
               <span id="contact-footer">© 2026 Mahfuj Mustafa | New York City, NY</span>
+              <span class="footer-links">
+                <a href="/privacy-policy/">privacy</a>
+                <a href="/terms-of-service/">terms</a>
+              </span>
             </div>
           </div>
         </div>

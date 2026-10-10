@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inspect Workflow | Mahfuj Mustafa</title>
+  <meta name="description" content="A local viewer that turns Claude Code JSONL logs into readable conversations and follows live runs over SSE, from one stdlib Python file and one HTML page.">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon-m.svg">
+  <link rel="canonical" href="https://mahfujmustafa.dev/projects/inspect-workflow/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Mahfuj Mustafa">
+  <meta property="og:title" content="Inspect Workflow | Mahfuj Mustafa">
+  <meta property="og:description" content="A local viewer that turns Claude Code JSONL logs into readable conversations and follows live runs over SSE, from one stdlib Python file and one HTML page.">
+  <meta property="og:url" content="https://mahfujmustafa.dev/projects/inspect-workflow/">
+  <meta property="og:image" content="https://mahfujmustafa.dev/og-image.jpg?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mahfuj Mustafa, student developer and security analyst, interested in CS, ML, and neuroscience">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://mahfujmustafa.dev/projects/inspect-workflow/#project",
+        "name": "Inspect Workflow",
+        "description": "A local viewer that turns raw Claude Code JSONL transcripts into readable conversations, groups subagent and workflow runs, and follows live runs over server-sent events.",
+        "url": "https://mahfujmustafa.dev/projects/inspect-workflow/",
+        "codeRepository": "https://github.com/stafawashere/inspectworkflow",
+        "programmingLanguage": ["Python", "HTML", "JavaScript"],
+        "author": { "@id": "https://mahfujmustafa.dev/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mahfujmustafa.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://mahfujmustafa.dev/#work" },
+          { "@type": "ListItem", "position": 3, "name": "Inspect Workflow", "item": "https://mahfujmustafa.dev/projects/inspect-workflow/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/legal.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">mahfujmustafa.dev</a> / <a class="back" href="/#work">projects</a>
+    <h1>Inspect Workflow</h1>
+    <p class="updated">Developer tool, July 2026. Code on <a href="https://github.com/stafawashere/inspectworkflow">GitHub</a>.</p>
+
+    <p>Inspect Workflow is a local viewer for Claude Code transcripts. You point it at a folder of .jsonl logs and read each one as a conversation instead of a wall of JSON, with subagent and workflow runs grouped by the folder they ran in. It also follows transcripts that are still being written, so you can watch a run grow in place.</p>
+
+    <p>The whole thing is server.py, which only uses the Python standard library, and index.html. There's nothing to install beyond Python 3.7 or newer.</p>
+
+    <h2>Why it's harder than it looks</h2>
+    <p>Reading a finished log is easy. Following a live one cheaply, across hundreds of transcripts, is where the work went. A background thread rescans the watched folders every second and pushes changes to the page over server-sent events on /api/stream. When a transcript you have open changes, the page asks for everything after the last byte it already has instead of reloading the file, so a run that's still writing grows in place.</p>
+    <p>The sidebar has to stay quick too. The server only parses the first 200 KB of each file as JSON, because that's where the prompt, model and working directory are, and it caches each agent until its file's size or modified time changes. By default it keeps the newest 300 transcripts.</p>
+    <p>Then there's the folder problem. When you drag a folder onto the page, the browser only gives the server its name, not its full path. So the server looks for a folder with that name under ~/.claude/projects (or whatever roots you pass on the command line) and picks the most recently changed match. If the name isn't found, the page reads the .jsonl files itself and opens them read-only without watching anything.</p>
+
+    <h2>Reading a transcript</h2>
+    <p>Every row in the sidebar is one agent. The server guesses a title from what the run did, usually the file it wrote to most. If it didn't write anything, it falls back to a task line in the prompt, a file the prompt mentions, or the prompt's first sentence. When the guess is bad you can double-click the row to rename it, and the name is saved in the browser's local storage.</p>
+    <p>Above the transcript are toggles for each kind of event: thinking, tools, results, answer and prompt. Thinking, answer and prompt start on. Tools and results start off because they're a lot of noise unless you're tracking down a specific call. The filter box hides events that don't contain what you type and highlights the matches in the rest.</p>
+    <p>Under the toggles is a strip with one bar per event, scaled by length, so you can see the shape of the whole run at once and click a bar to jump to it. With follow on, which is the default, the view stays at the bottom unless you've scrolled up, and a dot next to an agent means its file changed in the last 90 seconds.</p>
+
+    <h2>Staying local</h2>
+    <p>The server listens on 127.0.0.1 only and the page doesn't load anything from the internet. The one file it ever writes is containers.json, the list of folders you told it to watch, so they're still there the next time you start it. It never writes to a transcript. The port, the transcript cap and request logging are set through three environment variables.</p>
+
+    <h2>Stack</h2>
+    <p>Python standard library on the server, with threading for the rescan and server-sent events for the push. The client is a single HTML page with its own JavaScript and no outside requests.</p>
+
+    <p><a href="https://github.com/stafawashere/inspectworkflow">See the code on GitHub</a>, or go back to <a href="https://mahfujmustafa.dev/">mahfujmustafa.dev</a> and the rest of <a href="https://mahfujmustafa.dev/#work">my projects</a>.</p>
+  </main>
+</body>
+</html>

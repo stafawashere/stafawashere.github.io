@@ -1,0 +1,26 @@
+# Mahfuj Mustafa
+
+> Mahfuj Mustafa is a student developer and security analyst in New York City, class of 2027 at the High School of Arts and Technology and a FutureReady NYC dual enrollment student at the Borough of Manhattan Community College. Work covers security research, reverse engineering, live game operations, ML and neuroscience research, and developer tools.
+
+## Profile
+
+- [Portfolio](https://mahfujmustafa.dev/): skills, projects, experience, education and contact
+- [GitHub](https://github.com/stafawashere): source code for every project
+- [LinkedIn](https://www.linkedin.com/in/mahfujm527/)
+- [ORCID](https://orcid.org/0009-0002-1782-2580)
+
+## Projects
+
+- [Psychedelic Model](https://mahfujmustafa.dev/projects/psychedelic-model/): a diffusion model driven only by knobs mapped to brain variables, testing whether the visual sequence reported in DMT research emerges on its own
+- [Allusion](https://mahfujmustafa.dev/projects/allusion/): client-side security research on the Roblox shooter Rivals, reported to the developers and patched before release
+- [Inspect Workflow](https://mahfujmustafa.dev/projects/inspect-workflow/): a local viewer that turns Claude Code JSONL logs into readable conversations
+- [Taskbench](https://mahfujmustafa.dev/projects/taskbench/): a VS Code extension that turns the Explorer sidebar into a command workbench
+
+## Experience
+
+- Merge Box, Programmer, Live Operations (Feb 2024 to Aug 2026): shipped and maintained Roblox titles with 78M+ combined player visits
+- NYC DOE Workplace Challenge Program, Security Analyst (Mar 2026 to Apr 2026): security strategy for the LinkNYC public Wi-Fi network in a six-week team challenge
+
+## Contact
+
+- Email: contact@mahfujmustafa.dev

@@ -149,7 +149,11 @@
       dates.className   = 'exp-dates';
       dates.textContent = x.dates;
 
-      meta.appendChild(org);
+      const orgHeading = document.createElement('h3');
+      orgHeading.className = 'card-heading';
+      orgHeading.appendChild(org);
+
+      meta.appendChild(orgHeading);
       meta.appendChild(role);
       meta.appendChild(dates);
 
@@ -176,9 +180,11 @@
     PORTFOLIO.projects.forEach((p, index) => {
       const card = document.createElement('a');
       card.className = p.featured ? 'project-card is-featured' : 'project-card';
-      card.href      = p.url;
-      card.target    = '_blank';
-      card.rel       = 'noopener';
+      card.href      = p.page || p.url;
+      if (!p.page) {
+        card.target = '_blank';
+        card.rel    = 'noopener';
+      }
       card.style.setProperty('--i', index);
 
       const fx = document.createElement('span');
@@ -192,7 +198,7 @@
       const nameWords = p.name.split(' ');
       const nameTail  = nameWords.pop();
       const nameHead  = nameWords.length ? nameWords.join(' ') + ' ' : '';
-      const name = document.createElement('span');
+      const name = document.createElement('h3');
       name.className = 'project-name';
       name.innerHTML = nameHead + '<span class="arrow-wrap">' + nameTail + '&nbsp;<span class="arrow">↗</span></span>';
 
@@ -426,7 +432,11 @@
       note.textContent = e.note;
 
       card.appendChild(dates);
-      card.appendChild(name);
+      const nameHeading = document.createElement('h3');
+      nameHeading.className = 'card-heading';
+      nameHeading.appendChild(name);
+
+      card.appendChild(nameHeading);
       card.appendChild(kind);
       card.appendChild(note);
       grid.appendChild(card);

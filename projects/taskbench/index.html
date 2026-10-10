@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taskbench | Mahfuj Mustafa</title>
+  <meta name="description" content="A VS Code extension that keeps shell commands one click away in the Explorer sidebar, with live status, a stop button and tasks saved in a plain JSON file.">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon-m.svg">
+  <link rel="canonical" href="https://mahfujmustafa.dev/projects/taskbench/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Mahfuj Mustafa">
+  <meta property="og:title" content="Taskbench | Mahfuj Mustafa">
+  <meta property="og:description" content="A VS Code extension that keeps shell commands one click away in the Explorer sidebar, with live status, a stop button and tasks saved in a plain JSON file.">
+  <meta property="og:url" content="https://mahfujmustafa.dev/projects/taskbench/">
+  <meta property="og:image" content="https://mahfujmustafa.dev/og-image.jpg?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mahfuj Mustafa, student developer and security analyst, interested in CS, ML, and neuroscience">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://mahfujmustafa.dev/projects/taskbench/#project",
+        "name": "Taskbench",
+        "description": "A VS Code extension that turns the Explorer sidebar into a workbench for project shell tasks, with live status, stop controls and tasks stored in a plain JSON file.",
+        "url": "https://mahfujmustafa.dev/projects/taskbench/",
+        "codeRepository": "https://github.com/stafawashere/taskbench-extension",
+        "programmingLanguage": "JavaScript",
+        "runtimePlatform": "Visual Studio Code 1.75 or newer",
+        "license": "https://opensource.org/licenses/MIT",
+        "version": "0.2.0",
+        "author": { "@id": "https://mahfujmustafa.dev/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mahfujmustafa.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://mahfujmustafa.dev/#work" },
+          { "@type": "ListItem", "position": 3, "name": "Taskbench", "item": "https://mahfujmustafa.dev/projects/taskbench/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/legal.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">mahfujmustafa.dev</a> / <a class="back" href="/#work">projects</a>
+    <h1>Taskbench</h1>
+    <p class="updated">VS Code extension, July 2026. Code on <a href="https://github.com/stafawashere/taskbench-extension">GitHub</a>.</p>
+
+    <p>Taskbench turns the Explorer sidebar in VS Code into a command workbench. You save a shell command once, and after that it's one click to run, with live status you can stop mid-run. Dev servers and watchers that never exit on their own work too. Everything lives in a plain JSON file in the project, so your whole team's tasks ride along in version control.</p>
+
+    <h2>What makes it work</h2>
+    <p>Taskbench doesn't run processes itself. It hands every command to VS Code's own task system. Each task becomes a shell execution with its working directory and runs in its own terminal panel, so the output shows up where you'd expect it. The extension listens for the editor's task start and end events and only reacts to executions it started itself, which is how the sidebar knows what's running without polling anything.</p>
+    <p>While a task is running its dot pulses green and the play button turns into a stop button. Stopping finds the live execution by its label and terminates it. When a task finishes, the row shows how long ago it last ran. Those times are kept in VS Code's workspace storage, not in the task file.</p>
+    <p>The sidebar itself is a webview view. A file watcher on the task file refreshes it whenever the file changes, so editing tasks by hand and saving shows up right away.</p>
+
+    <h2>Using it</h2>
+    <p>Open the Taskbench view in the Explorer sidebar and click + (or run Taskbench: New Task from the Command Palette). Give the task a label and a command. The working directory and the "Background task" checkbox are optional. To run a task, press its play button or double-click the row. Double-clicking a running task stops it.</p>
+    <p>Check "Background task" for commands that don't exit on their own, like dev servers and watchers. That sets isBackground on the task and puts a bg tag on the row. The filter box at the top matches against both the label and the command, which helps once the list gets long. Deleting a task asks you to confirm first.</p>
+    <p>There are three commands, New Task, Refresh and Open task.json, and all three are also buttons in the view's title bar.</p>
+
+    <h2>The task file</h2>
+    <p>Tasks are saved in .tasks/task.json at the root of the first workspace folder. The format copies VS Code's tasks.json, but it's a separate file, so these tasks don't show up in VS Code's Run Task menu. Taskbench reads label, command, options.cwd, isBackground and the reveal, panel and clear settings under presentation. Every task runs as a shell command whatever type says, and ${workspaceFolder} is the only variable that gets filled in inside cwd.</p>
+    <p>The form won't let you reuse a label, because the label is how the view tells tasks apart.</p>
+
+    <h2>Stack</h2>
+    <p>Plain JavaScript against the VS Code extension API, with no npm dependencies. It needs VS Code 1.75 or newer. To run it from source you open the folder in VS Code and press F5, which opens a second window with Taskbench loaded. The current version is 0.2.0, which added a new icon on top of the 0.1.0 release, and it's MIT licensed.</p>
+
+    <p><a href="https://github.com/stafawashere/taskbench-extension">See the code on GitHub</a>, or go back to <a href="https://mahfujmustafa.dev/">mahfujmustafa.dev</a> and the rest of <a href="https://mahfujmustafa.dev/#work">my projects</a>.</p>
+  </main>
+</body>
+</html>

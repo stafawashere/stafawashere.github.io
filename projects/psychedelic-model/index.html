@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Psychedelic Model | Mahfuj Mustafa</title>
+  <meta name="description" content="Driving Stable Diffusion with five knobs mapped to brain variables to test whether the visual arc reported in DMT research appears with nothing drawn in.">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon-m.svg">
+  <link rel="canonical" href="https://mahfujmustafa.dev/projects/psychedelic-model/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Mahfuj Mustafa">
+  <meta property="og:title" content="Psychedelic Model | Mahfuj Mustafa">
+  <meta property="og:description" content="Driving Stable Diffusion with five knobs mapped to brain variables to test whether the visual arc reported in DMT research appears with nothing drawn in.">
+  <meta property="og:url" content="https://mahfujmustafa.dev/projects/psychedelic-model/">
+  <meta property="og:image" content="https://mahfujmustafa.dev/og-image.jpg?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mahfuj Mustafa, student developer and security analyst, interested in CS, ML, and neuroscience">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://mahfujmustafa.dev/projects/psychedelic-model/#project",
+        "name": "Psychedelic Model",
+        "description": "An experiment that drives Stable Diffusion 1.5 with five knobs mapped to brain variables and measures whether the visual sequence reported in DMT research emerges on its own.",
+        "url": "https://mahfujmustafa.dev/projects/psychedelic-model/",
+        "codeRepository": "https://github.com/stafawashere/psychedelic-model-research",
+        "programmingLanguage": "Python",
+        "author": { "@id": "https://mahfujmustafa.dev/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mahfujmustafa.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://mahfujmustafa.dev/#work" },
+          { "@type": "ListItem", "position": 3, "name": "Psychedelic Model", "item": "https://mahfujmustafa.dev/projects/psychedelic-model/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/legal.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">mahfujmustafa.dev</a> / <a class="back" href="/#work">projects</a>
+    <h1>Psychedelic Model</h1>
+    <p class="updated">ML and neuroscience research, June to July 2026. Code on <a href="https://github.com/stafawashere/psychedelic-model-research">GitHub</a>.</p>
+
+    <p>DMT research describes the visuals in a fairly consistent order. Geometry comes first, then forms, then figures, then a return to the room. I wanted to know whether that order falls out of an image model when the only things I touch are parameters that map to known brain variables.</p>
+
+    <p>So I started Stable Diffusion 1.5 from an ordinary photo and wrote five knobs that each stand in for something the brain does, then moved them along a dose curve. Nothing is painted in, the prompt never asks for anything psychedelic, and the metrics and their thresholds were written down before the runs they judge. It's a computational model of reported visual experience, so it can show a signature in the images but can't tell you what a trip feels like.</p>
+
+    <h2>The idea</h2>
+    <p>Two ideas from neuroscience set this up. REBUS (Carhart-Harris and Friston) says psychedelics relax the precision of high-level priors, so the brain stops explaining away bottom-up signal and internal noise. The other is 5-HT2A gain. DMT raises the gain of cortical pyramidal cells, which destabilizes a layered visual system. A latent diffusion model is loosely the same kind of system, with a prior (the text conditioning), sensory evidence (the encoded photo) and a stack of levels (the U-Net).</p>
+
+    <h2>The five knobs</h2>
+    <p>Everything comes from one dose curve that peaks at 4 minutes and never reaches zero.</p>
+    <ul>
+      <li><strong>scene_precision</strong> is the weight of the photo in the latent blend, standing in for sensory precision. It has a floor above zero, so the photo has a way back.</li>
+      <li><strong>prior_precision</strong> is the guidance scale on the caption, my stand-in for REBUS.</li>
+      <li><strong>gain</strong> multiplies one U-Net block's output, soft-clipped with tanh, for 5-HT2A cortical gain.</li>
+      <li><strong>depth</strong> picks which block gets the gain.</li>
+      <li><strong>recurrence</strong> is the weight of the previous frame, the loop feeding on itself.</li>
+    </ul>
+    <p>The caption is written by BLIP, and then a filter strips 78 words like fractal, spiral and entity.</p>
+
+    <h2>How a frame gets made</h2>
+    <p>The VAE encodes the photo and the previous frame, and they get blended by scene_precision and recurrence. Noise is added, DDIM denoises it under guidance at prior_precision, and a forward hook multiplies the chosen U-Net block by gain. The result is decoded, contrast-matched to the photo, and becomes the previous frame for the next step.</p>
+
+    <h2>What happened</h2>
+    <p>The main run (40 frames, seed 0) reproduced the timing of the arc and none of the content of its phases. The image left the photo and came back, with RMSE against frame 0 peaking at 0.274 at frame 13 and back down to 0.025 by frame 39. Periodic patterns grew out of the noise at the peak, with excess power at a 19 px wavelength reaching 3.0x the natural spectrum against 1.6x for the original photo. But mirror and rotational symmetry stayed near zero (-0.015 to 0.049), while synthetic test patterns scored 0.98 to 0.99. That's periodicity without symmetry, so I don't call it a Klüver form constant. The figures never emerged.</p>
+
+    <h2>Why parts of it failed</h2>
+    <p>Raising the denoise strength drowns fine detail first, so the come-up blurred the photo instead of making it shimmer. In the brain the prior goes up and the evidence is left alone, while this engine raises the prior by wrecking the evidence.</p>
+    <p>The U-Net's normalization cancels a plain multiply, so what's left of gain is the tanh clip, and that makes blobs at whatever scale the block already works at. That block has one cell per 16 px, which is where the 19 px wavelength comes from. In the brain a lateral interaction kernel picks the wavelength, and a scalar knob has nothing like it.</p>
+    <p>The missing figures say nothing about DMT. Stable Diffusion's only route to a figure is the prompt, and I strip figure words out of it on purpose. The return is guaranteed by construction, since the photo is re-encoded clean every frame. And the headline numbers come from one run, on one photo, with one seed.</p>
+
+    <h2>What's next</h2>
+    <p>The development plan sets a pass or fail line for each experiment in advance. The first few are a come-up driven by gain alone with denoise strength held flat, jittering the input photo every frame to see if the return survives, and a difference-of-Gaussians lateral kernel to see whether a selected wavelength is reachable.</p>
+
+    <h2>Stack</h2>
+    <p>Python and PyTorch, with Stable Diffusion 1.5 and BLIP from Hugging Face, running on Apple Silicon. I used agentic AI tools for assisted coding and research and disclose that in the paper I'm writing from this project. The question, the design and the thresholds were mine.</p>
+
+    <p><a href="https://github.com/stafawashere/psychedelic-model-research">Code and full write-up on GitHub</a>, or back to <a href="https://mahfujmustafa.dev/">mahfujmustafa.dev</a> and the rest of <a href="https://mahfujmustafa.dev/#work">my projects</a>.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Allusion | Mahfuj Mustafa</title>
+  <meta name="description" content="Client-side security research on the Roblox shooter Rivals: anti-cheat, hit detection and rendering flaws, all reported to the developers and fixed first.">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon-m.svg">
+  <link rel="canonical" href="https://mahfujmustafa.dev/projects/allusion/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Mahfuj Mustafa">
+  <meta property="og:title" content="Allusion | Mahfuj Mustafa">
+  <meta property="og:description" content="Client-side security research on the Roblox shooter Rivals: anti-cheat, hit detection and rendering flaws, all reported to the developers and fixed first.">
+  <meta property="og:url" content="https://mahfujmustafa.dev/projects/allusion/">
+  <meta property="og:image" content="https://mahfujmustafa.dev/og-image.jpg?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mahfuj Mustafa, student developer and security analyst, interested in CS, ML, and neuroscience">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://mahfujmustafa.dev/projects/allusion/#project",
+        "name": "Allusion",
+        "description": "Client-side security research on Rivals, a competitive shooter on Roblox, covering its anti-cheat, combat code and rendering. Every finding was reported to the developers and patched before the repo went public.",
+        "url": "https://mahfujmustafa.dev/projects/allusion/",
+        "codeRepository": "https://github.com/stafawashere/Allusion",
+        "programmingLanguage": "Lua",
+        "author": { "@id": "https://mahfujmustafa.dev/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mahfujmustafa.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://mahfujmustafa.dev/#work" },
+          { "@type": "ListItem", "position": 3, "name": "Allusion", "item": "https://mahfujmustafa.dev/projects/allusion/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/legal.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">mahfujmustafa.dev</a> / <a class="back" href="/#work">projects</a>
+    <h1>Allusion</h1>
+    <p class="updated">Security research, February 2026. Code on <a href="https://github.com/stafawashere/Allusion">GitHub</a>.</p>
+
+    <p>I pulled apart the game Rivals, a competitive shooter on Roblox, to find weaknesses in its anti-cheat, combat and rendering. I spent most of a school year on it, trying to see how much the game trusts the player's own machine. The short answer was too much.</p>
+
+    <p>Everything was reported to the developers before I made any of it public, and all of it was patched first. The repo is a record of the research, not something to run against the live game.</p>
+
+    <h2>What I found</h2>
+    <p><strong>The anti-cheat could be reached from the client.</strong> The functions that report suspicious behavior were still sitting in the garbage collector where client code could find them, so a modified client could intercept its own reports before they were sent. A check that runs on the machine it's checking can be switched off by that machine.</p>
+    <p><strong>Hit detection trusted a client-side raycast.</strong> Shots were resolved through a raycast in a shared utility module on the client. Redirecting that one function made a shot land on a target the camera wasn't pointed at, and the server accepted the result.</p>
+    <p><strong>The wall check could be worked around.</strong> This was the hardest one. I rebuilt how the client handles item input and found that shifting the shot origin on the y-axis got past the check that's supposed to stop shooting through walls.</p>
+    <p><strong>Body rotation was set by the client.</strong> The mechanics controller let the client decide which way its character faced on the server, without tripping the game's external flags.</p>
+    <p><strong>Firing input could be automated.</strong> Nothing on the server told a real trigger pull apart from a scripted one.</p>
+    <p><strong>The client knew where everyone was.</strong> Every player's position and health reached every client, even behind walls, so an overlay could draw boxes, health bars and skeletons for players you shouldn't be able to see.</p>
+    <p>The config also has an entry for a client-server desync, but I didn't publish code for it.</p>
+
+    <h2>What it taught me</h2>
+    <p>Almost every finding comes back to the same mistake. The server let the client tell it what happened instead of checking. Anti-cheat that lives on the player's machine slows people down but can't stop them, and the fixes that worked were the ones that moved a decision to the server.</p>
+
+    <h2>Fixes I'd make</h2>
+    <p>None of these need anything special. They move decisions off the player's machine.</p>
+    <ul>
+      <li><strong>Check hits on the server.</strong> Recompute each shot from the server's own copy of each player's position and the shooter's view direction, with a lag allowance, and reject shots that don't line up.</li>
+      <li><strong>Treat client-side anti-cheat as a speed bump.</strong> It stops casual tampering, but anything running on the player's machine can be found and switched off.</li>
+      <li><strong>Compute the line of fire yourself.</strong> Work out the shot origin from where the player is and run the wall check on the server.</li>
+      <li><strong>Limit rotation on the server.</strong> Cap how fast and how far facing can change between updates.</li>
+      <li><strong>Look at input timing.</strong> Real trigger pulls are messy. If reaction times and shot intervals are too consistent, send the account for review.</li>
+      <li><strong>Only send what the player can see.</strong> If a client never receives the position of someone behind a wall, no overlay can draw them. Interest management costs some server work, but it closes the whole category.</li>
+    </ul>
+
+    <h2>Stack</h2>
+    <p>The research build is Lua, with each finding behind its own toggle, plus a separate file for the anti-cheat work. The settings menu is built on LinoriaLib, which I didn't write.</p>
+
+    <p><a href="https://github.com/stafawashere/Allusion">Read the write-up on GitHub</a>, or go back to <a href="https://mahfujmustafa.dev/">mahfujmustafa.dev</a> and the rest of <a href="https://mahfujmustafa.dev/#work">my projects</a>.</p>
+  </main>
+</body>
+</html>
