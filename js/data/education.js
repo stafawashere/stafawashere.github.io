@@ -2,7 +2,7 @@ window.PORTFOLIO = window.PORTFOLIO || {};
 
 window.PORTFOLIO.education = [
   {
-    name:  'High School for Arts and Technology',
+    name:  'High School of Arts and Technology',
     kind:  'High School',
     dates: '2023 – 2027',
     url:   'https://www.hsartstech.org/',
