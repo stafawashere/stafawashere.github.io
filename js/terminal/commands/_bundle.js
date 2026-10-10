@@ -12,18 +12,18 @@ defineCommand({
     const all = !!(ctx.flags.all || ctx.flags.a || /^(all|hidden|full|everything)$/.test(ctx.argl.trim()));
     const row = (c, color) => o.line(o.cmd(Output.pad(c.usage || c.name, 14), c.name, color), o.txt(c.summary));
 
-    o.line(o.bold('Available commands '), o.dim('— click any to run')).blank();
+    o.line(o.bold('Available commands '), o.dim('(click any to run)')).blank();
     ctx.registry.group('core').forEach(c => row(c));
 
     if (!all) {
-      o.blank().line(o.dim('  psst — run '), o.cmd('help --all', 'help --all'), o.dim(' to reveal the hidden ones.'));
+      o.blank().line(o.dim('  psst, run '), o.cmd('help --all', 'help --all'), o.dim(' to reveal the hidden ones.'));
       return o;
     }
 
-    o.blank().line(o.warn('Hidden ', 700), o.dim('— easter eggs & extras')).blank();
+    o.blank().line(o.warn('Hidden ', 700), o.dim('(easter eggs & extras)')).blank();
     ctx.registry.group('system').forEach(c => row(c, ctx.C.warn));
 
-    o.blank().line(o.error('Root-only ', 700), o.dim('— unlock with '), o.accent('↑↑↓↓←→←→ B A')).blank();
+    o.blank().line(o.error('Root-only ', 700), o.dim('(unlock with '), o.accent('↑↑↓↓←→←→ B A'), o.dim(')')).blank();
     ctx.registry.group('root').forEach(c => ctx.root
       ? row(c, ctx.C.err)
       : o.line(o.faint(Output.pad(c.usage || c.name, 14), 700), o.faint(c.summary), o.faint('  [locked]')));
@@ -40,7 +40,7 @@ defineCommand({
     if (ctx.root) {
       return o
         .line(o.error('root', 700), o.dim('  (uid=0)'))
-        .line(o.txt('You escalated. Respect. Underneath the root shell it’s still '), o.bold('Mahfuj Mustafa'), o.txt(' —'))
+        .line(o.txt('You escalated. Respect. Underneath the root shell it’s still '), o.bold('Mahfuj Mustafa'), o.txt(','))
         .line(o.accent('17 y/o security analyst who left this door unlocked on purpose.', 400));
     }
     return o
@@ -56,14 +56,14 @@ defineCommand({
 /* ===== commands/about.js ===== */
 defineCommand({
   name: 'about', aliases: ['bio'], group: 'core',
-  summary: 'print about.txt — the full bio',
+  summary: 'print about.txt, the full bio',
   run(ctx) {
     return ctx.out
       .line(ctx.out.dim('about.txt'))
       .blank()
       .line('I’m a 17-year-old high school student in NYC who breaks things to')
       .line('understand them. I work across security analysis, reverse engineering,')
-      .line('full-stack web, Discord bots, API wrappers and automation — and I ship')
+      .line('full-stack web, Discord bots, API wrappers and automation, and I ship')
       .line('live games that have reached ', ctx.out.bold('78M+ player visits'), '.')
       .blank()
       .line(ctx.out.dim('Currently: '), ctx.out.accent('independent research in computational neuroscience', 400));
@@ -73,7 +73,7 @@ defineCommand({
 /* ===== commands/ls.js ===== */
 defineCommand({
   name: 'ls', aliases: ['dir', 'll'], group: 'core',
-  summary: 'list the filesystem — try `ls projects`',
+  summary: 'list the filesystem (try `ls projects`)',
   run(ctx) {
     const o = ctx.out;
     const a = ctx.argl.replace(/^-\S+\s*/, '').trim();
@@ -105,7 +105,7 @@ defineCommand({
     const o = ctx.out;
     const projects = ctx.data.projects;
 
-    o.line(o.dim('projects/'), o.faint('  — ' + projects.length + ' entries')).blank();
+    o.line(o.dim('projects/'), o.faint('  ' + projects.length + ' entries')).blank();
     o.table(projects.map(p => [
       o.cmd(p.id, 'cat ' + p.id),
       o.txt(p.type),
@@ -119,7 +119,7 @@ defineCommand({
 /* ===== commands/cat.js ===== */
 defineCommand({
   name: 'cat', aliases: ['less', 'more', 'read'], group: 'core',
-  summary: 'cat <project> — read a project file',
+  summary: 'cat <project>: read a project file',
   run(ctx) {
     const o = ctx.out;
     if (!ctx.argl) return o.line(o.dim('usage: '), o.accent('cat <project>', 600), o.dim('   (try '), o.accent('cat about.txt', 600), o.dim(')'));
@@ -167,7 +167,7 @@ defineCommand({
       return o.line(o.dim('opening '), o.accent('mail composer ↗', 400));
     }
     if (/resume|cv/.test(argl)) {
-      return o.line(o.txt('No PDF here — the site '), o.accent('is'), o.txt(' the resume. Try '), o.accent('experience', 600), o.dim(' & '), o.accent('projects', 600), o.dim('.'));
+      return o.line(o.txt('No PDF here. The site '), o.accent('is'), o.txt(' the resume. Try '), o.accent('experience', 600), o.dim(' & '), o.accent('projects', 600), o.dim('.'));
     }
 
     const p = ctx.findProject(argl);
@@ -245,7 +245,7 @@ defineCommand({
 /* ===== commands/sudo.js ===== */
 defineCommand({
   name: 'sudo', aliases: ['doas'], group: 'core',
-  summary: 'escalate privileges — try `sudo hire`',
+  summary: 'escalate privileges (try `sudo hire`)',
   run(ctx) {
     const o = ctx.out, argl = ctx.argl;
     if (/^hire/.test(argl) || argl === 'me' || /employ|recruit/.test(argl)) {
@@ -265,7 +265,7 @@ defineCommand({
 
 defineCommand({
   name: 'sudo hire', usage: 'sudo hire', group: 'system',
-  summary: 'escalate privileges — opens a pre-filled email',
+  summary: 'escalate privileges (opens a pre-filled email)',
   run(ctx) { return ctx.runCommand('sudo', 'hire'); },
 });
 
@@ -336,7 +336,7 @@ defineCommand({
   run(ctx) {
     const o = ctx.out, argl = ctx.argl;
     return /(-[a-z]*r[a-z]*f|-[a-z]*f[a-z]*r)/.test(argl) && /(\/|\*|~)/.test(argl)
-      ? o.line(o.error('rm: ', 700), o.txt('refusing to nuke '), o.warn(argl), o.txt(' — this portfolio is immutable. Nice try, though.'))
+      ? o.line(o.error('rm: ', 700), o.txt('refusing to nuke '), o.warn(argl), o.txt('. This portfolio is immutable. Nice try, though.'))
       : o.line(o.error('rm: ', 700), o.txt('permission denied'));
   },
 });
@@ -348,18 +348,18 @@ defineCommand({
   async run(ctx) {
     await ctx.type('01001101 01000001 01001000 01000110 01010101 01001010', { color: ctx.C.ok, speed: 22 });
     await ctx.sleep(120);
-    return ctx.out.line(ctx.out.ok('[ access granted ] ', 700), ctx.out.txt('jk — there’s nothing to hack. It’s a portfolio.'));
+    return ctx.out.line(ctx.out.ok('[ access granted ] ', 700), ctx.out.txt('jk, there’s nothing to hack. It’s a portfolio.'));
   },
 });
 
 /* ===== commands/ping.js ===== */
 defineCommand({
   name: 'ping', group: 'system',
-  summary: 'ping the box — all replies alive',
+  summary: 'ping the box (all replies alive)',
   run(ctx) {
     const o = ctx.out;
     return o
-      .line(o.txt('PING ' + (ctx.arg || 'mahfujmustafa.dev') + ' — 56 bytes'))
+      .line(o.txt('PING ' + (ctx.arg || 'mahfujmustafa.dev') + ': 56 data bytes'))
       .line(o.txt('64 bytes from core: icmp_seq=1 ttl=64 '), o.ok('time=0.042 ms'))
       .line(o.txt('64 bytes from core: icmp_seq=2 ttl=64 '), o.ok('time=0.038 ms'))
       .line(o.dim('--- alive and well ---'));
@@ -369,7 +369,7 @@ defineCommand({
 /* ===== commands/coffee.js ===== */
 defineCommand({
   name: 'coffee', aliases: ['brew'], group: 'system',
-  summary: 'HTTP 418 — I\'m a teapot',
+  summary: 'HTTP 418: I\'m a teapot',
   run(ctx) {
     return ctx.out.line(ctx.out.error('418 ', 700), ctx.out.txt("I'm a teapot. Can't brew coffee over HTTP (RFC 2324)."));
   },
@@ -379,7 +379,7 @@ defineCommand({
 defineCommand({
   name: 'sl', group: 'system',
   summary: 'for when you fat-finger `ls`',
-  run(ctx) { return ctx.out.line(ctx.out.warn('🚂 woo woo — you meant `ls`. (we don’t do emoji here)')); },
+  run(ctx) { return ctx.out.line(ctx.out.warn('🚂 woo woo, you meant `ls`. (we don’t do emoji here)')); },
 });
 
 /* ===== commands/theme.js ===== */
@@ -392,7 +392,7 @@ defineCommand({
 /* ===== commands/man.js ===== */
 defineCommand({
   name: 'man', group: 'system',
-  summary: 'man <cmd> — manual pages',
+  summary: 'man <cmd>: manual pages',
   run(ctx) {
     const o = ctx.out;
     if (!ctx.argl) return o.line(o.txt('What manual page do you want? Try '), o.accent('man whoami', 600), o.dim('.'));
@@ -400,7 +400,7 @@ defineCommand({
     if (!cmd) return o.line(o.txt('No manual entry for '), o.warn(ctx.argl));
     return o
       .line(o.accent('NAME'))
-      .line(o.txt('    ' + cmd.name + ' — ' + cmd.summary));
+      .line(o.txt('    ' + cmd.name + ' - ' + cmd.summary));
   },
 });
 
@@ -434,7 +434,7 @@ defineCommand({
     const o = ctx.out;
     return o
       .line(o.dim('decrypting .secret ...'))
-      .line(o.txt('There is no secret. Curiosity '), o.accent('is'), o.txt(' the brand. '), o.faint('psst — '), o.accent('↑↑↓↓←→←→ B A'), o.faint('.'));
+      .line(o.txt('There is no secret. Curiosity '), o.accent('is'), o.txt(' the brand. '), o.faint('psst, '), o.accent('↑↑↓↓←→←→ B A'), o.faint('.'));
   },
 });
 
@@ -446,7 +446,7 @@ defineCommand({
     const o = ctx.out;
     return o
       .line(o.dim('Connection to mahfujmustafa.dev closed.'))
-      .line(o.txt('...just kidding. There is no escape — this is the whole site. Scroll on.'));
+      .line(o.txt('...just kidding. There is no escape. This is the whole site. Scroll on.'));
   },
 });
 
@@ -533,11 +533,11 @@ defineCommand({
   run(ctx) {
     const o = ctx.out;
     if (typeof window.curieToggleSettingsButton !== 'function') {
-      return o.line(o.warn('Settings panel is still loading — try again in a second.'));
+      return o.line(o.warn('Settings panel is still loading. Try again in a second.'));
     }
     const shown = window.curieToggleSettingsButton();
     if (shown) {
-      o.line(o.ok('✓ '), o.txt('Settings button '), o.accent('shown'), o.txt(' — top-right of the nav bar, next to search.'));
+      o.line(o.ok('✓ '), o.txt('Settings button '), o.accent('shown'), o.txt(' in the top-right of the nav bar, next to search.'));
       o.line(o.dim('Run '), o.cmd('settings', 'settings'), o.dim(' again to hide it. Your choice is saved.'));
     } else {
       o.line(o.txt('Settings button '), o.accent('hidden'), o.txt('.'));

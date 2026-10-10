@@ -1,6 +1,6 @@
 defineCommand({
   name: 'sudo', aliases: ['doas'], group: 'core',
-  summary: 'escalate privileges — try `sudo hire`',
+  summary: 'escalate privileges (try `sudo hire`)',
   run(ctx) {
     const o = ctx.out, argl = ctx.argl;
     if (/^hire/.test(argl) || argl === 'me' || /employ|recruit/.test(argl)) {
@@ -20,7 +20,7 @@ defineCommand({
 
 defineCommand({
   name: 'sudo hire', usage: 'sudo hire', group: 'system',
-  summary: 'escalate privileges — opens a pre-filled email',
+  summary: 'escalate privileges (opens a pre-filled email)',
   run(ctx) { return ctx.runCommand('sudo', 'hire'); },
 });
 

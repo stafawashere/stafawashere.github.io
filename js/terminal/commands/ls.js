@@ -1,6 +1,6 @@
 defineCommand({
   name: 'ls', aliases: ['dir', 'll'], group: 'core',
-  summary: 'list the filesystem — try `ls projects`',
+  summary: 'list the filesystem (try `ls projects`)',
   run(ctx) {
     const o = ctx.out;
     const a = ctx.argl.replace(/^-\S+\s*/, '').trim();

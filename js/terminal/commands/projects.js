@@ -5,7 +5,7 @@ defineCommand({
     const o = ctx.out;
     const projects = ctx.data.projects;
 
-    o.line(o.dim('projects/'), o.faint('  — ' + projects.length + ' entries')).blank();
+    o.line(o.dim('projects/'), o.faint('  ' + projects.length + ' entries')).blank();
     o.table(projects.map(p => [
       o.cmd(p.id, 'cat ' + p.id),
       o.txt(p.type),

@@ -1,6 +1,6 @@
 defineCommand({
   name: 'cat', aliases: ['less', 'more', 'read'], group: 'core',
-  summary: 'cat <project> — read a project file',
+  summary: 'cat <project>: read a project file',
   run(ctx) {
     const o = ctx.out;
     if (!ctx.argl) return o.line(o.dim('usage: '), o.accent('cat <project>', 600), o.dim('   (try '), o.accent('cat about.txt', 600), o.dim(')'));

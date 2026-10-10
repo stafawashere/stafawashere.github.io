@@ -5,6 +5,6 @@ defineCommand({
     const o = ctx.out;
     return o
       .line(o.dim('decrypting .secret ...'))
-      .line(o.txt('There is no secret. Curiosity '), o.accent('is'), o.txt(' the brand. '), o.faint('psst — '), o.accent('↑↑↓↓←→←→ B A'), o.faint('.'));
+      .line(o.txt('There is no secret. Curiosity '), o.accent('is'), o.txt(' the brand. '), o.faint('psst, '), o.accent('↑↑↓↓←→←→ B A'), o.faint('.'));
   },
 });

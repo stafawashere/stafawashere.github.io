@@ -155,7 +155,7 @@ class Shell {
     this.printLines([
       { node: TerminalBanners.name(C, true) },
       this.blank(),
-      this.line(this.seg('mahfuj', C.p, 700), this.seg('OS', C.w, 700), this.seg('  v4.2.0  ', C.w), this.seg('— secure shell (tty1)', C.dim)),
+      this.line(this.seg('mahfuj', C.p, 700), this.seg('OS', C.w, 700), this.seg('  v4.2.0  ', C.w), this.seg('secure shell (tty1)', C.dim)),
       this.line(this.seg('Last login: ', C.dim), this.seg(new Date().toUTCString(), C.txt)),
       this.blank(),
       this.line(this.seg('Type ', C.dim), this.seg('help', C.p, 700), this.seg(' to begin, or ', C.dim), this.seg('whoami', C.p, 700), this.seg('.', C.dim)),
@@ -170,7 +170,7 @@ class Shell {
     names.forEach(n => { const d = this.lev(name, n); if (d < bd) { bd = d; best = n; } });
     const out = [this.line(this.seg('command not found: ', C.err), this.seg(name, C.warn, 700))];
     if (best && bd <= 3)
-      out.push(this.line(this.seg('did you mean ', C.dim), Object.assign(this.seg(best, C.p, 700), { cmd: best }), this.seg('?  ', C.dim), this.seg('— or type ', C.faint), this.seg('help', C.p, 600)));
+      out.push(this.line(this.seg('did you mean ', C.dim), Object.assign(this.seg(best, C.p, 700), { cmd: best }), this.seg('?  ', C.dim), this.seg('or type ', C.faint), this.seg('help', C.p, 600)));
     else
       out.push(this.line(this.seg('type ', C.dim), this.seg('help', C.p, 700), this.seg(' for the list of commands.', C.dim)));
     return out;

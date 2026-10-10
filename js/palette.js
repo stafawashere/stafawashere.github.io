@@ -16,10 +16,10 @@ class Palette {
       { id: 'work',       label: 'Projects',                        hint: 'section',  icon: '#', type: 'scroll' },
       { id: 'education',  label: 'Education',                       hint: 'section',  icon: '#', type: 'scroll' },
       { id: 'contact',    label: 'Contact',                         hint: 'section',  icon: '#', type: 'scroll' },
-      { label: 'GitHub — stafawashere',             hint: 'external', icon: '↗', type: 'link', url: 'https://github.com/stafawashere' },
+      { label: 'GitHub (stafawashere)',             hint: 'external', icon: '↗', type: 'link', url: 'https://github.com/stafawashere' },
       { label: 'LinkedIn · ' + PORTFOLIO.linkedinHandle,  hint: 'external', icon: '↗', type: 'link', url: PORTFOLIO.linkedin },
       { label: 'ORCID · ' + PORTFOLIO.orcidId,             hint: 'external', icon: '↗', type: 'link', url: PORTFOLIO.orcid },
-      { label: 'Email — contact@mahfujmustafa.dev', hint: 'external', icon: '↗', type: 'link', url: 'mailto:contact@mahfujmustafa.dev' },
+      { label: 'Email (contact@mahfujmustafa.dev)', hint: 'external', icon: '↗', type: 'link', url: 'mailto:contact@mahfujmustafa.dev' },
     ];
 
     this.input.addEventListener('input', () => {

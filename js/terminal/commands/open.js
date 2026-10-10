@@ -24,7 +24,7 @@ defineCommand({
       return o.line(o.dim('opening '), o.accent('mail composer ↗', 400));
     }
     if (/resume|cv/.test(argl)) {
-      return o.line(o.txt('No PDF here — the site '), o.accent('is'), o.txt(' the resume. Try '), o.accent('experience', 600), o.dim(' & '), o.accent('projects', 600), o.dim('.'));
+      return o.line(o.txt('No PDF here. The site '), o.accent('is'), o.txt(' the resume. Try '), o.accent('experience', 600), o.dim(' & '), o.accent('projects', 600), o.dim('.'));
     }
 
     const p = ctx.findProject(argl);
