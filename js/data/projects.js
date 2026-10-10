@@ -46,7 +46,7 @@ window.PORTFOLIO.projects = [
     date: 'OCT 2026',
     url:  'https://github.com/stafawashere/spicetify-release',
     tech: ['JavaScript', 'Bash'],
-    desc: 'Five extensions I wrote for my own Spotify on top of the Comfy theme, from a fix for the grid row Spotify added that collapsed Comfy\'s main view to a now-playing disc that pulses on the track\'s beats. I profiled the animations over the DevTools protocol and cut the disc from about 50% of a core to 13%, and a LaunchAgent puts everything back after each Spotify update.',
+    desc: 'Extensions I wrote for my own Spotify on the Comfy theme, starting with a fix for the layout a Spotify update broke. The album cover tints the whole app and spins as a disc that pulses on the beat, and I profiled the client over DevTools to bring that disc from half a CPU core down to 13%.',
   },
   {
     id:   'trashy-apocalypse',
