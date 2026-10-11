@@ -261,6 +261,27 @@
 
    #terminal-window.is-sheet #term-body { height: auto; }
 
+   #readme-popover.is-sheet {
+      position: fixed;
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: 72dvh;
+      max-height: none;
+      padding-bottom: env(safe-area-inset-bottom);
+      border-width: 1px 0 0;
+      border-radius: 14px 14px 0 0;
+      transform: translateY(24px);
+   }
+
+   #readme-popover.is-sheet.is-visible { transform: none; }
+
+   #readme-popover.is-sheet .markdown-body { padding: 20px 16px 28px; }
+
+   #readme-popover.is-sheet .readme-popover-status { padding: 20px 16px; }
+
    .term-traffic { gap: 14px; }
 
    .traffic-btn { position: relative; }
@@ -275,6 +296,12 @@
 
 @media (hover: none) {
    .footer-links a:active { color: var(--lilac); }
+
+   .project-card[data-readme] {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+   }
 
    .tag:active {
       border-color: var(--purple);

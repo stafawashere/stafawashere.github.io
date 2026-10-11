@@ -1,5 +1,7 @@
 (function () {
   const HOVER_DELAY_MS = 1500;
+  const LONG_PRESS_MS = 500;
+  const LONG_PRESS_SLOP_PX = 10;
   const VIEWPORT_MARGIN = 8;
   const CARD_GAP = 12;
   const STYLESHEETS = ['css/vendor/github-markdown-dark.css', 'css/readme-preview.css'];
@@ -12,6 +14,9 @@
   let bodyEl = null;
   let openCard = null;
   let renderToken = 0;
+  let suppressNextClick = false;
+
+  const sheetQuery = window.matchMedia('(max-width: 640px)');
 
   function injectStylesheets() {
     if (stylesReady) return stylesReady;
@@ -34,6 +39,7 @@
 
     popover = document.createElement('div');
     popover.id = 'readme-popover';
+    popover.className = 'readme-popover';
     popover.setAttribute('role', 'dialog');
     popover.tabIndex = -1;
     popover.hidden = true;
@@ -135,6 +141,15 @@
   }
 
   function positionPopover(card) {
+    const isSheet = sheetQuery.matches;
+    popover.classList.toggle('is-sheet', isSheet);
+
+    if (isSheet) {
+      popover.style.left = '';
+      popover.style.top = '';
+      return;
+    }
+
     const cardRect = card.getBoundingClientRect();
     const bodyRect = document.body.getBoundingClientRect();
     const width = popover.offsetWidth;
@@ -244,7 +259,78 @@
     if (popover.contains(event.target)) return;
 
     const isOnOpenCard = openCard && openCard.contains(event.target);
+    const isSheet = popover.classList.contains('is-sheet');
+    if (isSheet) suppressNextClick = true;
+
     closePopover(!isOnOpenCard);
+  }
+
+  function onDocumentPointerdown() {
+    suppressNextClick = false;
+  }
+
+  function onDocumentClick(event) {
+    if (!suppressNextClick) return;
+
+    suppressNextClick = false;
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function bindLongPress(grid) {
+    const touchOnly = window.matchMedia('(hover: none)');
+    let pressTimer = null;
+    let pressCard = null;
+    let pressPointerId = null;
+    let startX = 0;
+    let startY = 0;
+
+    function cancelPress() {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+      pressCard = null;
+      pressPointerId = null;
+    }
+
+    grid.addEventListener('pointerdown', event => {
+      const card = event.target.closest('.project-card[data-readme]');
+      const isMouse = event.pointerType === 'mouse';
+      const canLongPress = card && !isMouse && touchOnly.matches;
+      if (!canLongPress) return;
+
+      cancelPress();
+      pressCard = card;
+      pressPointerId = event.pointerId;
+      startX = event.clientX;
+      startY = event.clientY;
+
+      pressTimer = setTimeout(() => {
+        const longPressedCard = pressCard;
+        cancelPress();
+        suppressNextClick = true;
+        openPopover(longPressedCard);
+      }, LONG_PRESS_MS);
+    });
+
+    grid.addEventListener('pointermove', event => {
+      const isPressPointer = pressTimer && event.pointerId === pressPointerId;
+      if (!isPressPointer) return;
+
+      const travel = Math.hypot(event.clientX - startX, event.clientY - startY);
+      if (travel > LONG_PRESS_SLOP_PX) cancelPress();
+    });
+
+    ['pointerup', 'pointercancel'].forEach(type => {
+      grid.addEventListener(type, event => {
+        if (event.pointerId === pressPointerId) cancelPress();
+      });
+    });
+
+    grid.addEventListener('contextmenu', event => {
+      const card = event.target.closest('.project-card[data-readme]');
+      const isTouchLongPress = card && touchOnly.matches;
+      if (isTouchLongPress) event.preventDefault();
+    });
   }
 
   function initReadmePreview(grid) {
@@ -282,6 +368,10 @@
 
       cancelHover();
     });
+
+    document.addEventListener('pointerdown', onDocumentPointerdown, true);
+    document.addEventListener('click', onDocumentClick, true);
+    bindLongPress(grid);
 
     window.addEventListener('resize', () => {
       const isOpen = popover && !popover.hidden && openCard;
