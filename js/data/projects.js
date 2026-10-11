@@ -23,6 +23,16 @@ window.PORTFOLIO.projects = [
     desc: 'A platform for distributors and the resellers beneath them, where each side logs into its own scoped portal, with inventory tracking, bulk pricing tiers, and a sales-and-revenue dashboard.',
   },
   {
+    id:   'webapp-re',
+    name: 'webapp-re',
+    type: 'Claude Code Plugin',
+    date: 'OCT 2026',
+    url:  'https://github.com/stafawashere/webapp-re',
+    page: '/projects/webapp-re/',
+    tech: ['Python'],
+    desc: 'A Claude Code plugin that finds the private API behind a web app you are signed into, using your own browser session, and builds a small automation program and a slash-command plugin for that site. Requests are paced and every call that changes data waits for your approval.',
+  },
+  {
     id:   'inspect-workflow',
     name: 'Inspect Workflow',
     type: 'Developer Tool',

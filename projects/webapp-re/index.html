@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>webapp-re | Mahfuj Mustafa</title>
+  <meta name="description" content="A Claude Code plugin that finds the private HTTP API behind a web app you are signed into and turns it into an automation program and a plugin of its own.">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon-m.svg">
+  <link rel="canonical" href="https://mahfujmustafa.dev/projects/webapp-re/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Mahfuj Mustafa">
+  <meta property="og:title" content="webapp-re | Mahfuj Mustafa">
+  <meta property="og:description" content="A Claude Code plugin that finds the private HTTP API behind a web app you are signed into and turns it into an automation program and a plugin of its own.">
+  <meta property="og:url" content="https://mahfujmustafa.dev/projects/webapp-re/">
+  <meta property="og:image" content="https://mahfujmustafa.dev/og-image.jpg?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mahfuj Mustafa, student developer and security analyst, interested in CS, ML, and neuroscience">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://mahfujmustafa.dev/projects/webapp-re/#project",
+        "name": "webapp-re",
+        "description": "A Claude Code plugin that reverse engineers a web app's private HTTP API from the user's own signed-in browser session, then builds an automation program and a site plugin from what it verified.",
+        "url": "https://mahfujmustafa.dev/projects/webapp-re/",
+        "codeRepository": "https://github.com/stafawashere/webapp-re",
+        "programmingLanguage": ["Python"],
+        "author": { "@id": "https://mahfujmustafa.dev/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mahfujmustafa.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://mahfujmustafa.dev/#work" },
+          { "@type": "ListItem", "position": 3, "name": "webapp-re", "item": "https://mahfujmustafa.dev/projects/webapp-re/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/legal.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">mahfujmustafa.dev</a> / <a class="back" href="/#work">projects</a>
+    <h1>webapp-re</h1>
+    <p class="updated">Developer tool, October 2026. Code on <a href="https://github.com/stafawashere/webapp-re">GitHub</a>.</p>
+
+    <p>webapp-re is a Claude Code plugin that finds the private HTTP API behind a web app you're signed into and turns what it finds into a small automation program plus a plugin of its own, so the site gets its own slash commands. It works from the session in your own signed-in browser rather than a password.</p>
+
+    <h2>The stages</h2>
+    <p>Each stage is its own skill and reads what the one before it wrote from a fixed path, so you never pass files between them. <code>reverse</code> takes a site and a goal phrased as something you'd do, captures the traffic, narrows it to the one call that does the job, replays it, and records the result in a per-site knowledge base. <code>scope</code> runs that method across the whole site, read-only. <code>plan</code> turns the inventory into commands without sending any requests. <code>engineer</code> builds the program and the site plugin and checks every command against the live site. <code>optimize</code> audits what was built and changes nothing until you've accepted its findings.</p>
+
+    <h2>Staying polite to the site</h2>
+    <p>The generated program keeps one request in flight and waits at least 3 seconds between requests to the same origin, with some jitter. It retries only transport errors, and a 429, a challenge page or a checkpoint stops the whole client rather than the one call. Cookies come from a file you fill from your own browser, kept at mode 600 and redacted in every log. A call that would change data on the site waits for your approval.</p>
+
+    <h2>What a run leaves behind</h2>
+    <p>Every site gets its own workspace holding the scope and plan, one Markdown file per verified endpoint, an OpenAPI spec rendered from those endpoints, the program, and the generated plugin. The knowledge base is plain Markdown, and a goal whose endpoint was verified and replayed in the last 30 days skips the capture and goes straight to reproducing the call. Each workspace is its own git repository, and the plugin, the captures and the cookie file are gitignored because they're tied to your account.</p>
+
+    <h2>Stack</h2>
+    <p>Every script is a uv inline script, so uv fetches Python 3.11 or newer and the one dependency, websockets for the Chrome DevTools Protocol capture, on its own. The browser is driven through the Claude in Chrome extension or over CDP on a separate profile you sign into by hand. The repo has CI and a test suite for the menu builder, and it vendors two MIT-licensed skills with their own licenses.</p>
+
+    <p><a href="https://github.com/stafawashere/webapp-re">See the code on GitHub</a>, or go back to <a href="https://mahfujmustafa.dev/">mahfujmustafa.dev</a> and the rest of <a href="https://mahfujmustafa.dev/#work">my projects</a>.</p>
+  </main>
+</body>
+</html>

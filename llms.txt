@@ -14,6 +14,7 @@
 - [Psychedelic Model](https://mahfujmustafa.dev/projects/psychedelic-model/): a diffusion model driven only by knobs mapped to brain variables, testing whether the visual sequence reported in DMT research emerges on its own
 - [Allusion](https://mahfujmustafa.dev/projects/allusion/): client-side security research on the Roblox shooter Rivals, reported to the developers and patched before release
 - [Inspect Workflow](https://mahfujmustafa.dev/projects/inspect-workflow/): a local viewer that turns Claude Code JSONL logs into readable conversations
+- [webapp-re](https://mahfujmustafa.dev/projects/webapp-re/): a Claude Code plugin that finds the private HTTP API behind a web app you are signed into and builds an automation program and a plugin from it
 - [Taskbench](https://mahfujmustafa.dev/projects/taskbench/): a VS Code extension that turns the Explorer sidebar into a command workbench
 
 ## Experience
