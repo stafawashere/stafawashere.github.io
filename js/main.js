@@ -180,12 +180,11 @@
     PORTFOLIO.projects.forEach((p, index) => {
       const card = document.createElement('a');
       card.className = p.featured ? 'project-card is-featured' : 'project-card';
-      card.href      = p.page || p.url;
-      if (!p.page) {
-        card.target = '_blank';
-        card.rel    = 'noopener';
-        card.dataset.readme = p.url.split('/').pop();
-      }
+      card.href      = p.url;
+      card.target    = '_blank';
+      card.rel       = 'noopener';
+      card.dataset.readme  = p.url.split('/').pop();
+      card.dataset.repoUrl = p.url;
       card.style.setProperty('--i', index);
 
       const fx = document.createElement('span');

@@ -1,0 +1,76 @@
+<div id="readme" class="md" data-path="README.md"><article class="markdown-body entry-content container-lg" itemprop="text"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">Taskbench</h1><a id="user-content-taskbench" class="anchor" aria-label="Permalink: Taskbench" href="#user-content-taskbench"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">A VS Code extension that keeps your project's shell commands in the Explorer sidebar. You save a command once, and after that it's one click to run.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Using it</h2><a id="user-content-using-it" class="anchor" aria-label="Permalink: Using it" href="#user-content-using-it"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Open the Taskbench view in the Explorer sidebar. Click <code>+</code> (or run <code>Taskbench: New Task</code> from the Command Palette) and give the task a label and a command. The working directory and the "Background task" checkbox are optional. To run a task, press its play button or double-click the row.</p>
+<p dir="auto">Tasks run through VS Code's own task system, each in its own terminal panel, so the output shows up where you'd expect it. While a task is running its dot pulses green and the play button turns into a stop button. Double-clicking a running task stops it too. When it finishes, the row shows how long ago it last ran. Those times are kept in VS Code's workspace storage, not in the task file.</p>
+<p dir="auto">Check "Background task" for commands that don't exit on their own, like dev servers and watchers. That sets <code>isBackground</code> on the task and puts a <code>bg</code> tag on the row.</p>
+<p dir="auto">The filter box at the top matches against both the label and the command, which helps once the list gets long. Deleting a task asks you to confirm first.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">The task file</h2><a id="user-content-the-task-file" class="anchor" aria-label="Permalink: The task file" href="#user-content-the-task-file"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Tasks are saved in <code>.tasks/task.json</code> at the root of the first workspace folder. It's a plain file in the project, so you can commit it and everyone working on the repo gets the same tasks. A task made with the form looks like this:</p>
+<div class="highlight highlight-source-json notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="{
+    &quot;version&quot;: &quot;2.0.0&quot;,
+    &quot;tasks&quot;: [
+        {
+            &quot;label&quot;: &quot;build&quot;,
+            &quot;type&quot;: &quot;shell&quot;,
+            &quot;command&quot;: &quot;npm run build&quot;,
+            &quot;options&quot;: {
+                &quot;cwd&quot;: &quot;${workspaceFolder}&quot;
+            },
+            &quot;problemMatcher&quot;: [],
+            &quot;presentation&quot;: {
+                &quot;reveal&quot;: &quot;always&quot;,
+                &quot;panel&quot;: &quot;dedicated&quot;,
+                &quot;clear&quot;: true
+            }
+        }
+    ]
+}"><pre>{
+    <span class="pl-ent">"version"</span>: <span class="pl-s"><span class="pl-pds">"</span>2.0.0<span class="pl-pds">"</span></span>,
+    <span class="pl-ent">"tasks"</span>: [
+        {
+            <span class="pl-ent">"label"</span>: <span class="pl-s"><span class="pl-pds">"</span>build<span class="pl-pds">"</span></span>,
+            <span class="pl-ent">"type"</span>: <span class="pl-s"><span class="pl-pds">"</span>shell<span class="pl-pds">"</span></span>,
+            <span class="pl-ent">"command"</span>: <span class="pl-s"><span class="pl-pds">"</span>npm run build<span class="pl-pds">"</span></span>,
+            <span class="pl-ent">"options"</span>: {
+                <span class="pl-ent">"cwd"</span>: <span class="pl-s"><span class="pl-pds">"</span>${workspaceFolder}<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-ent">"problemMatcher"</span>: [],
+            <span class="pl-ent">"presentation"</span>: {
+                <span class="pl-ent">"reveal"</span>: <span class="pl-s"><span class="pl-pds">"</span>always<span class="pl-pds">"</span></span>,
+                <span class="pl-ent">"panel"</span>: <span class="pl-s"><span class="pl-pds">"</span>dedicated<span class="pl-pds">"</span></span>,
+                <span class="pl-ent">"clear"</span>: <span class="pl-c1">true</span>
+            }
+        }
+    ]
+}</pre></div>
+<p dir="auto">The format copies VS Code's <code>tasks.json</code>, but it's a separate file, so these tasks don't show up in VS Code's Run Task menu. Taskbench only reads some of the fields: <code>label</code>, <code>command</code>, <code>options.cwd</code>, <code>isBackground</code> and <code>presentation</code> (<code>reveal</code>, <code>panel</code> and <code>clear</code>). Every task runs as a shell command whatever <code>type</code> says, and <code>${workspaceFolder}</code> is the only variable that gets filled in inside <code>cwd</code>.</p>
+<p dir="auto"><code>Taskbench: Open task.json</code> opens the file for editing by hand. The view watches it and updates when you save. The form won't let you reuse a label, because the label is how the view tells tasks apart.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Commands</h2><a id="user-content-commands" class="anchor" aria-label="Permalink: Commands" href="#user-content-commands"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Taskbench: New Task</code></td>
+<td>Opens the form for a new task</td>
+</tr>
+<tr>
+<td><code>Taskbench: Refresh</code></td>
+<td>Reloads the list from disk</td>
+</tr>
+<tr>
+<td><code>Taskbench: Open task.json</code></td>
+<td>Opens the task file, creating it first if it doesn't exist</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto">All three are also buttons in the view's title bar.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Running it from source</h2><a id="user-content-running-it-from-source" class="anchor" aria-label="Permalink: Running it from source" href="#user-content-running-it-from-source"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">It needs VS Code 1.75 or newer and has no npm dependencies. Open this folder in VS Code and press F5. That opens a second VS Code window with Taskbench loaded.</p>
+<p dir="auto">Changes are listed in <a href="https://github.com/stafawashere/taskbench-extension/blob/main/CHANGELOG.md">CHANGELOG.md</a>. It's MIT licensed.</p>
+</article></div>

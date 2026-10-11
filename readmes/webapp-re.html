@@ -1,0 +1,115 @@
+<div id="readme" class="md" data-path="README.md"><article class="markdown-body entry-content container-lg" itemprop="text"><themed-picture data-catalyst-inline="true"><picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/stafawashere/webapp-re/main/img/banner-dark.png">
+   <img alt="webapp-re" src="https://raw.githubusercontent.com/stafawashere/webapp-re/main/img/banner-light.png">
+</picture></themed-picture>
+<div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">webapp-re</h1><a id="user-content-webapp-re" class="anchor" aria-label="Permalink: webapp-re" href="#user-content-webapp-re"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">A Claude Code plugin that finds the private HTTP API behind a web app you're signed into, and
+turns what it finds into a small automation program plus a <code>/&lt;site&gt;:</code> plugin of its own.</p>
+<p dir="auto">It uses the session from your own signed-in browser rather than a password. Requests are spaced
+out, and a call that would change data on the site waits for your approval.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">What it needs</h2><a id="user-content-what-it-needs" class="anchor" aria-label="Permalink: What it needs" href="#user-content-what-it-needs"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li>Claude Code, with plugin support (tested on 2.1.296)</li>
+<li><a href="https://docs.astral.sh/uv/" rel="nofollow">uv</a>. Every script is a uv inline script, so uv fetches Python 3.11
+or newer and the one dependency (<code>websockets</code>, for the CDP capture) on its own</li>
+<li>A Chromium browser, driven either through the Claude in Chrome extension or over CDP on a
+separate profile you sign into by hand</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Installing it</h2><a id="user-content-installing-it" class="anchor" aria-label="Permalink: Installing it" href="#user-content-installing-it"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="claude plugin marketplace add stafawashere/webapp-re
+claude plugin install webapp-re@webapp-re"><pre>claude plugin marketplace add stafawashere/webapp-re
+claude plugin install webapp-re@webapp-re</pre></div>
+<p dir="auto">Inside a session the same thing is <code>/plugin marketplace add stafawashere/webapp-re</code>, then
+<code>/plugin install webapp-re@webapp-re</code>. Start a new session afterwards and <code>/webapp-re:</code> lists
+every stage.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Using it</h2><a id="user-content-using-it" class="anchor" aria-label="Permalink: Using it" href="#user-content-using-it"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Each stage is its own skill and reads what the stage before it wrote from a fixed path, so you
+never pass files between them.</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="/webapp-re:reverse &lt;site&gt; &lt;goal&gt;             find and verify the request behind one goal
+/webapp-re:scope &lt;site or url&gt;               walk the site read-only and list what it can do
+/webapp-re:plan &lt;site&gt;                       design the commands, schemas and build order
+/webapp-re:engineer &lt;site&gt; [commands...]     build the program and the /&lt;site&gt;: plugin
+/webapp-re:optimize &lt;site&gt; [names...] [--auto]
+                                             audit, then apply the findings you accept
+/webapp-re:optimize &lt;site&gt; --apply [run-id]  apply the findings of an earlier audit
+/webapp-re:integrate-menu &lt;site&gt;             give /&lt;site&gt;:menu a self-syncing menu
+/webapp-re:webapp-re help                    list the commands and each site's progress"><pre class="notranslate"><code>/webapp-re:reverse &lt;site&gt; &lt;goal&gt;             find and verify the request behind one goal
+/webapp-re:scope &lt;site or url&gt;               walk the site read-only and list what it can do
+/webapp-re:plan &lt;site&gt;                       design the commands, schemas and build order
+/webapp-re:engineer &lt;site&gt; [commands...]     build the program and the /&lt;site&gt;: plugin
+/webapp-re:optimize &lt;site&gt; [names...] [--auto]
+                                             audit, then apply the findings you accept
+/webapp-re:optimize &lt;site&gt; --apply [run-id]  apply the findings of an earlier audit
+/webapp-re:integrate-menu &lt;site&gt;             give /&lt;site&gt;:menu a self-syncing menu
+/webapp-re:webapp-re help                    list the commands and each site's progress
+</code></pre></div>
+<p dir="auto"><code>reverse</code> is the method the other stages lean on. You give it a site and a goal phrased as
+something you'd do, like <code>app.example.com: list the items on my saved list</code>, and it captures the
+traffic, narrows it to the one call that does the job, replays it, and writes the result into the
+site's knowledge base. <code>scope</code> runs the same method across the whole site, read-only, and
+<code>plan</code> turns its inventory into commands without sending any requests. Once a plan exists,
+<code>engineer</code> builds the program and the site plugin and checks every command against the live
+site. <code>optimize</code> audits a built site's plugin and program, and changes nothing until you've accepted
+its findings.</p>
+<p dir="auto"><code>/webapp-re &lt;stage&gt; ...</code> works too. It goes through the <code>webapp-re</code> skill, which hands off to the
+stage you name.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">What you end up with</h2><a id="user-content-what-you-end-up-with" class="anchor" aria-label="Permalink: What you end up with" href="#user-content-what-you-end-up-with"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">For <code>app.example.com</code>, a full run leaves this under <code>$WEBAPP_RE_HOME/example/</code>:</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="site.json            slug, origins and the browser in use
+scope/               scope.md and scope.json, the inventory of the app
+plan/                plan.md and plan.json, the commands and their build order
+knowledge/           one file per verified endpoint, plus patterns, sessions and a changelog
+openapi/             example.openapi.yaml, rendered from the verified endpoints
+program/             the automation library and CLI, a uv project
+plugin/              the /example: plugin that calls program/"><pre class="notranslate"><code>site.json            slug, origins and the browser in use
+scope/               scope.md and scope.json, the inventory of the app
+plan/                plan.md and plan.json, the commands and their build order
+knowledge/           one file per verified endpoint, plus patterns, sessions and a changelog
+openapi/             example.openapi.yaml, rendered from the verified endpoints
+program/             the automation library and CLI, a uv project
+plugin/              the /example: plugin that calls program/
+</code></pre></div>
+<p dir="auto">After that, <code>/example:help</code> lists the site's commands and <code>/example:example &lt;command&gt;</code> runs one
+through the program. The knowledge base is plain Markdown, and <code>reverse</code> reads it first, so a goal
+whose endpoint was verified and replayed in the last 30 days skips the capture and goes straight
+to reproducing the call.</p>
+<p dir="auto"><a href="https://github.com/stafawashere/webapp-re/blob/main/examples/citymapper">examples/citymapper</a> is a real one, for citymapper.com, run signed out. You
+can read through what each stage wrote, or use the program and its plugin directly.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Pacing and your account</h2><a id="user-content-pacing-and-your-account" class="anchor" aria-label="Permalink: Pacing and your account" href="#user-content-pacing-and-your-account"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The generated program keeps one request in flight, waits at least 3 seconds between requests to
+the same origin with some jitter, and retries only transport errors. A 429, a challenge page or a
+checkpoint stops the whole client rather than the one call. Cookies come from a <code>.env</code> file you
+fill from your own browser, kept at mode 600 and redacted in every log. A password login is never
+automated unless you ask for it, and the password is never stored. The reasoning and the defaults
+are in <a href="https://github.com/stafawashere/webapp-re/blob/main/plugin/references/pacing-and-safety.md">plugin/references/pacing-and-safety.md</a>.</p>
+<p dir="auto">Use it on accounts you own, and read the site's terms first, because some sites don't allow
+automated access to their private API even from your own session.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Where your sites go</h2><a id="user-content-where-your-sites-go" class="anchor" aria-label="Permalink: Where your sites go" href="#user-content-where-your-sites-go"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Every site gets one workspace under <code>$WEBAPP_RE_HOME/&lt;slug&gt;/</code>. <code>WEBAPP_RE_HOME</code> defaults to
+<code>~/dev/webapp-re/apps</code>, and you can point it anywhere. The slug is the registrable domain without
+its public suffix, so <code>app.example.com</code> and <code>www.example.com</code> both become <code>example</code>. The full tree is in
+<a href="https://github.com/stafawashere/webapp-re/blob/main/plugin/references/site-layout.md">plugin/references/site-layout.md</a>.</p>
+<p dir="auto">Each workspace is its own git repository (<code>kb.py init</code> runs <code>git init</code>). The generated plugin, the
+captures in <code>var/</code> and the cookie file <code>.env</code> are gitignored in the workspace, because they're
+tied to your account. Nothing is committed or pushed for you. The site plugins are listed in a
+local marketplace named <code>webapp-re-local</code>, written to <code>.claude-plugin/marketplace.json</code> in the
+parent of <code>WEBAPP_RE_HOME</code> (or <code>$WEBAPP_RE_MARKETPLACE</code>), and <code>kb.py init</code> adds each new site
+to it.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">How it's laid out</h2><a id="user-content-how-its-laid-out" class="anchor" aria-label="Permalink: How it's laid out" href="#user-content-how-its-laid-out"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><code>plugin/</code> is the plugin itself. <code>skills/</code> holds the router, one skill per stage, and two vendored
+skills, <code>js-reverse</code> and <code>web-api-reverse-engineering</code>, both MIT and listed with their source
+commits in <a href="https://github.com/stafawashere/webapp-re/blob/main/docs/third-party-skills.md">docs/third-party-skills.md</a>. <code>scripts/</code> has <code>kb.py</code> (the
+per-site knowledge base), <code>site_plugin.py</code> (the site plugin generator), <code>cdp_capture.py</code>,
+<code>shape.py</code>, the scope and plan checkers and <code>optimize_run.py</code>. <code>references/</code> has the method and
+format docs the skills load, and <code>menu/</code> the site menu builder.</p>
+<p dir="auto"><a href="https://github.com/stafawashere/webapp-re/blob/main/docs/architecture.md">docs/architecture.md</a> walks through the stages and the data flow between
+them.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Running the tests</h2><a id="user-content-running-the-tests" class="anchor" aria-label="Permalink: Running the tests" href="#user-content-running-the-tests"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">From the repository root:</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="uv run --script tests/test_build_menu.py"><pre>uv run --script tests/test_build_menu.py</pre></div>
+<p dir="auto">That runs 22 tests for the menu builder. <a href="https://github.com/stafawashere/webapp-re/blob/main/tests/README.md">tests/README.md</a> has the checker
+fixtures, the output each one should give, and the commands to run them. CI runs the same tests
+and checkers on every push.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">License</h2><a id="user-content-license" class="anchor" aria-label="Permalink: License" href="#user-content-license"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">MIT, see <a href="https://github.com/stafawashere/webapp-re/blob/main/LICENSE">LICENSE</a>. The two vendored skills keep their own MIT licenses in their folders.</p>
+</article></div>

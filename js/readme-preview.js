@@ -4,6 +4,7 @@
   const LONG_PRESS_SLOP_PX = 10;
   const VIEWPORT_MARGIN = 8;
   const CARD_GAP = 12;
+  const LEAVE_GRACE_MS = 250;
   const STYLESHEETS = ['css/vendor/github-markdown-dark.css', 'css/readme-preview.css'];
 
   const readmeCache = new Map();
@@ -15,6 +16,7 @@
   let openCard = null;
   let renderToken = 0;
   let suppressNextClick = false;
+  let leaveTimer = null;
 
   const sheetQuery = window.matchMedia('(max-width: 640px)');
 
@@ -204,7 +206,7 @@
 
   function openPopover(card) {
     const repo = card.dataset.readme;
-    const repoUrl = card.href;
+    const repoUrl = card.dataset.repoUrl || card.href;
     const isAlreadyOpen = openCard === card && popover && !popover.hidden;
     if (isAlreadyOpen) return;
 
@@ -227,6 +229,8 @@
 
       document.addEventListener('keydown', onKeydown, true);
       document.addEventListener('pointerdown', onOutsidePointerdown, true);
+      document.addEventListener('pointerover', onTriggerZonePointerover, true);
+      document.documentElement.addEventListener('pointerleave', onWindowPointerleave);
     });
   }
 
@@ -242,10 +246,52 @@
     bodyEl.replaceChildren();
     openCard = null;
 
+    cancelLeave();
     document.removeEventListener('keydown', onKeydown, true);
     document.removeEventListener('pointerdown', onOutsidePointerdown, true);
+    document.removeEventListener('pointerover', onTriggerZonePointerover, true);
+    document.documentElement.removeEventListener('pointerleave', onWindowPointerleave);
 
     if (restoreFocus && card) card.focus({ preventScroll: true });
+  }
+
+  function cancelLeave() {
+    clearTimeout(leaveTimer);
+    leaveTimer = null;
+  }
+
+  function scheduleLeave() {
+    if (leaveTimer) return;
+
+    leaveTimer = setTimeout(() => {
+      leaveTimer = null;
+      closePopover(false);
+    }, LEAVE_GRACE_MS);
+  }
+
+  function onTriggerZonePointerover(event) {
+    const isMouse = event.pointerType === 'mouse';
+    const isSheet = popover.classList.contains('is-sheet');
+    if (!isMouse || isSheet) return;
+
+    const isOnPopover = popover.contains(event.target);
+    const isOnOpenCard = openCard && openCard.contains(event.target);
+    const isInsideZone = isOnPopover || isOnOpenCard;
+
+    if (isInsideZone) {
+      cancelLeave();
+      return;
+    }
+
+    scheduleLeave();
+  }
+
+  function onWindowPointerleave(event) {
+    const isMouse = event.pointerType === 'mouse';
+    const isSheet = popover.classList.contains('is-sheet');
+    if (!isMouse || isSheet) return;
+
+    scheduleLeave();
   }
 
   function onKeydown(event) {

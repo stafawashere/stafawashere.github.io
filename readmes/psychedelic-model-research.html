@@ -1,0 +1,134 @@
+<div id="readme" class="md" data-path="README.md"><article class="markdown-body entry-content container-lg" itemprop="text"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">Driving Stable Diffusion with brain variables</h1><a id="user-content-driving-stable-diffusion-with-brain-variables" class="anchor" aria-label="Permalink: Driving Stable Diffusion with brain variables" href="#user-content-driving-stable-diffusion-with-brain-variables"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">DMT research describes the visuals in a fairly consistent order. Geometry comes first, then forms, then figures, then a return to the room. I wanted to know whether that order falls out of an image model when the only things I touch are parameters that map to known brain variables.</p>
+<p dir="auto">So I took Stable Diffusion 1.5, started it from an ordinary photo, and wrote five knobs that each stand in for something the brain does. Then I moved them along a dose curve and measured what came out. Nothing is painted in by hand and the prompt never asks for anything psychedelic.</p>
+<p dir="auto">This is a computational model of reported visual experience. It can show a signature in the images. It can't tell you what a trip feels like, and the model isn't "tripping".</p>
+<p align="center" dir="auto">
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/stafawashere/psychedelic-model-research/blob/main/assets/trip.gif"><img src="https://raw.githubusercontent.com/stafawashere/psychedelic-model-research/main/assets/trip.gif" width="512" alt="A photo of a forest road dissolving into a repeating texture at the dose peak and then returning to the photo" data-animated-image="" style="max-width: 100%;"></a>
+</p>
+<p align="center" dir="auto">
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/stafawashere/psychedelic-model-research/blob/main/assets/frame_00_scene.png"><img src="https://raw.githubusercontent.com/stafawashere/psychedelic-model-research/main/assets/frame_00_scene.png" width="240" alt="Frame 0, the original scene" style="max-width: 100%;"></a>
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/stafawashere/psychedelic-model-research/blob/main/assets/frame_13_peak.png"><img src="https://raw.githubusercontent.com/stafawashere/psychedelic-model-research/main/assets/frame_13_peak.png" width="240" alt="Frame 13, the dose peak" style="max-width: 100%;"></a>
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/stafawashere/psychedelic-model-research/blob/main/assets/frame_39_return.png"><img src="https://raw.githubusercontent.com/stafawashere/psychedelic-model-research/main/assets/frame_39_return.png" width="240" alt="Frame 39, back to the scene" style="max-width: 100%;"></a>
+  <br>
+  <em>Frames 0, 13 and 39 of one run. Same seed and same caption the whole way through. Only the knobs move.</em>
+</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">The idea</h2><a id="user-content-the-idea" class="anchor" aria-label="Permalink: The idea" href="#user-content-the-idea"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Two ideas from neuroscience set this up. REBUS (Carhart-Harris and Friston) says psychedelics relax the precision of high-level priors, so the brain stops explaining away bottom-up signal and internal noise. The other is 5-HT2A gain. DMT acts on the 5-HT2A receptor and raises the gain of cortical pyramidal cells, and turning up gain in a layered visual system destabilizes it.</p>
+<p dir="auto">A latent diffusion model is loosely the same kind of system. It has a prior (the text conditioning), sensory evidence (the encoded photo), and a stack of levels (the U-Net). If the DMT arc comes from these parameter changes, it should show up here too, driven only by the knobs, from a neutral starting image.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">The five knobs</h2><a id="user-content-the-five-knobs" class="anchor" aria-label="Permalink: The five knobs" href="#user-content-the-five-knobs"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Everything comes from one number, the dose curve <code>D(t)</code>. It rises exponentially to a peak at 4 minutes, falls off more slowly after, and never quite reaches zero.</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Knob</th>
+<th>What it does in the model</th>
+<th>Brain variable</th>
+<th>At the peak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scene_precision</code></td>
+<td>weight of the encoded photo in the latent blend, with a floor above zero</td>
+<td>precision of sensory evidence</td>
+<td>falls to the floor</td>
+</tr>
+<tr>
+<td><code>prior_precision</code></td>
+<td>classifier-free guidance scale on the caption</td>
+<td>precision of high-level priors (REBUS)</td>
+<td>falls</td>
+</tr>
+<tr>
+<td><code>gain</code></td>
+<td>multiplies the output of one U-Net block, soft-clipped with tanh</td>
+<td>5-HT2A cortical gain</td>
+<td>rises, <code>1 + gain_slope * D</code></td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>which U-Net block gets the gain, shallow to deep</td>
+<td>which cortical level destabilizes</td>
+<td>moves deeper</td>
+</tr>
+<tr>
+<td><code>recurrence</code></td>
+<td>weight of the previous frame in the blend</td>
+<td>the loop feeding on itself</td>
+<td>rises, then falls with the dose</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto">Two other pieces shape the output and they aren't knobs, so I'd rather say so up front. <code>ds</code>, the denoise strength, sets how far back into noise each frame starts, and it also rides the dose curve (0.45 to 0.82 in <code>configs/crisp_trip.yaml</code>). And before a frame feeds into the next one, its color mean and contrast get matched to the photo so the loop doesn't run away.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">The rules</h2><a id="user-content-the-rules" class="anchor" aria-label="Permalink: The rules" href="#user-content-the-rules"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ol dir="auto">
+<li>Nothing is hand-drawn. No geometry is painted in, and arm A has no spatial warp, so any pattern has to come out of the model.</li>
+<li>The prompt is a neutral caption of the photo. BLIP writes it, then a filter strips 78 words like fractal, spiral, entity and psychedelic, and warns if it removed anything. If you prompt for the result you've proven nothing.</li>
+<li>Sensory precision never hits zero, so the photo has a way back.</li>
+<li>Measurements and their thresholds get written down before the runs they judge. Every run also saves its full config, caption included, before the first frame renders.</li>
+<li>A result is a computational signature. It's never a claim about experience.</li>
+</ol>
+<p dir="auto">There are two arms and they're never mixed. Arm A is pure emergence. Arm B adds a log-polar warp that maps cortex to visual field (the Bressloff and Cowan picture), which is an assumption, so those runs are labeled <code>B_logpolar_bias</code> in their config.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">How a frame gets made</h2><a id="user-content-how-a-frame-gets-made" class="anchor" aria-label="Permalink: How a frame gets made" href="#user-content-how-a-frame-gets-made"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The VAE encodes the photo and the previous frame, and they get blended by <code>scene_precision</code> and <code>recurrence</code>. Noise is added to the depth set by <code>ds</code>. DDIM denoises it under guidance at <code>prior_precision</code>, while a forward hook multiplies the chosen U-Net block's output by <code>gain</code>. The result is decoded, contrast-matched to the photo, and becomes the "previous frame" for the next step. The photo itself is re-encoded fresh every frame.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">What happened</h2><a id="user-content-what-happened" class="anchor" aria-label="Permalink: What happened" href="#user-content-what-happened"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The main run is <code>configs/crisp_trip.yaml</code>, arm A, 40 frames, seed 0. The full write-up is in <a href="https://github.com/stafawashere/psychedelic-model-research/blob/main/docs/conclusion.md">docs/conclusion.md</a>.</p>
+<p dir="auto">The run reproduced the timing of the arc and none of the content of its phases.</p>
+<p dir="auto">The image left the photo and came back. RMSE against frame 0 peaked at 0.274 at frame 13 and was back down to 0.025 by frame 39.</p>
+<p dir="auto">Periodic patterns grew out of the noise at the peak on their own. Excess periodic power at a 19 px wavelength rose to 3.0x over the natural 1/f spectrum, against 1.6x for the original photo, and the caption never had a geometry word in it.</p>
+<p dir="auto">They weren't the geometry people report, though. At frame 13, mirror and rotational symmetry stayed near zero (-0.015 to 0.049), while synthetic test patterns (concentric rings, a six-arm spiral) scored 0.98 to 0.99 on the symmetries they have. That's periodicity without symmetry, so I don't call it a Klüver form constant.</p>
+<p dir="auto">The figures never emerged.</p>
+<p dir="auto">These are the parts that failed and my best read on why.</p>
+<p dir="auto">The come-up was wrong. Surfaces were supposed to shimmer with detail intact, and instead the photo went out of focus. That came from <code>ds</code>. Raising the denoise strength scales the photo's latent down against white noise, and fine detail drowns first. The brain raises the prior and leaves the evidence alone, but this engine raises the prior by wrecking the evidence.</p>
+<p dir="auto">The geometry has a structural reason for failing. A plain multiply gets cancelled by the U-Net's normalization, so what's left of <code>gain</code> is the tanh soft-clip, and saturation makes blobs at whatever scale the block already works at. That block has one cell per 16 px, which is where the 19 px wavelength comes from. In the brain, a lateral interaction kernel picks the wavelength and the retina-to-cortex map bends it into spirals and tunnels. A scalar knob has neither.</p>
+<p dir="auto">The missing figures say nothing about DMT. Stable Diffusion's only route to a figure is the text prompt, and I strip figure words out of it on purpose. The setup decides that question and the experiment has no power over it.</p>
+<p dir="auto">The return is guaranteed by construction. The photo is re-encoded every frame with no noise and no movement, so the model is always pulled back to the same pixels. Real perception has to re-converge on a noisy, moving input.</p>
+<p dir="auto">Only four knobs moved. <code>depth</code> was pinned to the shallowest block in this config, because an earlier shallow-to-deep sweep found nothing past it.</p>
+<p dir="auto">The peak doesn't evolve on its own. The starting noise is identical every frame, so the peak is one noise pattern rendered under slowly drifting knobs.</p>
+<p dir="auto"><a href="https://github.com/stafawashere/psychedelic-model-research/blob/main/docs/development-plan.md">docs/development-plan.md</a> lays out what comes next, and each experiment has its pass or fail line set in advance. The first few are a come-up driven by <code>gain</code> alone with <code>ds</code> held flat, jittering the input photo every frame to see if the return survives, and a difference-of-Gaussians lateral kernel to see whether a selected wavelength is reachable at all. An earlier version of that kernel already failed once (the wavelength barely moved off 24.4 px), and the plan explains why the new one is a different experiment. The plan is design only in this repo.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">AI use</h2><a id="user-content-ai-use" class="anchor" aria-label="Permalink: AI use" href="#user-content-ai-use"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">I used agentic AI tools for assisted coding and research, and I disclose that in the paper I'm writing from this project. The question, the design and the thresholds were all mine.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Running it</h2><a id="user-content-running-it" class="anchor" aria-label="Permalink: Running it" href="#user-content-running-it"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">It's set up for Apple Silicon. The configs use the <code>mps</code> device.</p>
+<p dir="auto">One problem first. <code>run.py</code> imports <code>src/measure/make_video.py</code>, and that file (along with <code>src/measure/metrics.py</code>) isn't in the repo yet, so a fresh clone fails at that import until they're pushed.</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python run.py configs/crisp_trip.yaml"><pre>python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python run.py configs/crisp_trip.yaml</pre></div>
+<p dir="auto">The first run downloads Stable Diffusion 1.5 and the BLIP captioning model from Hugging Face. With no config argument, <code>run.py</code> uses the defaults in <code>src/core/config.py</code>. It refuses to render if no frame lands exactly on the dose peak.</p>
+<p dir="auto">Output goes to <code>output/latest/</code>. You get the resolved <code>config.yaml</code>, <code>scene.png</code>, the individual <code>frames/</code>, and <code>trip.mp4</code> and <code>trip.gif</code>. Whatever was in <code>output/latest/</code> before gets moved to <code>output/past/&lt;timestamp&gt;/</code>.</p>
+<p dir="auto">To measure the peak the same way the conclusion does:</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content=".venv/bin/python tests/probe_apex_structure.py output/latest/frames 0 13 15"><pre>.venv/bin/python tests/probe_apex_structure.py output/latest/frames 0 13 15</pre></div>
+<p dir="auto">It only needs numpy and Pillow, and it prints the synthetic controls next to your frames so a null result is still readable.</p>
+<p dir="auto">A few things about this stack:</p>
+<ul dir="auto">
+<li>Everything runs in float32 by default. <code>float16</code> and <code>bfloat16</code> are options in the config, and the VAE always stays in float32.</li>
+<li>The scheduler is DDIM only. Anything else is rejected.</li>
+<li>The safety checker is off, because a blanked frame would feed into every frame after it.</li>
+<li><code>run.py</code> sets <code>PYTORCH_ENABLE_MPS_FALLBACK=1</code> so ops that aren't on Metal yet fall back to the CPU.</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Layout</h2><a id="user-content-layout" class="anchor" aria-label="Permalink: Layout" href="#user-content-layout"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="run.py         walks the dose schedule, renders each frame, stitches the video
+src/core/      config.py, dose.py, knobs.py (dose curve to knob values, plain Python)
+src/render/    engine.py (one frame), hooks.py (U-Net gain hooks and the arm B warp)
+configs/       run configs for both arms and several scenes
+resources/     source photos
+tests/         probes and sweeps (only probe_apex_structure.py runs from a fresh clone)
+docs/          conclusion.md, development-plan.md, neuro-reference.md
+docs/notes/    my study notes on the U-Net and the VAE latent space
+assets/        the frames and GIF above"><pre class="notranslate"><code>run.py         walks the dose schedule, renders each frame, stitches the video
+src/core/      config.py, dose.py, knobs.py (dose curve to knob values, plain Python)
+src/render/    engine.py (one frame), hooks.py (U-Net gain hooks and the arm B warp)
+configs/       run configs for both arms and several scenes
+resources/     source photos
+tests/         probes and sweeps (only probe_apex_structure.py runs from a fresh clone)
+docs/          conclusion.md, development-plan.md, neuro-reference.md
+docs/notes/    my study notes on the U-Net and the VAE latent space
+assets/        the frames and GIF above
+</code></pre></div>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Limitations</h2><a id="user-content-limitations" class="anchor" aria-label="Permalink: Limitations" href="#user-content-limitations"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">This is research on one machine, not a library. The headline numbers come from one run, on one photo, with one seed. The neuroscience citations in <a href="https://github.com/stafawashere/psychedelic-model-research/blob/main/docs/neuro-reference.md">docs/neuro-reference.md</a> came from a literature search, and each claim there is labeled by how well it was checked.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Prior art</h2><a id="user-content-prior-art" class="anchor" aria-label="Permalink: Prior art" href="#user-content-prior-art"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">This builds on Carhart-Harris and Friston's REBUS model, the entropic brain hypothesis, Klüver's form constants, Ermentrout and Cowan's 1979 account of geometric hallucinations as a pattern-forming instability in visual cortex, and Bressloff and colleagues' 2001 extension of it. The gain hook is loosely in the spirit of DeepDream, which amplifies what a layer already responds to.</p>
+</article></div>
