@@ -375,6 +375,14 @@
       color: var(--text-bright);
       background: rgba(255, 255, 255, 0.04);
    }
+
+   .readme-popover-link:active { text-decoration: underline; }
+
+   .readme-popover-close:active {
+      border-color: #3d444d;
+      background: #262c36;
+      color: #f0f6fc;
+   }
 }
 
 /* Inline padding grows the hit area without moving the line box. */

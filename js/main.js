@@ -184,6 +184,7 @@
       if (!p.page) {
         card.target = '_blank';
         card.rel    = 'noopener';
+        card.dataset.readme = p.url.split('/').pop();
       }
       card.style.setProperty('--i', index);
 
@@ -1743,6 +1744,7 @@
   buildSkills();
   buildExperience();
   buildProjects();
+  if (window.initReadmePreview) window.initReadmePreview(document.getElementById('work-content'));
   initCardGleam();
   buildEducation();
   buildRecords();

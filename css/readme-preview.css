@@ -1,0 +1,129 @@
+#readme-popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  width: min(640px, calc(100vw - 16px));
+  max-height: 70vh;
+  border: 1px solid #3d444d;
+  border-radius: 12px;
+  background: #0d1117;
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(var(--purple-rgb), 0.08);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .18s ease-out, transform .22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#readme-popover[hidden] {
+  display: none;
+}
+
+#readme-popover.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+#readme-popover:focus {
+  outline: none;
+}
+
+#readme-popover:focus-visible {
+  outline: 2px solid rgba(var(--purple-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+.readme-popover-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  padding: 10px 12px 10px 16px;
+  border-bottom: 1px solid #3d444d;
+  background: #151b23;
+  font-family: var(--font);
+  font-size: 13px;
+}
+
+.readme-popover-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: #f0f6fc;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.readme-popover-link {
+  flex: none;
+  color: #4493f8;
+  text-decoration: none;
+}
+
+.readme-popover-link:hover,
+.readme-popover-link:focus-visible {
+  text-decoration: underline;
+}
+
+.readme-popover-close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #9198a1;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.readme-popover-close:hover,
+.readme-popover-close:focus-visible {
+  border-color: #3d444d;
+  background: #262c36;
+  color: #f0f6fc;
+}
+
+.readme-popover-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #3d444d transparent;
+}
+
+#readme-popover .markdown-body {
+  padding: 24px 28px 28px;
+  font-size: 14px;
+}
+
+#readme-popover .markdown-body img {
+  background-color: transparent;
+}
+
+.readme-popover-status {
+  margin: 0;
+  padding: 24px 28px;
+  color: #9198a1;
+  font-family: var(--font);
+  font-size: 13px;
+}
+
+.readme-popover-status a {
+  color: #4493f8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #readme-popover {
+    transition: none;
+  }
+}
