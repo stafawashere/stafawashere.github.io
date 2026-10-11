@@ -1,0 +1,72 @@
+<div id="readme" class="md" data-path="README.md"><article class="markdown-body entry-content container-lg" itemprop="text"><div class="markdown-heading" dir="auto"><h1 class="heading-element" dir="auto">Ledger</h1><a id="user-content-ledger" class="anchor" aria-label="Permalink: Ledger" href="#user-content-ledger"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">A Discord bot I wrote to keep track of a balance, who owes what, and how much stock is left of each item. Everything runs through slash commands, buttons and pop-up forms, and every change gets written to a history log you can filter and export.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Commands</h2><a id="user-content-commands" class="anchor" aria-label="Permalink: Commands" href="#user-content-commands"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/ledger</code></td>
+<td>Shows the balance, total owed, associate and asset counts, and the last 7 history entries. Buttons to increase, decrease or set the balance and to export the full history as a text file.</td>
+</tr>
+<tr>
+<td><code>/wipe</code></td>
+<td>Clears all data after a confirm button.</td>
+</tr>
+<tr>
+<td><code>/tab</code></td>
+<td>Lists associates sorted by debt, with buttons to add or delete one.</td>
+</tr>
+<tr>
+<td><code>/associate</code></td>
+<td>Pick an associate from a dropdown to change their debt or export their history.</td>
+</tr>
+<tr>
+<td><code>/assets</code></td>
+<td>Lists assets sorted by stock, with buttons to add or delete one.</td>
+</tr>
+<tr>
+<td><code>/asset</code></td>
+<td>Pick an asset to change its stock, edit its name, unit and thumbnail, or export its history.</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto">Amounts can be decimals. Each associate and asset gets a short random ID, and the dropdowns show the first 25.</p>
+<p dir="auto">There are no permission checks on any command, so anyone in the server who can use slash commands can change the numbers or wipe everything. Keep it in a server you trust.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Storage</h2><a id="user-content-storage" class="anchor" aria-label="Permalink: Storage" href="#user-content-storage"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Data lives in <code>ledger.json</code> in the folder you run the bot from, through <a href="https://github.com/msiemens/tinydb">TinyDB</a>. It has four tables (<code>ledger</code>, <code>tab</code>, <code>assets</code>, <code>history</code>) and is created on first run. It's in <code>.gitignore</code>.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Setup</h2><a id="user-content-setup" class="anchor" aria-label="Permalink: Setup" href="#user-content-setup"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">You need Python 3.13 or newer, <a href="https://github.com/astral-sh/uv">uv</a>, and a bot application from the Discord Developer Portal.</p>
+<p dir="auto">The bot turns on the Message Content intent, so enable it under Bot &gt; Privileged Gateway Intents or the login fails. Invite the bot with the <code>bot</code> and <code>applications.commands</code> scopes.</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="git clone https://github.com/stafawashere/ledger.git
+cd ledger
+uv sync"><pre>git clone https://github.com/stafawashere/ledger.git
+<span class="pl-c1">cd</span> ledger
+uv sync</pre></div>
+<p dir="auto">Create a <code>.env</code> file in the project root:</p>
+<div class="highlight highlight-source-dotenv notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="DISCORD_TOKEN=your_bot_token"><pre><span class="pl-v">DISCORD_TOKEN</span><span class="pl-k">=</span><span class="pl-s">your_bot_token</span></pre></div>
+<p dir="auto">Run it from the project root, since the cog folder and <code>ledger.json</code> are found by relative path:</p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="uv run bot.py"><pre>uv run bot.py</pre></div>
+<p dir="auto">On startup it loads every folder in <code>cogs/</code> and syncs the slash commands. While it's running, it watches <code>cogs/</code> with <a href="https://github.com/samuelcolvin/watchfiles">watchfiles</a> and reloads a cog when one of its files changes, so I didn't have to restart it while working on the UI.</p>
+<div class="markdown-heading" dir="auto"><h2 class="heading-element" dir="auto">Layout</h2><a id="user-content-layout" class="anchor" aria-label="Permalink: Layout" href="#user-content-layout"><svg data-component="Octicon" class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="bot.py               startup, cog loading, hot reload
+cogs/ledger/         /ledger, /wipe, balance and history export
+cogs/tab/            /tab, /associate
+cogs/assets/         /assets, /asset
+utility/database.py  TinyDB tables and the history log
+utility/embeds.py    embed helpers
+utility/views.py     dropdown wrapper
+utility/__init__.py  ID generation, number parsing and formatting"><pre class="notranslate"><code>bot.py               startup, cog loading, hot reload
+cogs/ledger/         /ledger, /wipe, balance and history export
+cogs/tab/            /tab, /associate
+cogs/assets/         /assets, /asset
+utility/database.py  TinyDB tables and the history log
+utility/embeds.py    embed helpers
+utility/views.py     dropdown wrapper
+utility/__init__.py  ID generation, number parsing and formatting
+</code></pre></div>
+</article></div>
