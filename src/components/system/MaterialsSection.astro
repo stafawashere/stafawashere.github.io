@@ -1,0 +1,168 @@
+---
+import { Image } from "astro:assets";
+import portrait from "@/assets/images/portrait.webp";
+import { materials, portraitLayers, portraitNote, sectionLabels } from "@/data/identity";
+---
+
+<section class="materials" aria-labelledby="materials-label">
+   <h2 id="materials-label" class="ss label">
+      {sectionLabels.materials}
+   </h2>
+
+   <ul class="chips">
+      {materials.map((material) => (
+         <li class="chip-item">
+            <div
+               class:list={["chip", material.texture, { outlined: material.outlined }]}
+               style={`background-color: var(${material.token})`}
+               aria-hidden="true"
+            />
+            <span class="ss chip-name">{material.name}</span>
+         </li>
+      ))}
+   </ul>
+
+   <div class="human-layer">
+      <div class="stack" aria-hidden="true">
+         <div class="layer canvas"></div>
+         <div class="layer routing"></div>
+         <div class="layer substrate"></div>
+         <Image src={portrait} alt="" width={300} class="cutout" />
+         <div class="contact"></div>
+      </div>
+
+      <ol class="ss layers">
+         {portraitLayers.map((layer) => (
+            <li>{layer}</li>
+         ))}
+         <li class="layer-note">{portraitNote}</li>
+      </ol>
+   </div>
+</section>
+
+<style>
+   .materials {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+   }
+
+   .label {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--violet-link);
+   }
+
+   .chips {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+   .chip-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+   }
+
+   .chip {
+      height: 64px;
+   }
+
+   .chip.outlined {
+      box-shadow: inset 0 0 0 1px var(--rule);
+   }
+
+   .chip-name {
+      font-size: 10px;
+   }
+
+   .human-layer {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--titanium);
+   }
+
+   .stack {
+      position: relative;
+      height: 230px;
+   }
+
+   .layer {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+   }
+
+   .canvas {
+      left: 0;
+      top: 0;
+      background: var(--ceramic);
+      box-shadow: inset 0 0 0 1px var(--rule);
+   }
+
+   .routing {
+      left: 14px;
+      top: 20px;
+      border: 1px solid var(--violet-signal);
+   }
+
+   .substrate {
+      left: 28px;
+      top: 40px;
+      background: var(--graphite);
+      clip-path: polygon(0 14%, 10% 0, 100% 0, 100% 86%, 88% 100%, 0 100%);
+   }
+
+   .stack :global(.cutout) {
+      position: absolute;
+      width: 150px;
+      left: 34px;
+      top: 30px;
+      height: auto;
+   }
+
+   .contact {
+      position: absolute;
+      left: 50px;
+      top: 196px;
+      width: 40px;
+      height: 4px;
+      background: var(--titanium);
+   }
+
+   .layers {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--graphite);
+   }
+
+   .layer-note {
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      color: var(--ink);
+   }
+
+   @media (max-width: 500px) {
+      .chips {
+         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .human-layer {
+         grid-template-columns: minmax(0, 1fr);
+      }
+   }
+</style>

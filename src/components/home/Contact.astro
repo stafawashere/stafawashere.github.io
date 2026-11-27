@@ -1,0 +1,244 @@
+---
+import { Image } from "astro:assets";
+import portrait from "@/assets/images/portrait.webp";
+import Monogram from "@/components/ui/Monogram.astro";
+import { contacts, profile } from "@/data/profile";
+---
+
+<section id="contact" class="contact on-dark" aria-labelledby="contact-title">
+   <div class="grain grain-layer" aria-hidden="true"></div>
+   <div class="wrap inner">
+      <div class="g12 grid">
+         <div class="s6 intro">
+            <div class="portrait-frame" aria-hidden="true">
+               <div class="grain backing"></div>
+               <div class="ledge"></div>
+               <Image src={portrait} alt="" widths={[208, 416]} sizes="208px" class="portrait" />
+               <span class="brushed contact-strip"></span>
+            </div>
+            <div class="lead">
+               <h2 id="contact-title" class="h2">
+                  Get in touch.
+               </h2>
+               <p class="note">For research, internships or collaboration. Email is fastest.</p>
+            </div>
+         </div>
+         <div class="s6 connector">
+            <div class="brushed edge" aria-hidden="true"></div>
+            <ul class="rows">
+               {contacts.map((contact) => (
+                  <li>
+                     <a href={contact.href} class="row">
+                        <span class="pin" aria-hidden="true" />
+                        <span class="ss key">{contact.label}</span>
+                        <span class="value">{contact.value}</span>
+                        <span aria-hidden="true">↗</span>
+                     </a>
+                  </li>
+               ))}
+            </ul>
+         </div>
+      </div>
+      <footer class="footer">
+         <div class="sign">
+            <Monogram
+               width={30}
+               stroke="var(--on-dark)"
+               via="var(--violet-glow)"
+               withPads={false}
+            />
+            <span class="ss small">
+               {profile.name} · {profile.location}
+            </span>
+         </div>
+         <span class="ss small">{profile.motto}</span>
+      </footer>
+   </div>
+</section>
+
+<style>
+   .contact {
+      position: relative;
+      margin-top: 112px;
+   }
+
+   .inner {
+      position: relative;
+      padding-top: 96px;
+      padding-bottom: 64px;
+   }
+
+   .grid {
+      align-items: end;
+      row-gap: 48px;
+   }
+
+   .intro {
+      display: flex;
+      gap: 28px;
+      align-items: flex-end;
+   }
+
+   .portrait-frame {
+      position: relative;
+      flex: none;
+      width: 208px;
+      height: 252px;
+   }
+
+   .backing {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 72%;
+      background-color: var(--graphite-raised);
+      clip-path: polygon(
+         0 12%,
+         10% 0,
+         100% 0,
+         100% calc(100% - 24px),
+         calc(100% - 24px) 100%,
+         0 100%
+      );
+   }
+
+   .ledge {
+      position: absolute;
+      left: 21px;
+      right: 0;
+      bottom: 72%;
+      height: 1px;
+      background: var(--trace-dim);
+   }
+
+   .portrait-frame :global(.portrait) {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
+   }
+
+   .contact-strip {
+      position: absolute;
+      left: 0;
+      bottom: 40px;
+      width: 5px;
+      height: 60px;
+      background-color: var(--titanium);
+   }
+
+   .lead {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+   }
+
+   .h2 {
+      font-size: 64px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+   }
+
+   .note {
+      max-width: 34ch;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--on-dark-soft);
+   }
+
+   .connector {
+      display: flex;
+   }
+
+   .edge {
+      flex: none;
+      width: 14px;
+      background-color: var(--titanium);
+      clip-path: polygon(0 10px, 100% 0, 100% 100%, 0 calc(100% - 10px));
+   }
+
+   .rows {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--trace-dark);
+   }
+
+   .contact .row {
+      display: grid;
+      grid-template-columns: 22px 76px minmax(0, 1fr) 20px;
+      gap: 14px;
+      align-items: center;
+      min-height: 44px;
+      padding: 18px 0;
+      color: var(--on-dark);
+      border-bottom: 1px solid var(--trace-dark);
+   }
+
+   .contact .row:hover {
+      color: var(--violet-mist);
+   }
+
+   .pin {
+      width: 22px;
+      height: 6px;
+      background: var(--titanium);
+      transition: background-color var(--dur-fast) ease;
+   }
+
+   .row:hover .pin {
+      background: var(--violet-glow);
+   }
+
+   .key {
+      font-size: 11px;
+      color: var(--on-dark-muted);
+   }
+
+   .value {
+      font-size: 18px;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+   }
+
+   .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 88px;
+      padding-top: 22px;
+      border-top: 1px solid var(--trace-dark);
+   }
+
+   .sign {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+   }
+
+   .small {
+      font-size: 11px;
+      color: var(--on-dark-muted);
+   }
+
+   @media (max-width: 700px) {
+      .intro {
+         flex-direction: column;
+         align-items: flex-start;
+      }
+
+      .h2 {
+         font-size: 38px;
+      }
+   }
+</style>

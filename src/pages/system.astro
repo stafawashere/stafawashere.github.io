@@ -1,0 +1,101 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import TopBar from "@/components/research/TopBar.astro";
+import CircuitSection from "@/components/system/CircuitSection.astro";
+import MarkSection from "@/components/system/MarkSection.astro";
+import MaterialsSection from "@/components/system/MaterialsSection.astro";
+import PaletteSection from "@/components/system/PaletteSection.astro";
+import TypeSection from "@/components/system/TypeSection.astro";
+import { identityPage } from "@/data/identity";
+
+const crumbs = [{ label: "Identity system" }];
+---
+
+<BaseLayout title="Identity system" description={identityPage.description}>
+   <TopBar {crumbs} />
+
+   <main id="main" class="wrap sheet">
+      <header class="sheet-head">
+         <div class="title-block">
+            <span class="ss kicker">{identityPage.kicker}</span>
+            <h1 class="title">{identityPage.title}</h1>
+         </div>
+         <span class="ss kicker">{identityPage.revision}</span>
+      </header>
+
+      <PaletteSection />
+
+      <div class="pair">
+         <TypeSection />
+         <MarkSection />
+      </div>
+
+      <div class="pair">
+         <CircuitSection />
+         <MaterialsSection />
+      </div>
+   </main>
+</BaseLayout>
+
+<style>
+   .sheet {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+      padding-top: 72px;
+      padding-bottom: 96px;
+   }
+
+   .sheet-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid var(--graphite);
+   }
+
+   .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .kicker {
+      font-size: 11px;
+      color: var(--ink-muted);
+   }
+
+   .title {
+      font-size: 64px;
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+      font-weight: 600;
+   }
+
+   .pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 56px;
+   }
+
+   @media (max-width: 1100px) {
+      .pair {
+         grid-template-columns: minmax(0, 1fr);
+      }
+   }
+
+   @media (max-width: 700px) {
+      .sheet {
+         gap: 48px;
+         padding-top: 48px;
+         padding-bottom: 64px;
+      }
+
+      .title {
+         font-size: 44px;
+      }
+   }
+</style>

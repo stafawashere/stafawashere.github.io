@@ -1,0 +1,46 @@
+---
+interface Props {
+   index: string;
+   label: string;
+   tone?: "light" | "dark";
+}
+
+const { index, label, tone = "light" } = Astro.props;
+---
+
+<span class:list={["ss", "section-label", tone]}>
+   <span class="index">{index}</span>
+   <span class="rule" aria-hidden="true"></span>
+   {label}
+</span>
+
+<style>
+   .section-label {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      color: var(--ink-muted);
+   }
+
+   .index {
+      color: var(--graphite);
+   }
+
+   .rule {
+      width: 56px;
+      height: 1px;
+      background: var(--graphite);
+   }
+
+   .dark {
+      color: var(--on-dark-muted);
+   }
+
+   .dark .index {
+      color: var(--on-dark);
+   }
+
+   .dark .rule {
+      background: var(--on-dark);
+   }
+</style>

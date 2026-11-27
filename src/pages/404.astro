@@ -1,0 +1,52 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SiteHeader from "@/components/layout/SiteHeader.astro";
+---
+
+<BaseLayout title="Not found">
+   <SiteHeader />
+   <main id="main" class="wrap missing">
+      <span class="ss">Error 404 · no route</span>
+      <h1>This trace ends here.</h1>
+      <p>The page you asked for isn’t on this board.</p>
+      <a href="/" class="tap">
+         Back to the homepage
+      </a>
+   </main>
+</BaseLayout>
+
+<style>
+   .missing {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 120px;
+      padding-bottom: 160px;
+   }
+
+   .ss {
+      color: var(--ink-muted);
+   }
+
+   h1 {
+      font-size: 64px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 600;
+   }
+
+   p {
+      font-size: 18px;
+      color: var(--ink);
+   }
+
+   a {
+      font-weight: 600;
+   }
+
+   @media (max-width: 700px) {
+      h1 {
+         font-size: 42px;
+      }
+   }
+</style>

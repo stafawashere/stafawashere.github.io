@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import FramesSection from "@/components/research/FramesSection.astro";
+import NextNav from "@/components/research/NextNav.astro";
+import PaperBody from "@/components/research/PaperBody.astro";
+import TitleSection from "@/components/research/TitleSection.astro";
+import TopBar from "@/components/research/TopBar.astro";
+import { researchPage, study } from "@/data/research";
+
+const crumbs = [{ label: "Research", href: "/#research" }, { label: study.id }];
+---
+
+<BaseLayout title={study.title} description={researchPage.description}>
+   <TopBar {crumbs} />
+
+   <main id="main">
+      <TitleSection />
+      <FramesSection />
+      <PaperBody />
+   </main>
+
+   <NextNav />
+</BaseLayout>

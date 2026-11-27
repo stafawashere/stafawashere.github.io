@@ -1,0 +1,64 @@
+---
+import { limitsSection } from "@/data/research";
+---
+
+<section id="limits" class="on-dark limits" aria-labelledby="limits-title">
+   <div class="grain grain-layer" aria-hidden="true"></div>
+   <span class="ss label">{limitsSection.label}</span>
+   <h2 id="limits-title" class="serif statement">
+      {limitsSection.statement}
+   </h2>
+   <ul class="items">
+      {limitsSection.items.map((item) => (
+         <li>{item}</li>
+      ))}
+   </ul>
+</section>
+
+<style>
+   .limits {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 36px 36px 40px;
+      scroll-margin-top: 24px;
+   }
+
+   .label,
+   .statement,
+   .items {
+      position: relative;
+   }
+
+   .label {
+      color: var(--on-dark-muted);
+   }
+
+   .statement {
+      font-size: 34px;
+      line-height: 1.2;
+   }
+
+   .items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 64ch;
+      margin: 0;
+      padding: 0 0 0 18px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--on-dark-soft);
+   }
+
+   @media (max-width: 700px) {
+      .limits {
+         padding: 28px 22px 32px;
+      }
+
+      .statement {
+         font-size: 28px;
+      }
+   }
+</style>

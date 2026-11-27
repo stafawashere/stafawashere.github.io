@@ -1,0 +1,111 @@
+---
+import { projectIndex } from "@/data/projects";
+---
+
+<div id="index" class="index">
+   <div class="ss heading">
+      <h3 class="label">Project index</h3>
+      <span>{projectIndex.length} entries</span>
+   </div>
+   <ul class="rows">
+      {projectIndex.map((project) => (
+         <li>
+            <a href={project.url} class="row">
+               <span class="ss id">{project.id}</span>
+               <span class="name">{project.name}</span>
+               <span class="ss kind">{project.kind}</span>
+               <span class="tech">{project.tech}</span>
+               <span class="ss date">{project.date}</span>
+            </a>
+         </li>
+      ))}
+   </ul>
+</div>
+
+<style>
+   .index {
+      margin-top: 96px;
+      scroll-margin-top: 24px;
+   }
+
+   .heading {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      color: var(--ink-muted);
+      border-bottom: 1.5px solid var(--graphite);
+   }
+
+   .label {
+      font: inherit;
+      color: var(--graphite);
+   }
+
+   .rows {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+   .row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1.6fr) minmax(0, 1.2fr) minmax(0, 2.4fr) 120px;
+      column-gap: 20px;
+      align-items: baseline;
+      padding: 15px 0;
+      color: var(--graphite);
+      border-bottom: 1px solid var(--titanium);
+      transition: background-color var(--dur-fast) ease;
+   }
+
+   .row:hover {
+      background: var(--substrate);
+   }
+
+   .id,
+   .date {
+      font-size: 11px;
+      color: var(--ink-muted);
+   }
+
+   .date {
+      font-size: 10px;
+      text-align: right;
+   }
+
+   .name {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+   }
+
+   .kind {
+      font-size: 10px;
+      color: var(--violet-link);
+   }
+
+   .tech {
+      font-size: 14px;
+      color: var(--ink);
+   }
+
+   @media (max-width: 1024px) {
+      .row {
+         grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1fr) 100px;
+      }
+
+      .tech {
+         display: none;
+      }
+   }
+
+   @media (max-width: 700px) {
+      .row {
+         grid-template-columns: 56px minmax(0, 1fr) 88px;
+      }
+
+      .kind {
+         display: none;
+      }
+   }
+</style>

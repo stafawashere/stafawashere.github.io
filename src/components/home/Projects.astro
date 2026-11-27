@@ -1,0 +1,655 @@
+---
+import { Image } from "astro:assets";
+import ProjectIndex from "./ProjectIndex.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import distributionShot from "@/assets/images/projects/distribution-network.webp";
+import inspectShot from "@/assets/images/projects/inspect-workflow.webp";
+import spicetifyShot from "@/assets/images/projects/spicetify.webp";
+import sujoodShot from "@/assets/images/projects/sujood.webp";
+import trashyShot from "@/assets/images/projects/trashy-apocalypse.webp";
+import webappReShot from "@/assets/images/projects/webapp-re.webp";
+import { projectById, projectIndex } from "@/data/projects";
+
+const disky = projectById("PRJ-03");
+const distribution = projectById("PRJ-04");
+const trashy = projectById("PRJ-05");
+const inspect = projectById("PRJ-07");
+const webappRe = projectById("PRJ-08");
+const sujood = projectById("PRJ-09");
+const spicetify = projectById("PRJ-06");
+const smallProjects = [
+   {
+      project: projectById("PRJ-10"),
+      kind: "VS Code extension",
+      blurb: "Shell tasks for a whole team, one click each, kept in a plain JSON file.",
+   },
+   {
+      project: projectById("PRJ-11"),
+      kind: "Discord bot",
+      blurb: "Balances and inventory through slash commands, with an exportable history.",
+   },
+];
+---
+
+<section id="projects" class="wrap projects">
+   <SectionHeading index="03" label="Projects" title="Built from the protocol up." maxCh={16}>
+      <a href="#index" class="ss tap all">
+         All {projectIndex.length} projects ↘
+      </a>
+   </SectionHeading>
+
+   <div class="g12 features">
+      <article class="s5 card-dark disky">
+         <div class="grain grain-layer" aria-hidden="true"></div>
+         <div class="ss row-between muted">
+            <span>{disky.id} · Python · open source</span>
+            <span>{disky.date}</span>
+         </div>
+         <div class="stat">
+            <span class="bigfig">57</span>
+            <span class="ss muted">
+               event types
+               <br />
+               parsed from scratch
+            </span>
+         </div>
+         <div class="wire" aria-hidden="true">
+            <span class="ss node">Discord</span>
+            <span class="line"></span>
+            <span class="ss muted">WebSocket + HTTP</span>
+            <span class="line"></span>
+            <span class="ss node solid">Disky</span>
+         </div>
+         <div class="body">
+            <h3 class="h3">{disky.name}</h3>
+            <p>
+               A Discord library written over raw WebSockets and HTTP instead of an existing
+               wrapper. It handles the connection, heartbeat, reconnects and sessions on its own.
+            </p>
+            <a href={disky.url} class="tap source">
+               Source ↗
+            </a>
+         </div>
+      </article>
+
+      <article class="s7 signal-card distribution">
+         <svg class="trace" aria-hidden="true" viewBox="0 0 800 10" preserveAspectRatio="none">
+            <path
+               d="M0 5H800"
+               stroke="var(--rule)"
+               stroke-width="1"
+               vector-effect="non-scaling-stroke"
+            ></path>
+            <path
+               class="sig"
+               d="M0 5H800"
+               stroke="var(--violet-signal)"
+               stroke-width="2"
+               vector-effect="non-scaling-stroke"
+            ></path>
+         </svg>
+         <figure class="window">
+            <div class="chrome">
+               <span class="light lit" aria-hidden="true"></span>
+               <span class="light" aria-hidden="true"></span>
+               <span class="light" aria-hidden="true"></span>
+               <figcaption class="ss">FIG. 03 · admin dashboard · real screenshot</figcaption>
+            </div>
+            <Image
+               src={distributionShot}
+               alt="Distribution Network admin dashboard: revenue, profit, pending sales, top products and resellers, recent sales and stock movements."
+               widths={[640, 960, 1600]}
+               sizes="(max-width: 1024px) 100vw, 760px"
+               class="shot"
+            />
+         </figure>
+         <div class="split">
+            <div class="stack">
+               <span class="ss small-muted">
+                  {distribution.id} · Full-stack · {distribution.date}
+               </span>
+               <h3 class="h3">{distribution.name}</h3>
+               <span class="ss tech">{distribution.tech}</span>
+            </div>
+            <div class="stack">
+               <p class="ink">
+                  Separate portals for a distributor and its resellers: inventory, bulk pricing
+                  tiers, sales approval and a revenue dashboard. Every stock change is written in
+                  the same transaction as the count, so the history can’t drift.
+               </p>
+               <a href={distribution.url} class="tap strong">
+                  Source ↗
+               </a>
+            </div>
+         </div>
+      </article>
+
+      <article class="s12 trashy">
+         <figure class="registered">
+            <Image
+               src={trashyShot}
+               alt="Trashy Apocalypse level map: a top-down pixel-art wasteland with stone walls and toxic barrels."
+               widths={[450, 900]}
+               sizes="(max-width: 1024px) 100vw, 760px"
+               class="shot pixelated"
+            />
+            <span class="corner top-left" aria-hidden="true"></span>
+            <span class="corner bottom-right" aria-hidden="true"></span>
+            <figcaption class="ss small-ink">FIG. 04 · level background, from the repo</figcaption>
+         </figure>
+         <div class="stack">
+            <span class="ss small-muted">
+               {trashy.id} · Lead programmer · AP CSP team · {trashy.date}
+            </span>
+            <h3 class="h3 large">{trashy.name}</h3>
+            <p class="ink">
+               A top-down zombie shooter on Python’s Arcade library. I wrote the code, including a
+               layered audio engine and saved high scores. It was our school’s entry in its annual
+               arts event.
+            </p>
+            <a href={trashy.url} class="tap strong">
+               Source ↗
+            </a>
+         </div>
+      </article>
+
+      <div class="s12 cluster">
+         <div class="ss cluster-head">
+            <h3 class="cluster-title">Developer tools and smaller projects</h3>
+            <span>Feb 2026–present</span>
+         </div>
+         <div class="g12 cluster-grid">
+            <article class="s7 stack wide">
+               <Image
+                  src={spicetifyShot}
+                  alt="Spotify desktop with the extensions: album-colored theme, a large cover and a library grid."
+                  widths={[640, 960, 1600]}
+                  sizes="(max-width: 1024px) 100vw, 760px"
+                  class="shot outlined"
+               />
+               <div class="split">
+                  <div class="stack tight">
+                     <span class="ss small-muted">{spicetify.id} · Spotify client mods</span>
+                     <h4 class="h4">{spicetify.name}</h4>
+                  </div>
+                  <div class="stack">
+                     <p class="ink small">
+                        Profiled the Spotify client over DevTools and cut an animation from half a
+                        CPU core to 13%.
+                     </p>
+                     <div
+                        class="cpu"
+                        role="img"
+                        aria-label="CPU share of one core: about 50 percent before, 13 percent after"
+                     >
+                        <span class="ss">Before</span>
+                        <span class="track">
+                           <span class="fill" style="width: 50%"></span>
+                        </span>
+                        <span class="ss">~50%</span>
+                        <span class="ss">After</span>
+                        <span class="track">
+                           <span class="fill after" style="width: 13%"></span>
+                        </span>
+                        <span class="ss after-label">13%</span>
+                     </div>
+                  </div>
+               </div>
+            </article>
+
+            <article class="s5 stack">
+               <Image
+                  src={inspectShot}
+                  alt="Inspect Workflow showing a Claude Code transcript as a readable conversation with a sidebar of agent runs."
+                  widths={[480, 960, 1600]}
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  class="shot outlined"
+               />
+               <span class="ss small-muted">{inspect.id} · Python · one HTML page</span>
+               <h4 class="h4">
+                  <a href={inspect.url}>{inspect.name}</a>
+               </h4>
+               <p class="ink small">
+                  Follows live Claude Code transcripts over SSE, grouping subagents and workflow
+                  runs as they happened. Standard library only.
+               </p>
+            </article>
+
+            <article class="s4 stack">
+               <Image
+                  src={webappReShot}
+                  alt="webapp-re banner with the tagline Never pay for an API again."
+                  widths={[450, 900]}
+                  sizes="(max-width: 1024px) 100vw, 420px"
+                  class="shot outlined"
+               />
+               <span class="ss small-muted">{webappRe.id} · Claude Code plugin</span>
+               <h4 class="h4 small-title">
+                  <a href={webappRe.url}>{webappRe.name}</a>
+               </h4>
+               <p class="ink small">
+                  Finds the private API behind a web app you’re signed into and builds an automation
+                  program for it, holding every data-changing call for approval.
+               </p>
+            </article>
+
+            <article class="s4 stack">
+               <Image
+                  src={sujoodShot}
+                  alt="Sujood page for the standing position: Arabic text, transliteration and a Listen button."
+                  widths={[450, 900]}
+                  sizes="(max-width: 1024px) 100vw, 420px"
+                  class="shot outlined"
+               />
+               <span class="ss small-muted">{sujood.id} · live at sujood.online</span>
+               <h4 class="h4 small-title">
+                  <a href={sujood.url}>{sujood.name}</a>
+               </h4>
+               <p class="ink small">
+                  The eight positions of salah in order, each with the Arabic, a transliteration and
+                  the recitation audio.
+               </p>
+            </article>
+
+            <ul class="s4 mini-list">
+               {smallProjects.map(({ project, kind, blurb }) => (
+                  <li>
+                     <span class="ss small-muted">
+                        {project.id} · {kind}
+                     </span>
+                     <a href={project.url} class="mini-name">
+                        {project.name}
+                     </a>
+                     <span class="ink small">{blurb}</span>
+                  </li>
+               ))}
+            </ul>
+         </div>
+      </div>
+   </div>
+
+   <ProjectIndex />
+</section>
+
+<style>
+   .projects {
+      position: relative;
+      padding-top: 120px;
+   }
+
+   .all {
+      gap: 10px;
+   }
+
+   .features {
+      row-gap: 80px;
+   }
+
+   .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+   }
+
+   .tight {
+      gap: 6px;
+   }
+
+   .h3 {
+      font-size: 32px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+   }
+
+   .h3.large {
+      font-size: 36px;
+   }
+
+   .h4 {
+      font-size: 26px;
+      letter-spacing: -0.025em;
+      font-weight: 600;
+   }
+
+   .h4 a,
+   .mini-name {
+      color: var(--graphite);
+   }
+
+   .h4 a:hover,
+   .mini-name:hover {
+      color: var(--violet-link);
+   }
+
+   .small-title {
+      font-size: 22px;
+      letter-spacing: 0;
+   }
+
+   .ink {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink);
+   }
+
+   .ink.small {
+      font-size: 15px;
+   }
+
+   .small-muted {
+      font-size: 11px;
+      color: var(--ink-muted);
+   }
+
+   .small-ink {
+      font-size: 10px;
+      color: var(--ink);
+      margin-top: 12px;
+   }
+
+   .strong {
+      font-size: 15px;
+      font-weight: 600;
+   }
+
+   .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: 24px;
+   }
+
+   .card-dark {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 36px 32px 32px;
+      background: var(--graphite);
+      color: var(--on-dark);
+      clip-path: polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 0 100%);
+   }
+
+   .card-dark > :not(.grain-layer) {
+      position: relative;
+   }
+
+   .row-between {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 11px;
+   }
+
+   .muted {
+      color: var(--on-dark-muted);
+      font-size: 11px;
+      line-height: 1.6;
+   }
+
+   .stat {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+   }
+
+   .bigfig {
+      font-size: 88px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+   }
+
+   .wire {
+      display: flex;
+      align-items: center;
+   }
+
+   .wire .muted {
+      padding: 0 8px;
+      font-size: 10px;
+   }
+
+   .node {
+      padding: 6px 8px;
+      font-size: 10px;
+      border: 1px solid var(--violet-glow);
+   }
+
+   .node.solid {
+      border-color: var(--titanium);
+      background: var(--titanium);
+      color: var(--graphite);
+   }
+
+   .line {
+      flex: 1;
+      height: 1px;
+      background: var(--violet-glow);
+   }
+
+   .body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .body p {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--on-dark-soft);
+   }
+
+   .source {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--violet-mist);
+   }
+
+   .source:hover {
+      color: var(--on-dark);
+   }
+
+   .signal-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+   }
+
+   .trace {
+      position: absolute;
+      left: 0;
+      top: -14px;
+      width: 100%;
+      height: 10px;
+      overflow: visible;
+   }
+
+   .sig {
+      stroke-dasharray: 28 1400;
+      stroke-dashoffset: 28;
+      opacity: 0;
+      transition:
+         stroke-dashoffset var(--dur-signal) var(--ease-signal),
+         opacity 160ms;
+   }
+
+   .signal-card:hover .sig,
+   .signal-card:focus-within .sig {
+      stroke-dashoffset: -1100;
+      opacity: 1;
+   }
+
+   .window {
+      position: relative;
+      padding: 14px 14px 0;
+      background: var(--graphite);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
+   }
+
+   .chrome {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding-bottom: 10px;
+   }
+
+   .light {
+      width: 8px;
+      height: 8px;
+      background: var(--trace-dark);
+   }
+
+   .light.lit {
+      background: var(--titanium);
+   }
+
+   .chrome figcaption {
+      margin-left: auto;
+      font-size: 9px;
+      color: var(--on-dark-muted);
+   }
+
+   .tech {
+      font-size: 10px;
+      line-height: 1.7;
+      color: var(--ink);
+   }
+
+   .trashy {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: 40px;
+      align-items: center;
+   }
+
+   .registered {
+      position: relative;
+   }
+
+   .pixelated {
+      image-rendering: pixelated;
+   }
+
+   .outlined,
+   .pixelated {
+      box-shadow: 0 0 0 1px var(--rule);
+   }
+
+   .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+   }
+
+   .top-left {
+      left: -10px;
+      top: -10px;
+      border-left: 1px solid var(--graphite);
+      border-top: 1px solid var(--graphite);
+   }
+
+   .bottom-right {
+      right: -10px;
+      top: calc(100% - 46px);
+      border-right: 1px solid var(--graphite);
+      border-bottom: 1px solid var(--graphite);
+   }
+
+   .cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+   }
+
+   .cluster-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 14px;
+      color: var(--ink-muted);
+      border-bottom: 1.5px solid var(--graphite);
+   }
+
+   .cluster-title {
+      font: inherit;
+      color: var(--graphite);
+   }
+
+   .cluster-grid {
+      row-gap: 56px;
+   }
+
+   .wide {
+      gap: 16px;
+   }
+
+   .cpu {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) 40px;
+      gap: 8px 10px;
+      align-items: center;
+   }
+
+   .cpu .ss {
+      font-size: 10px;
+   }
+
+   .track {
+      position: relative;
+      height: 10px;
+      background: var(--substrate);
+   }
+
+   .fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: var(--graphite);
+   }
+
+   .fill.after {
+      background: var(--violet-signal);
+   }
+
+   .after-label {
+      color: var(--violet-link);
+   }
+
+   .mini-list {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--graphite);
+   }
+
+   .mini-list li {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--titanium);
+   }
+
+   .mini-name {
+      font-size: 20px;
+      font-weight: 600;
+   }
+
+   @media (max-width: 700px) {
+      .split,
+      .trashy {
+         grid-template-columns: 1fr;
+         row-gap: 28px;
+      }
+
+      .bigfig {
+         font-size: 46px;
+      }
+   }
+</style>

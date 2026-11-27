@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SiteHeader from "@/components/layout/SiteHeader.astro";
+import Contact from "@/components/home/Contact.astro";
+import EducationSkills from "@/components/home/EducationSkills.astro";
+import Evidence from "@/components/home/Evidence.astro";
+import Experience from "@/components/home/Experience.astro";
+import Hero from "@/components/home/Hero.astro";
+import Projects from "@/components/home/Projects.astro";
+import ResearchFeature from "@/components/home/ResearchFeature.astro";
+import Security from "@/components/home/Security.astro";
+import Service from "@/components/home/Service.astro";
+---
+
+<BaseLayout>
+   <SiteHeader />
+   <main id="main">
+      <Hero />
+      <Evidence />
+      <ResearchFeature />
+      <Security />
+      <Projects />
+      <Experience />
+      <Service />
+      <EducationSkills />
+      <Contact />
+   </main>
+</BaseLayout>

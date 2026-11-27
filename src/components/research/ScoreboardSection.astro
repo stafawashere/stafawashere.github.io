@@ -1,0 +1,101 @@
+---
+import PaperSection from "./PaperSection.astro";
+import { scoreboard, scoreboardSection } from "@/data/research";
+---
+
+<PaperSection id="scoreboard" label={scoreboardSection.label} title={scoreboardSection.title}>
+   <div role="table" aria-label="Scoreboard by phase" class="table">
+      <div role="row" class="score ss head">
+         <span role="columnheader">Phase</span>
+         <span role="columnheader">Produced</span>
+         <span role="columnheader">What came out</span>
+         <span role="columnheader" class="hide-s">
+            What was missing
+         </span>
+      </div>
+      {scoreboard.map((score) => (
+         <div role="row" class="score row">
+            <span role="cell" class="phase">
+               {score.phase}
+            </span>
+            <span role="cell">
+               <span class:list={["ss", "verdict", score.verdict]}>{score.verdict}</span>
+            </span>
+            <span role="cell" class="note">
+               {score.produced}
+            </span>
+            <span role="cell" class="hide-s note">
+               {score.missing}
+            </span>
+         </div>
+      ))}
+   </div>
+</PaperSection>
+
+<style>
+   .table {
+      display: flex;
+      flex-direction: column;
+      margin-top: 4px;
+      border-top: 1.5px solid var(--graphite);
+   }
+
+   .score {
+      display: grid;
+      grid-template-columns: 130px 100px minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: 18px;
+   }
+
+   .head {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--graphite);
+      font-size: 10px;
+      color: var(--ink-muted);
+   }
+
+   .row {
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--titanium);
+      font-size: 15px;
+      line-height: 1.45;
+   }
+
+   .phase {
+      font-weight: 600;
+   }
+
+   .verdict {
+      padding: 3px 7px;
+      font-size: 10px;
+   }
+
+   .verdict.yes {
+      background: var(--graphite);
+      color: var(--ceramic);
+   }
+
+   .verdict.partial {
+      background: var(--titanium);
+      color: var(--graphite);
+   }
+
+   .verdict.no {
+      background: var(--ceramic);
+      color: var(--graphite);
+   }
+
+   .note {
+      color: var(--ink);
+   }
+
+   @media (max-width: 700px) {
+      .score {
+         grid-template-columns: 110px 80px minmax(0, 1fr);
+      }
+
+      .hide-s {
+         display: none;
+      }
+   }
+</style>

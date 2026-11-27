@@ -1,0 +1,96 @@
+---
+import Monogram from "@/components/ui/Monogram.astro";
+import { profile } from "@/data/profile";
+
+interface Crumb {
+   label: string;
+   href?: string;
+}
+
+interface Props {
+   crumbs: Crumb[];
+}
+
+const { crumbs } = Astro.props;
+---
+
+<header class="wrap top-bar">
+   <a href="/" class="home" aria-label="Back to homepage">
+      <Monogram />
+      <span class="ss">{profile.name}</span>
+   </a>
+
+   <nav aria-label="Breadcrumb">
+      <ol class="ss crumbs">
+         {crumbs.map((crumb, index) => {
+            const isLast = index === crumbs.length - 1;
+
+            return (
+               <li>
+                  {crumb.href ? (
+                     <a href={crumb.href} class="tap crumb-link">
+                        {crumb.label}
+                     </a>
+                  ) : (
+                     <span class="current" aria-current={isLast ? "page" : undefined}>
+                        {crumb.label}
+                     </span>
+                  )}
+                  {!isLast && <span aria-hidden="true">/</span>}
+               </li>
+            );
+         })}
+      </ol>
+   </nav>
+</header>
+
+<style>
+   .top-bar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--rule);
+   }
+
+   .home {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 44px;
+      color: var(--graphite);
+   }
+
+   .crumbs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 11px;
+      color: var(--ink-muted);
+   }
+
+   .crumbs li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+   }
+
+   .crumb-link {
+      color: var(--ink-muted);
+   }
+
+   .crumb-link:hover {
+      color: var(--graphite);
+   }
+
+   .current {
+      color: var(--graphite);
+   }
+</style>

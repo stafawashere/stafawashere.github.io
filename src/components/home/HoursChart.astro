@@ -1,0 +1,112 @@
+---
+import { HOURS_SCALE_MAX, weeklyHours } from "@/data/experience";
+import { percentOf } from "@/lib/chart";
+---
+
+<figure class="hours">
+   <figcaption class="ss caption">
+      <span class="title">FIG. 05 · Weekly hours, as listed on the résumé</span>
+      <span>Periods overlap · scale 0–{HOURS_SCALE_MAX}</span>
+   </figcaption>
+   <ul class="rows">
+      {weeklyHours.map((load) => (
+         <li class="row">
+            <span class="label">
+               {load.label} <span class="ss when">{load.when}</span>
+            </span>
+            <span class="bar" aria-hidden="true">
+               <span
+                  class:list={["fill", load.tone]}
+                  style={`width: ${percentOf(load.hours, HOURS_SCALE_MAX)}`}
+               />
+            </span>
+            <span class="ss value">~{load.hours} h</span>
+         </li>
+      ))}
+   </ul>
+</figure>
+
+<style>
+   .hours {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 64px;
+   }
+
+   .caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 12px;
+      font-size: 11px;
+      color: var(--ink);
+      border-bottom: 1.5px solid var(--graphite);
+   }
+
+   .title {
+      color: var(--graphite);
+   }
+
+   .rows {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+   .row {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 64px;
+      column-gap: 20px;
+      align-items: center;
+      padding: 8px 0;
+   }
+
+   .label {
+      font-size: 15px;
+      font-weight: 500;
+   }
+
+   .when {
+      margin-left: 6px;
+      font-size: 10px;
+      color: var(--ink-muted);
+   }
+
+   .bar {
+      position: relative;
+      display: block;
+      height: 12px;
+      background: var(--ceramic);
+      box-shadow: inset 0 0 0 1px var(--rule);
+   }
+
+   .fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: var(--graphite);
+   }
+
+   .fill.care {
+      background: var(--violet-signal);
+   }
+
+   .value {
+      text-align: right;
+   }
+
+   @media (max-width: 700px) {
+      .row {
+         grid-template-columns: minmax(0, 1fr) 48px;
+         row-gap: 6px;
+      }
+
+      .bar {
+         grid-column: 1 / -1;
+         order: 3;
+      }
+   }
+</style>

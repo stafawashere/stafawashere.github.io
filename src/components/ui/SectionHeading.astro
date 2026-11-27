@@ -1,0 +1,52 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+
+interface Props {
+   index: string;
+   label: string;
+   title: string;
+   maxCh?: number;
+}
+
+const { index, label, title, maxCh = 17 } = Astro.props;
+---
+
+<div class="section-heading">
+   <div class="lead">
+      <SectionLabel {index} {label} />
+      <h2 class="h2" style={`max-width: ${maxCh}ch`}>
+         {title}
+      </h2>
+   </div>
+   <slot />
+</div>
+
+<style>
+   .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+   }
+
+   .lead {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+   }
+
+   .h2 {
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+   }
+
+   @media (max-width: 700px) {
+      .h2 {
+         font-size: 38px;
+      }
+   }
+</style>

@@ -1,0 +1,176 @@
+---
+import HumanLayer from "./HumanLayer.astro";
+import StrandBus from "./StrandBus.astro";
+import { profile } from "@/data/profile";
+---
+
+<section id="top" class="wrap hero">
+   <div class="g12 hero-grid">
+      <div class="s7 intro">
+         <p class="ss meta">
+            <span class="here">{profile.location}</span>
+            <span class="dash" aria-hidden="true"></span>
+            <span>{profile.school}</span>
+            <span class="dash" aria-hidden="true"></span>
+            <span>{profile.dualEnrollment}</span>
+         </p>
+         <h1 class="h1">
+            {profile.firstName}
+            <br />
+            {profile.lastName}
+            <span class="dot" aria-hidden="true"></span>
+         </h1>
+         <p class="tagline">{profile.tagline}</p>
+         <div class="actions">
+            <a href={profile.resumePath} class="btn btn-dark">
+               <span class="pins" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+               </span>
+               Résumé, one page
+            </a>
+            <a href="#research" class="btn btn-line">
+               Read the research
+            </a>
+         </div>
+      </div>
+      <div class="s5">
+         <HumanLayer />
+      </div>
+   </div>
+   <StrandBus />
+</section>
+
+<style>
+   .hero {
+      position: relative;
+      padding-top: 48px;
+   }
+
+   .hero-grid {
+      align-items: end;
+   }
+
+   .intro {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding-bottom: 40px;
+   }
+
+   .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+      color: var(--ink-muted);
+   }
+
+   .here {
+      color: var(--graphite);
+   }
+
+   .dash {
+      width: 24px;
+      height: 1px;
+      background: var(--rule);
+   }
+
+   .h1 {
+      font-size: 108px;
+      line-height: 0.88;
+      letter-spacing: -0.052em;
+      font-weight: 600;
+   }
+
+   .dot {
+      display: inline-block;
+      width: 0.15em;
+      height: 0.15em;
+      margin-left: 0.06em;
+      border-radius: 50%;
+      background: var(--violet-signal);
+      box-shadow: inset 0 0 0 0.03em var(--graphite);
+   }
+
+   .tagline {
+      max-width: 33ch;
+      font-size: 23px;
+      line-height: 1.42;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+   }
+
+   .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      align-items: center;
+   }
+
+   .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+      font-size: 16px;
+      transition:
+         background-color var(--dur-fast) ease,
+         color var(--dur-fast) ease,
+         transform 100ms ease;
+   }
+
+   .btn:active {
+      transform: translateY(1px);
+   }
+
+   .btn-dark {
+      padding: 0 22px 0 18px;
+      font-weight: 600;
+      background: var(--graphite);
+      color: var(--on-dark);
+      clip-path: polygon(
+         0 0,
+         calc(100% - 14px) 0,
+         100% 14px,
+         100% 100%,
+         14px 100%,
+         0 calc(100% - 14px)
+      );
+   }
+
+   .btn-dark:hover {
+      background: var(--violet-link);
+      color: var(--on-dark);
+   }
+
+   .pins {
+      display: inline-flex;
+      gap: 3px;
+   }
+
+   .pins span {
+      width: 3px;
+      height: 14px;
+      background: var(--titanium);
+   }
+
+   .btn-line {
+      min-height: 44px;
+      font-weight: 500;
+      color: var(--graphite);
+      border-bottom: 1px solid var(--graphite);
+   }
+
+   .btn-line:hover {
+      color: var(--violet-link);
+      border-color: var(--violet-link);
+   }
+
+   @media (max-width: 700px) {
+      .h1 {
+         font-size: 62px;
+      }
+   }
+</style>

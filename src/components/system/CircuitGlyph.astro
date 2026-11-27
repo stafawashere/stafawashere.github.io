@@ -1,0 +1,139 @@
+---
+import type { GlyphKind } from "@/data/identity";
+
+interface Props {
+   kind: GlyphKind;
+}
+
+const { kind } = Astro.props;
+---
+
+{kind === "chamfered-aperture" ? (
+   <div class="aperture" aria-hidden="true" />
+) : (
+   <svg width="140" height="70" viewBox="0 0 140 70" aria-hidden="true">
+      {kind === "primary-trace" && <path class="primary" d="M10 50H60L84 26H130" />}
+      {kind === "secondary-bus" && (
+         <g class="bus">
+            <path d="M10 42H60L76 26H130" />
+            <path d="M10 50H64L80 34H130" />
+            <path d="M10 58H68L84 42H130" />
+         </g>
+      )}
+      {kind === "subsurface-route" && <path class="subsurface" d="M10 50H56L86 20H130" />}
+      {kind === "pad-and-via" && (
+         <>
+            <path class="pad-trace" d="M20 35H96" />
+            <circle class="via" cx="100" cy="35" r="4" />
+            <rect class="pad" x="14" y="31" width="8" height="8" />
+         </>
+      )}
+      {kind === "connector-edge" && (
+         <g class="contacts">
+            <rect x="20" y="20" width="12" height="30" />
+            <rect x="40" y="20" width="12" height="30" />
+            <rect x="60" y="20" width="12" height="30" />
+            <rect x="80" y="20" width="12" height="30" />
+            <rect x="100" y="20" width="12" height="30" />
+         </g>
+      )}
+      {kind === "registration" && (
+         <>
+            <path class="corners" d="M30 20h14M30 20v14M110 50H96M110 50V36" />
+            <path class="cross" d="M70 28v14M63 35h14" />
+         </>
+      )}
+      {kind === "signal" && (
+         <>
+            <path class="signal-rail" d="M10 35H130" />
+            <path class="signal-pulse" d="M10 35H130" />
+         </>
+      )}
+   </svg>
+)}
+
+<style>
+   svg {
+      max-width: 100%;
+      height: auto;
+   }
+
+   path,
+   g {
+      fill: none;
+   }
+
+   .primary {
+      stroke: var(--graphite);
+      stroke-width: 1.5;
+   }
+
+   .bus path {
+      stroke: var(--trace-dim);
+      stroke-width: 0.9;
+   }
+
+   .subsurface {
+      stroke: var(--graphite-raised);
+      stroke-width: 7;
+   }
+
+   .pad-trace {
+      stroke: var(--graphite);
+      stroke-width: 1.4;
+   }
+
+   .via {
+      fill: var(--ceramic);
+      stroke: var(--graphite);
+      stroke-width: 1.4;
+   }
+
+   .pad {
+      fill: var(--graphite);
+   }
+
+   .contacts {
+      fill: var(--titanium);
+   }
+
+   .corners {
+      stroke: var(--graphite);
+      stroke-width: 1;
+   }
+
+   .cross {
+      stroke: var(--rule);
+      stroke-width: 1;
+   }
+
+   .signal-rail {
+      stroke: var(--rule);
+      stroke-width: 1;
+   }
+
+   .signal-pulse {
+      stroke: var(--violet-signal);
+      stroke-width: 2;
+      stroke-dasharray: 28 200;
+      stroke-dashoffset: -60;
+      transition: stroke-dashoffset var(--dur-signal) var(--ease-signal);
+   }
+
+   :global(.tile:hover) .signal-pulse {
+      stroke-dashoffset: -80;
+   }
+
+   .aperture {
+      width: 100px;
+      height: 56px;
+      background: var(--graphite);
+      clip-path: polygon(0 18%, 12% 0, 58% 0, 64% 10%, 100% 10%, 100% 80%, 86% 100%, 0 100%);
+   }
+
+   @media (prefers-reduced-motion: reduce) {
+      .signal-pulse {
+         transition: none;
+      }
+   }
+</style>

@@ -1,0 +1,64 @@
+---
+import { nextProject } from "@/data/research";
+---
+
+<nav class="next-band" aria-label="More work">
+   <div class="grain grain-layer" aria-hidden="true"></div>
+
+   <div class="wrap inner">
+      <a href="/#research" class="ss tap back">
+         <span aria-hidden="true">←</span>&nbsp;Homepage
+      </a>
+      <a href={nextProject.href} class="next">
+         <span class="ss kicker">{nextProject.kicker}</span>
+         <span class="title">
+            {nextProject.title} <span aria-hidden="true">→</span>
+         </span>
+      </a>
+   </div>
+</nav>
+
+<style>
+   .next-band {
+      position: relative;
+      background: var(--substrate);
+   }
+
+   .inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 48px;
+      padding-bottom: 48px;
+   }
+
+   .back {
+      color: var(--graphite);
+   }
+
+   .next {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--graphite);
+      text-align: right;
+   }
+
+   .next:hover .title {
+      color: var(--violet-link);
+   }
+
+   .kicker {
+      font-size: 11px;
+      color: var(--ink);
+   }
+
+   .title {
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+   }
+</style>

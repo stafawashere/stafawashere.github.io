@@ -1,0 +1,99 @@
+---
+import Monogram from "@/components/ui/Monogram.astro";
+import { profile } from "@/data/profile";
+
+const sections = [
+   { href: "/#research", label: "Research", compact: false },
+   { href: "/#security", label: "Security", compact: false },
+   { href: "/#projects", label: "Projects", compact: true },
+   { href: "/#experience", label: "Experience", compact: true },
+   { href: "/#education", label: "Education", compact: false },
+];
+---
+
+<header class="wrap site-header">
+   <a href="/" aria-label={`${profile.name}, home`} class="home tap">
+      <Monogram />
+      <span class="ss hide-m">{profile.name}</span>
+   </a>
+   <nav aria-label="Primary">
+      <ul class="links">
+         {sections.map((section) => (
+            <li class:list={{ "hide-m": !section.compact }}>
+               <a href={section.href} class="tap">
+                  {section.label}
+               </a>
+            </li>
+         ))}
+         <li>
+            <a href={profile.resumePath} class="tap resume">
+               Résumé<span class="ss">PDF</span>
+            </a>
+         </li>
+      </ul>
+   </nav>
+</header>
+<div class="wrap" aria-hidden="true">
+   <div class="hairline"></div>
+</div>
+
+<style>
+   .site-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      padding-bottom: 20px;
+   }
+
+   .home {
+      gap: 14px;
+      color: var(--graphite);
+   }
+
+   .links {
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+   .links a {
+      color: var(--graphite);
+      font-size: 15px;
+      font-weight: 500;
+   }
+
+   .links a:hover {
+      color: var(--violet-link);
+   }
+
+   .resume {
+      gap: 8px;
+      font-weight: 600 !important;
+      border: 1px solid var(--graphite);
+      padding: 0 14px;
+   }
+
+   .resume .ss {
+      font-size: 10px;
+      color: var(--ink-muted);
+   }
+
+   .hairline {
+      height: 1px;
+      background: var(--rule);
+   }
+
+   @media (max-width: 700px) {
+      .links {
+         gap: 14px;
+      }
+   }
+</style>

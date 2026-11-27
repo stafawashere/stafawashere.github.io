@@ -1,0 +1,76 @@
+---
+import { LAST_FRAME, rmseSeries } from "@/data/research";
+import { plotSeries, toPathData } from "@/lib/chart";
+
+const box = { width: 700, baseline: 84, top: 10 };
+const points = plotSeries(
+   rmseSeries.map((sample) => ({ x: sample.frame, y: sample.rmse })),
+   box,
+);
+const pathData = toPathData(points);
+const peakIndex = rmseSeries.reduce(
+   (best, sample, index) => (sample.rmse > rmseSeries[best]!.rmse ? index : best),
+   0,
+);
+const peakSample = rmseSeries[peakIndex]!;
+const peakPoint = points[peakIndex]!;
+const lastSample = rmseSeries.at(-1)!;
+const lastPoint = points.at(-1)!;
+const label = `RMSE against frame 0 rises from 0 to a peak of ${peakSample.rmse} at frame ${peakSample.frame}, then falls to ${lastSample.rmse} by frame ${LAST_FRAME}.`;
+---
+
+<svg viewBox="0 0 700 100" role="img" aria-label={label} class="chart">
+   <path d={`M0 ${box.baseline}H${box.width}`} stroke="var(--trace-dark)" stroke-width="1"></path>
+   <path
+      d={pathData}
+      fill="none"
+      stroke="var(--violet-glow)"
+      stroke-width="1.6"
+      stroke-linejoin="round"
+   ></path>
+   <g fill="var(--graphite)" stroke="var(--violet-glow)" stroke-width="1.2">
+      {points.map((point, index) => {
+         const isEndpoint = index === 0 || index === points.length - 1;
+         const isPeak = index === peakIndex;
+
+         return isPeak ? null : <circle cx={point.x} cy={point.y} r={isEndpoint ? 3 : 2.5} />;
+      })}
+   </g>
+   <circle cx={peakPoint.x} cy={peakPoint.y} r="4" fill="var(--violet-glow)"></circle>
+   <text x={peakPoint.x + 10} y={peakPoint.y + 4} class="mark bright">
+      F{peakSample.frame} · {peakSample.rmse.toFixed(3)}
+   </text>
+   <text x={box.width} y={lastPoint.y - 9} text-anchor="end" class="mark">
+      F{lastSample.frame} · {lastSample.rmse.toFixed(3)}
+   </text>
+   <text x="0" y="98" class="mark small">
+      FRAME 00
+   </text>
+   <text x={box.width} y="98" text-anchor="end" class="mark small">
+      {LAST_FRAME}
+   </text>
+</svg>
+
+<style>
+   .chart {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+   }
+
+   .mark {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      fill: var(--on-dark-muted);
+   }
+
+   .bright {
+      fill: var(--on-dark);
+   }
+
+   .small {
+      font-size: 9px;
+   }
+</style>

@@ -1,0 +1,168 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { allusion, findings } from "@/data/security";
+---
+
+<section id="security" class="wrap security">
+   <SectionHeading index="02" label="Security research" title={allusion.headline}>
+      <p class="context">
+         <span class="ss scope">
+            Allusion · {allusion.period} · ~{allusion.hoursPerWeek} hrs/week
+         </span>
+         {allusion.context}
+      </p>
+   </SectionHeading>
+
+   <div class="table signal-host">
+      <div class="row ss head" aria-hidden="true">
+         <span>No.</span>
+         <span>What the client controlled</span>
+         <span class="arrow"></span>
+         <span class="fix">Server-side fix I reported</span>
+      </div>
+      <ol class="rows">
+         {findings.map((finding) => (
+            <li class="row">
+               <span class="ss id">{finding.id}</span>
+               <div class="problem">
+                  <span class="title">{finding.title}</span>
+                  <span class="what">
+                     <span class="visually-hidden">What the client controlled: </span>
+                     {finding.clientControl}
+                  </span>
+               </div>
+               <svg class="arrow" viewBox="0 0 40 12" aria-hidden="true">
+                  <path d="M0 6H34" stroke="var(--violet-signal)" stroke-width="1.4" />
+                  <circle cx="36" cy="6" r="3" fill="var(--violet-signal)" />
+               </svg>
+               <span class="fix">
+                  <span class="visually-hidden">Server-side fix: </span>
+                  {finding.serverFix}
+               </span>
+            </li>
+         ))}
+      </ol>
+      <div class="footer">
+         <span class="ss">{allusion.disclosure}</span>
+         <a href={allusion.writeupUrl} class="tap writeup">
+            Read the write-up ↗
+         </a>
+      </div>
+   </div>
+</section>
+
+<style>
+   .security {
+      position: relative;
+      padding-top: 112px;
+   }
+
+   .context {
+      max-width: 40ch;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink);
+   }
+
+   .scope {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      color: var(--graphite);
+   }
+
+   .rows {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+   .row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1.1fr) 40px minmax(0, 1fr);
+      column-gap: 16px;
+      align-items: start;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--titanium);
+   }
+
+   .head {
+      padding: 0 0 12px;
+      font-size: 10px;
+      color: var(--ink-muted);
+      border-bottom: 1.5px solid var(--graphite);
+   }
+
+   .id {
+      padding-top: 3px;
+      font-size: 11px;
+      color: var(--violet-link);
+   }
+
+   .problem {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+   }
+
+   .title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+   }
+
+   .what {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink);
+   }
+
+   svg.arrow {
+      width: 40px;
+      height: 12px;
+      margin-top: 7px;
+   }
+
+   .row > .fix {
+      font-size: 15px;
+      line-height: 1.5;
+   }
+
+   .head > .fix {
+      font-size: 10px;
+   }
+
+   .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      font-size: 11px;
+      color: var(--ink);
+   }
+
+   .footer .ss {
+      font-size: 11px;
+   }
+
+   .writeup {
+      font-size: 15px;
+      font-weight: 600;
+   }
+
+   @media (max-width: 700px) {
+      .row {
+         grid-template-columns: 32px minmax(0, 1fr);
+         row-gap: 8px;
+      }
+
+      .row > .fix {
+         grid-column: 2;
+      }
+
+      .arrow {
+         display: none;
+      }
+   }
+</style>

@@ -1,0 +1,116 @@
+---
+import SectionLabel from "@/components/ui/SectionLabel.astro";
+import { schools, skills } from "@/data/experience";
+---
+
+<section id="education" class="wrap education">
+   <div class="g12 grid">
+      <div class="s6 column">
+         <h2 class="heading">
+            <SectionLabel index="06" label="Education" />
+         </h2>
+         <div class="list">
+            {schools.map((school) => (
+               <div class="item">
+                  <span class="ss period">{school.period}</span>
+                  <h3 class="name">{school.name}</h3>
+                  <p class="summary">{school.summary}</p>
+               </div>
+            ))}
+         </div>
+      </div>
+      <div class="s6 column">
+         <h2 class="heading">
+            <SectionLabel index="07" label="Skills" />
+         </h2>
+         <dl class="list">
+            {skills.map((group) => (
+               <div class="skill">
+                  <dt class="ss">{group.label}</dt>
+                  <dd>{group.items.join(", ")}</dd>
+               </div>
+            ))}
+         </dl>
+      </div>
+   </div>
+</section>
+
+<style>
+   .education {
+      position: relative;
+      padding-top: 112px;
+      padding-bottom: 24px;
+   }
+
+   .grid {
+      row-gap: 64px;
+   }
+
+   .column {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+   }
+
+   .heading {
+      font: inherit;
+   }
+
+   .list {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      border-top: 1.5px solid var(--graphite);
+   }
+
+   .item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--titanium);
+   }
+
+   .period {
+      font-size: 11px;
+      color: var(--violet-link);
+   }
+
+   .name {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+   }
+
+   .summary {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink);
+   }
+
+   .skill {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      column-gap: 24px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--titanium);
+   }
+
+   .skill dt {
+      font-size: 11px;
+      color: var(--ink-muted);
+   }
+
+   .skill dd {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.55;
+   }
+
+   @media (max-width: 700px) {
+      .skill {
+         grid-template-columns: 1fr;
+         row-gap: 6px;
+      }
+   }
+</style>

@@ -1,0 +1,163 @@
+---
+import { Image } from "astro:assets";
+import portrait from "@/assets/images/portrait.webp";
+import { profile } from "@/data/profile";
+---
+
+<div class="human-layer">
+   <svg viewBox="0 0 520 640" aria-hidden="true" class="layer overflow">
+      <g fill="none" stroke="var(--rule)" stroke-width="1">
+         <path d="M-40 150H0L28 178V200"></path>
+         <path d="M-40 158H-4L18 180V200"></path>
+      </g>
+      <g fill="var(--ceramic)" stroke="var(--rule)" stroke-width="1">
+         <circle cx="-43" cy="150" r="3"></circle>
+         <circle cx="-43" cy="158" r="3"></circle>
+      </g>
+      <path d="M8 116v14M1 123h14" stroke="var(--rule)" stroke-width="1"></path>
+      <text x="520" y="100" text-anchor="end" class="fig-label">
+         FIG. 00 / PORTRAIT
+      </text>
+   </svg>
+
+   <div class="substrate grain"></div>
+
+   <svg viewBox="0 0 520 640" aria-hidden="true" class="layer">
+      <path
+         d="M0 360H70L130 300H200"
+         fill="none"
+         stroke="var(--graphite-raised)"
+         stroke-width="7"
+      ></path>
+      <path
+         d="M520 300H470L430 260"
+         fill="none"
+         stroke="var(--graphite-raised)"
+         stroke-width="6"
+      ></path>
+      <g fill="none" stroke="var(--trace-dark)" stroke-width="0.9">
+         <path d="M14 262H80L110 232H150"></path>
+         <path d="M14 270H86L116 240H150"></path>
+         <path d="M14 278H92L122 248H150"></path>
+         <path d="M520 340H492L478 354V420"></path>
+         <path d="M520 348H500L486 362V420"></path>
+      </g>
+      <g fill="var(--graphite)" stroke="var(--trace-dim)" stroke-width="1">
+         <circle cx="153" cy="232" r="3"></circle>
+         <circle cx="153" cy="240" r="3"></circle>
+         <circle cx="153" cy="248" r="3"></circle>
+         <circle cx="478" cy="423" r="3"></circle>
+         <circle cx="486" cy="423" r="3"></circle>
+      </g>
+      <path
+         d="M0 240L36 200H302L322 218H520"
+         fill="none"
+         stroke="var(--titanium)"
+         stroke-width="1.2"
+      ></path>
+      <g fill="var(--titanium)">
+         <rect x="0" y="292" width="10" height="5"></rect>
+         <rect x="0" y="300" width="10" height="5"></rect>
+         <rect x="0" y="308" width="10" height="5"></rect>
+         <rect x="0" y="332" width="10" height="5"></rect>
+         <rect x="0" y="340" width="10" height="5"></rect>
+      </g>
+      <text x="508" y="244" transform="rotate(90 508 244)" class="serial">
+         MM-00 · NYC · REV.01
+      </text>
+   </svg>
+
+   <Image
+      src={portrait}
+      alt={`Portrait of ${profile.name}: curly dark hair, black rectangular glasses, black blazer over a white open-collar shirt.`}
+      widths={[360, 540, 900]}
+      sizes="(max-width: 1024px) 500px, 540px"
+      loading="eager"
+      fetchpriority="high"
+      class="portrait"
+   />
+
+   <svg viewBox="0 0 520 640" aria-hidden="true" class="layer">
+      <path d="M0 596H48L78 566H118" fill="none" stroke="var(--titanium)" stroke-width="1.4"></path>
+      <circle
+         cx="121"
+         cy="566"
+         r="3.6"
+         fill="var(--graphite)"
+         stroke="var(--titanium)"
+         stroke-width="1.4"
+      ></circle>
+      <g fill="var(--titanium)">
+         <rect x="0" y="606" width="14" height="4"></rect>
+         <rect x="0" y="614" width="14" height="4"></rect>
+         <rect x="0" y="622" width="14" height="4"></rect>
+      </g>
+      <path d="M496 618v14M489 625h14" stroke="var(--trace-dim)" stroke-width="1"></path>
+   </svg>
+</div>
+
+<style>
+   .human-layer {
+      position: relative;
+      width: 100%;
+      max-width: 540px;
+      aspect-ratio: 13 / 16;
+      margin-left: auto;
+   }
+
+   .layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+   }
+
+   .overflow {
+      overflow: visible;
+   }
+
+   .fig-label,
+   .serial {
+      font-family: var(--font-mono);
+   }
+
+   .fig-label {
+      font-size: 10.5px;
+      letter-spacing: 1.1px;
+      fill: var(--ink-muted);
+   }
+
+   .serial {
+      font-size: 9px;
+      letter-spacing: 1.4px;
+      fill: var(--trace-dim);
+   }
+
+   .substrate {
+      position: absolute;
+      left: 0;
+      top: 31.25%;
+      width: 100%;
+      height: 68.75%;
+      background-color: var(--graphite);
+      clip-path: polygon(0 9%, 7% 0, 58% 0, 62% 4%, 100% 4%, 100% 86%, 88% 100%, 0 100%);
+   }
+
+   .portrait {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      clip-path: polygon(0 0, 100% 0, 100% 88%, 88% 100%, 0 100%);
+      filter: contrast(1.03) saturate(0.97);
+   }
+
+   @media (max-width: 1024px) {
+      .human-layer {
+         margin: 8px auto 0;
+         max-width: 500px;
+      }
+   }
+</style>

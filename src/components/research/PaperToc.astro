@@ -1,0 +1,41 @@
+---
+import { tocEntries } from "@/data/research";
+---
+
+<nav class="toc" aria-label="On this page">
+   {tocEntries.map((entry) => (
+      <a href={`#${entry.id}`} class="entry">
+         <span class="ss index">{entry.index}</span>
+         {entry.label}
+      </a>
+   ))}
+</nav>
+
+<style>
+   .toc {
+      display: flex;
+      flex-direction: column;
+      align-self: start;
+      border-top: 1.5px solid var(--graphite);
+   }
+
+   .entry {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 44px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--titanium);
+      color: var(--graphite);
+      font-size: 15px;
+   }
+
+   .entry:hover {
+      color: var(--violet-link);
+   }
+
+   .index {
+      font-size: 10px;
+      color: var(--violet-link);
+   }
+</style>

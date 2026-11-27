@@ -1,0 +1,135 @@
+---
+import { evidence } from "@/data/profile";
+---
+
+<section aria-label="Key numbers" class="evidence">
+   <div class="grain grain-layer" aria-hidden="true"></div>
+   <div class="connector" aria-hidden="true"></div>
+   <div class="wrap inner">
+      <div class="ss heading">
+         <span>E / Numbers, each with its scope</span>
+         <span>Source: résumé, Nov 2026</span>
+      </div>
+      <dl class="figures">
+         {evidence.map((figure) => (
+            <div class="figure">
+               <dt class="ss label">
+                  {figure.id} · {figure.source}
+               </dt>
+               <dd class="value">{figure.value}</dd>
+               <dd class="claim">{figure.claim}</dd>
+            </div>
+         ))}
+      </dl>
+   </div>
+</section>
+
+<style>
+   .evidence {
+      position: relative;
+      margin-top: 8px;
+      background: var(--substrate);
+   }
+
+   .connector {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 6px;
+      background: repeating-linear-gradient(90deg, var(--titanium) 0 18px, transparent 18px 26px);
+   }
+
+   .inner {
+      position: relative;
+      padding-top: 44px;
+      padding-bottom: 44px;
+   }
+
+   .heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      color: var(--ink);
+   }
+
+   .figures {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 0;
+   }
+
+   .figure {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 24px;
+   }
+
+   .figure:first-child {
+      padding-left: 0;
+   }
+
+   .figure:last-child {
+      padding-right: 0;
+   }
+
+   .figure + .figure {
+      border-left: 1px solid var(--rule);
+   }
+
+   dd {
+      margin: 0;
+   }
+
+   .label {
+      font-size: 11px;
+      color: var(--ink);
+   }
+
+   .value {
+      font-size: 56px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1;
+   }
+
+   .claim {
+      font-size: 15px;
+      line-height: 1.45;
+   }
+
+   @media (max-width: 1024px) {
+      .figures {
+         grid-template-columns: repeat(2, minmax(0, 1fr));
+         row-gap: 32px;
+      }
+
+      .figure:nth-child(3) {
+         border-left: 0;
+         padding-left: 0;
+      }
+   }
+
+   @media (max-width: 700px) {
+      .figures {
+         grid-template-columns: 1fr;
+      }
+
+      .figure {
+         padding: 0;
+      }
+
+      .figure + .figure {
+         border-left: 0;
+         border-top: 1px solid var(--rule);
+         padding-top: 24px;
+      }
+
+      .value {
+         font-size: 46px;
+      }
+   }
+</style>

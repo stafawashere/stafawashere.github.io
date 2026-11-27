@@ -1,0 +1,57 @@
+---
+interface Props {
+   id: string;
+   label: string;
+   title: string;
+   paragraphs?: readonly string[];
+}
+
+const { id, label, title, paragraphs = [] } = Astro.props;
+const headingId = `${id}-title`;
+---
+
+<section {id} class="paper-section" aria-labelledby={headingId}>
+   <span class="ss label">{label}</span>
+   <h2 id={headingId} class="serif heading">
+      {title}
+   </h2>
+   {paragraphs.map((paragraph) => (
+      <p class="body">{paragraph}</p>
+   ))}
+   <slot />
+</section>
+
+<style>
+   .paper-section {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      scroll-margin-top: 24px;
+   }
+
+   .label {
+      color: var(--violet-link);
+   }
+
+   .heading {
+      font-size: 44px;
+      line-height: 1.1;
+   }
+
+   .body {
+      max-width: 62ch;
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--ink);
+   }
+
+   @media (max-width: 700px) {
+      .heading {
+         font-size: 34px;
+      }
+
+      .body {
+         font-size: 17px;
+      }
+   }
+</style>

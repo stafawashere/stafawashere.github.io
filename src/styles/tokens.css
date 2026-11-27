@@ -1,0 +1,45 @@
+:root {
+   --ceramic: #f0edf5;
+   --substrate: #ded9eb;
+   --graphite: #30283e;
+   --graphite-deep: #241e2f;
+   --graphite-raised: #3b3249;
+   --ink: #4f4663;
+   --ink-muted: #5c5373;
+   --violet-link: #5e49a6;
+   --violet-signal: #7862bd;
+   --violet-glow: #a693e0;
+   --violet-mist: #c9bcf0;
+   --titanium: #c1b9d7;
+   --rule: #ada2c9;
+   --trace-dim: #8e83ad;
+   --trace-dark: #5a4f72;
+   --trace-ash: #6b6084;
+   --on-dark: #f0edf5;
+   --on-dark-soft: #d9d3e6;
+   --on-dark-muted: #b7aecf;
+
+   --font-sans: "Inter Tight", system-ui, sans-serif;
+   --font-mono: "Geist Mono", ui-monospace, monospace;
+   --font-serif: "Instrument Serif", Georgia, serif;
+
+   --wrap-max: 1360px;
+   --gutter: 40px;
+   --grid-gap: 24px;
+
+   --ease-signal: cubic-bezier(0.2, 0.7, 0.2, 1);
+   --dur-fast: 180ms;
+   --dur-signal: 380ms;
+}
+
+@media (max-width: 1024px) {
+   :root {
+      --gutter: 28px;
+   }
+}
+
+@media (max-width: 700px) {
+   :root {
+      --gutter: 20px;
+   }
+}

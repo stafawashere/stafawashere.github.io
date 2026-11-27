@@ -1,0 +1,250 @@
+---
+import HoursChart from "./HoursChart.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { linkNyc, service } from "@/data/experience";
+
+const defenseLayers = [
+   { shade: "var(--titanium)", offset: 0 },
+   { shade: "var(--rule)", offset: 8 },
+   { shade: "var(--trace-dim)", offset: 16 },
+   { shade: "var(--trace-ash)", offset: 24 },
+   { shade: "var(--violet-glow)", offset: 32 },
+];
+---
+
+<section id="service" class="service">
+   <div class="grain grain-layer" aria-hidden="true"></div>
+   <div class="wrap inner">
+      <SectionHeading index="05" label="Leadership and service" title="Outside the editor." />
+      <div class="g12 grid">
+         <article class="s7 linknyc">
+            <div class="grain grain-layer" aria-hidden="true"></div>
+            <div class="ss meta">
+               <span>{linkNyc.program}</span>
+               <span>{linkNyc.period}</span>
+            </div>
+            <h3 class="title">{linkNyc.title}</h3>
+            <p class="summary">{linkNyc.summary}</p>
+            <div class="split">
+               <div class="layers">
+                  <span class="ss label">Defense in depth · 5 layers</span>
+                  {defenseLayers.map((layer) => (
+                     <span
+                        class="layer"
+                        aria-hidden="true"
+                        style={`background: ${layer.shade}; margin-left: ${layer.offset}%`}
+                     />
+                  ))}
+               </div>
+               <div class="frameworks">
+                  <span class="ss label">Benchmarked against</span>
+                  <span class="ss list">
+                     {linkNyc.frameworks.map((line) => (
+                        <span>{line}</span>
+                     ))}
+                  </span>
+                  <span class="ss label spaced">Threat priority</span>
+                  <span class="priorities">
+                     <span class="ss p0">P0</span>
+                     <span class="ss p1">P1</span>
+                     <span class="ss p2">P2</span>
+                     <span class="ss p3">P3</span>
+                  </span>
+               </div>
+            </div>
+         </article>
+         <div class="s5 commitments">
+            {service.map((entry) => (
+               <div class="entry">
+                  <div class="ss entry-meta">
+                     <span class="period">{entry.period}</span>
+                     <span>~{entry.hoursPerWeek} hrs/week</span>
+                  </div>
+                  <h3 class="entry-title">{entry.title}</h3>
+                  <p class="entry-summary">{entry.summary}</p>
+               </div>
+            ))}
+         </div>
+      </div>
+      <HoursChart />
+   </div>
+</section>
+
+<style>
+   .service {
+      position: relative;
+      margin-top: 112px;
+      background: var(--substrate);
+   }
+
+   .service :global(.section-label) {
+      color: var(--ink);
+   }
+
+   .service :global(.h2) {
+      font-size: 48px;
+   }
+
+   .inner {
+      position: relative;
+      padding-top: 96px;
+      padding-bottom: 96px;
+   }
+
+   .grid {
+      row-gap: 40px;
+   }
+
+   .linknyc {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 36px;
+      background: var(--graphite);
+      color: var(--on-dark);
+      clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+   }
+
+   .linknyc > :not(.grain-layer) {
+      position: relative;
+   }
+
+   .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--on-dark-muted);
+   }
+
+   .title {
+      font-size: 32px;
+      letter-spacing: -0.03em;
+      font-weight: 600;
+   }
+
+   .summary {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--on-dark-soft);
+   }
+
+   .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 24px;
+   }
+
+   .layers,
+   .frameworks {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+   }
+
+   .frameworks {
+      gap: 6px;
+   }
+
+   .label {
+      margin-bottom: 6px;
+      font-size: 10px;
+      color: var(--on-dark-muted);
+   }
+
+   .spaced {
+      margin: 6px 0 0;
+   }
+
+   .layer {
+      height: 12px;
+   }
+
+   .list {
+      display: flex;
+      flex-direction: column;
+      font-size: 11px;
+      line-height: 1.9;
+   }
+
+   .priorities {
+      display: flex;
+      gap: 4px;
+   }
+
+   .priorities .ss {
+      padding: 3px 7px;
+      font-size: 10px;
+   }
+
+   .p0 {
+      background: var(--on-dark);
+      color: var(--graphite);
+   }
+
+   .p1 {
+      background: var(--titanium);
+      color: var(--graphite);
+   }
+
+   .p2 {
+      background: var(--trace-dim);
+      color: var(--graphite-deep);
+   }
+
+   .priorities .p3 {
+      padding: 2px 6px;
+      border: 1px solid var(--trace-dim);
+      color: var(--on-dark-soft);
+   }
+
+   .commitments {
+      display: flex;
+      flex-direction: column;
+      border-top: 1.5px solid var(--graphite);
+   }
+
+   .entry {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+   }
+
+   .entry-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--ink);
+   }
+
+   .period {
+      color: var(--violet-link);
+   }
+
+   .entry-title {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+   }
+
+   .entry-summary {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink);
+   }
+
+   @media (max-width: 700px) {
+      .split {
+         grid-template-columns: 1fr;
+         row-gap: 28px;
+      }
+
+      .linknyc {
+         padding: 28px 24px;
+      }
+   }
+</style>

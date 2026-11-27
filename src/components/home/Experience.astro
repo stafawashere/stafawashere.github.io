@@ -1,0 +1,99 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { roles } from "@/data/experience";
+---
+
+<section id="experience" class="wrap experience">
+   <SectionHeading
+      index="04"
+      label="Experience"
+      title="Shipping to real players and paying clients."
+      maxCh={18}
+   />
+   <div class="lane">
+      {roles.map((role) => (
+         <article class="role">
+            <span class:list={["pad", { highlight: role.highlight }]} aria-hidden="true" />
+            <div class="ss meta">
+               <span class="period">{role.period}</span>
+               {role.hoursPerWeek && <span>~{role.hoursPerWeek} hrs/week</span>}
+            </div>
+            <h3 class="title">{role.title}</h3>
+            <span class="org">{role.org}</span>
+            <p class="summary">{role.summary}</p>
+         </article>
+      ))}
+   </div>
+</section>
+
+<style>
+   .experience {
+      position: relative;
+      padding-top: 120px;
+   }
+
+   .lane {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+   }
+
+   .role {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 24px;
+      border-top: 1.5px solid var(--graphite);
+   }
+
+   .pad {
+      position: absolute;
+      left: 0;
+      top: -5px;
+      width: 9px;
+      height: 9px;
+      background: var(--graphite);
+   }
+
+   .pad.highlight {
+      background: var(--violet-signal);
+   }
+
+   .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--ink);
+   }
+
+   .period {
+      color: var(--violet-link);
+   }
+
+   .title {
+      font-size: 28px;
+      letter-spacing: -0.025em;
+      font-weight: 600;
+   }
+
+   .org {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+   }
+
+   .summary {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink);
+   }
+
+   @media (max-width: 700px) {
+      .lane {
+         grid-template-columns: 1fr;
+         row-gap: 28px;
+      }
+   }
+</style>

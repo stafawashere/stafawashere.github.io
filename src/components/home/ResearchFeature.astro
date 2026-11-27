@@ -1,0 +1,245 @@
+---
+import { Image } from "astro:assets";
+import RmseChart from "./RmseChart.astro";
+import SectionLabel from "@/components/ui/SectionLabel.astro";
+import { RESEARCH_PATH } from "@/data/projects";
+import { keyFrames, outcomes, study } from "@/data/research";
+---
+
+<section id="research" class="research on-dark">
+   <div class="grain grain-layer" aria-hidden="true"></div>
+   <div class="wrap inner">
+      <div class="g12 layout">
+         <div class="s5 copy">
+            <SectionLabel index="01" label={`Research · ${study.period}`} tone="dark" />
+            <h2 class="h2">{study.title}</h2>
+            <p class="serif question">{study.question}</p>
+            <p class="method">{study.method}</p>
+            <dl class="outcomes">
+               {outcomes.map((outcome) => (
+                  <div class="outcome">
+                     <dt class:list={["ss", { failed: outcome.verdict === "Failed" }]}>
+                        {outcome.verdict}
+                     </dt>
+                     <dd>{outcome.text}</dd>
+                  </div>
+               ))}
+            </dl>
+            <div class="links">
+               <a href={RESEARCH_PATH} class="btn-study">
+                  Read the study →
+               </a>
+               <a href={study.sourceUrl} class="tap">
+                  Source on GitHub ↗
+               </a>
+            </div>
+         </div>
+         <div class="s7 evidence">
+            <div class="frames">
+               {keyFrames.map((frame) => (
+                  <figure class:list={{ peak: frame.peak }}>
+                     <Image
+                        src={frame.src}
+                        alt={frame.alt}
+                        widths={[256, 512]}
+                        sizes="(max-width: 700px) 100vw, 240px"
+                        class="shot"
+                     />
+                     <figcaption class="ss">{frame.caption}</figcaption>
+                  </figure>
+               ))}
+            </div>
+            <RmseChart />
+            <p class="ss legend">
+               <span class="swatch-row">
+                  <span class="swatch" aria-hidden="true"></span>Real model output · one run, seed
+                  0, same caption
+               </span>
+               <span>FIG. 01b · RMSE vs frame 00, measured</span>
+            </p>
+         </div>
+      </div>
+   </div>
+</section>
+
+<style>
+   .research {
+      position: relative;
+   }
+
+   .inner {
+      position: relative;
+      padding-top: 104px;
+      padding-bottom: 104px;
+   }
+
+   .layout {
+      row-gap: 56px;
+   }
+
+   .copy {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+   }
+
+   .h2 {
+      font-size: 58px;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+      font-weight: 600;
+   }
+
+   .question {
+      font-size: 27px;
+      line-height: 1.22;
+      font-style: italic;
+      color: var(--on-dark-soft);
+   }
+
+   .method {
+      max-width: 46ch;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--on-dark-soft);
+   }
+
+   .outcomes {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      border-top: 1px solid var(--trace-dark);
+   }
+
+   .outcome {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--trace-dark);
+   }
+
+   .outcome dt {
+      font-size: 11px;
+      color: var(--violet-glow);
+   }
+
+   .outcome dt.failed {
+      color: var(--on-dark-muted);
+   }
+
+   .outcome dd {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+   }
+
+   .links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 500;
+   }
+
+   .btn-study {
+      display: inline-flex;
+      align-items: center;
+      min-height: 48px;
+      padding: 0 22px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--graphite) !important;
+      background: var(--titanium);
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+      transition: background-color var(--dur-fast) ease;
+   }
+
+   .btn-study:hover {
+      background: var(--violet-mist);
+   }
+
+   .evidence {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-top: 56px;
+   }
+
+   .frames {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      align-items: end;
+   }
+
+   figure {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   figure :global(img) {
+      box-shadow: 0 0 0 1px var(--trace-dark);
+   }
+
+   figure.peak {
+      margin-bottom: 48px;
+   }
+
+   figure.peak :global(img) {
+      box-shadow: 0 0 0 1px var(--violet-glow);
+   }
+
+   figcaption {
+      font-size: 10px;
+      line-height: 1.6;
+      color: var(--on-dark-muted);
+   }
+
+   .peak figcaption {
+      color: var(--on-dark);
+   }
+
+   .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 10px;
+      line-height: 1.7;
+      color: var(--on-dark-muted);
+   }
+
+   .swatch-row {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+   }
+
+   .swatch {
+      width: 10px;
+      height: 10px;
+      background: var(--on-dark);
+   }
+
+   @media (max-width: 1024px) {
+      .evidence {
+         padding-top: 0;
+      }
+   }
+
+   @media (max-width: 700px) {
+      .h2 {
+         font-size: 38px;
+      }
+
+      .frames {
+         grid-template-columns: 1fr;
+      }
+
+      figure.peak {
+         margin-bottom: 0;
+      }
+   }
+</style>

@@ -1,0 +1,73 @@
+---
+import FindingSection from "./FindingSection.astro";
+import KnobsSection from "./KnobsSection.astro";
+import LimitsSection from "./LimitsSection.astro";
+import PaperAside from "./PaperAside.astro";
+import PaperToc from "./PaperToc.astro";
+import QuestionSection from "./QuestionSection.astro";
+import RulesSection from "./RulesSection.astro";
+import ScoreboardSection from "./ScoreboardSection.astro";
+---
+
+<div class="wrap paper-band">
+   <div class="paper">
+      <div class="side">
+         <PaperToc />
+      </div>
+
+      <article class="article">
+         <QuestionSection />
+         <KnobsSection />
+         <RulesSection />
+         <ScoreboardSection />
+         <FindingSection />
+         <LimitsSection />
+      </article>
+
+      <div class="side">
+         <PaperAside />
+      </div>
+   </div>
+</div>
+
+<style>
+   .paper-band {
+      position: relative;
+      padding-top: 88px;
+      padding-bottom: 96px;
+   }
+
+   .paper {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr) 250px;
+      column-gap: 56px;
+   }
+
+   .article {
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+      min-width: 0;
+   }
+
+   @media (max-width: 1100px) {
+      .paper {
+         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .side {
+         display: none;
+      }
+   }
+
+   @media (max-width: 700px) {
+      .paper-band {
+         padding-top: 56px;
+         padding-bottom: 64px;
+      }
+
+      .article {
+         gap: 56px;
+      }
+   }
+</style>

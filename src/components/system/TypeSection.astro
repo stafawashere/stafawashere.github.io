@@ -1,0 +1,96 @@
+---
+import { sectionLabels, typeNote, typeSpecimens } from "@/data/identity";
+---
+
+<section class="type" aria-labelledby="type-label">
+   <h2 id="type-label" class="ss label">
+      {sectionLabels.type}
+   </h2>
+
+   {typeSpecimens.map((specimen) => (
+      <div class="specimen">
+         <span class="ss family">
+            {specimen.family}
+            <br />
+            {specimen.job}
+         </span>
+         <span class:list={["sample", specimen.style, { ss: specimen.style === "mono" }]}>
+            {specimen.sample}
+         </span>
+      </div>
+   ))}
+
+   <p class="note">{typeNote}</p>
+</section>
+
+<style>
+   .type {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+   }
+
+   .label {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--violet-link);
+   }
+
+   .specimen {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 16px;
+      align-items: baseline;
+      padding-top: 16px;
+      border-top: 1px solid var(--titanium);
+   }
+
+   .specimen:first-of-type {
+      border-top-color: var(--graphite);
+   }
+
+   .family {
+      font-size: 11px;
+      color: var(--ink-muted);
+   }
+
+   .display {
+      font-size: 72px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+   }
+
+   .serif {
+      font-family: var(--font-serif);
+      font-size: 40px;
+      line-height: 1.1;
+      font-style: italic;
+   }
+
+   .mono {
+      font-size: 15px;
+      color: var(--graphite);
+   }
+
+   .note {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink);
+   }
+
+   @media (max-width: 700px) {
+      .specimen {
+         grid-template-columns: minmax(0, 1fr);
+         gap: 10px;
+      }
+
+      .display {
+         font-size: 52px;
+      }
+
+      .serif {
+         font-size: 32px;
+      }
+   }
+</style>
