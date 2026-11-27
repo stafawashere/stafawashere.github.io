@@ -69,8 +69,8 @@ export const evidence: EvidenceFigure[] = [
 export const contacts: Contact[] = [
    {
       label: "Email",
-      value: "mahfujmustafa527@gmail.com",
-      href: "mailto:mahfujmustafa527@gmail.com",
+      value: "contact@mahfujmustafa.dev",
+      href: "mailto:contact@mahfujmustafa.dev",
    },
    { label: "GitHub", value: "github.com/stafawashere", href: "https://github.com/stafawashere" },
    {
