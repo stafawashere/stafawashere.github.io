@@ -1,5 +1,5 @@
 ---
-import Monogram from "@/components/ui/Monogram.astro";
+import Mark from "@/components/ui/Mark.astro";
 import { profile } from "@/data/profile";
 
 interface Crumb {
@@ -16,7 +16,7 @@ const { crumbs } = Astro.props;
 
 <header class="wrap top-bar">
    <a href="/" class="home" aria-label="Back to homepage">
-      <Monogram />
+      <Mark width={40} tile glow={false} />
       <span class="ss">{profile.name}</span>
    </a>
 

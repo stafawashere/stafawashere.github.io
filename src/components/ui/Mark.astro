@@ -1,0 +1,58 @@
+---
+import { Image } from "astro:assets";
+import mark from "@/assets/brand/mark.png";
+
+interface Props {
+   width?: number;
+   glow?: boolean;
+   tile?: boolean;
+}
+
+const { width = 44, glow = true, tile = false } = Astro.props;
+---
+
+<span class:list={["frame", { tile }]}>
+   <Image
+      src={mark}
+      alt=""
+      width={width}
+      densities={[1, 2]}
+      format="webp"
+      class:list={["mark", { glow }]}
+      aria-hidden="true"
+   />
+</span>
+
+<style>
+   .frame {
+      display: inline-flex;
+      flex: none;
+   }
+
+   .tile {
+      padding: 9px 10px;
+      background: var(--graphite);
+      clip-path: polygon(
+         0 0,
+         calc(100% - 9px) 0,
+         100% 9px,
+         100% 100%,
+         9px 100%,
+         0 calc(100% - 9px)
+      );
+   }
+
+   .mark {
+      display: block;
+      height: auto;
+   }
+
+   .glow {
+      filter: drop-shadow(0 4px 10px rgb(120 98 189 / 0.28));
+      transition: filter var(--dur-signal) var(--ease-signal);
+   }
+
+   :global(a:hover) .glow {
+      filter: drop-shadow(0 4px 14px rgb(120 98 189 / 0.5));
+   }
+</style>

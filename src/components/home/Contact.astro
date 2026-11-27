@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import portrait from "@/assets/images/portrait.webp";
-import Monogram from "@/components/ui/Monogram.astro";
+import Mark from "@/components/ui/Mark.astro";
 import { contacts, profile } from "@/data/profile";
 ---
 
@@ -41,12 +41,7 @@ import { contacts, profile } from "@/data/profile";
       </div>
       <footer class="footer">
          <div class="sign">
-            <Monogram
-               width={30}
-               stroke="var(--on-dark)"
-               via="var(--violet-glow)"
-               withPads={false}
-            />
+            <Mark width={44} />
             <span class="ss small">
                {profile.name} · {profile.location}
             </span>

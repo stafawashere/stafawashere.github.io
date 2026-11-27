@@ -13,10 +13,10 @@ export interface TypeSpecimen {
    style: "display" | "serif" | "mono";
 }
 
-export interface MarkCandidate {
-   id: "A" | "B" | "C";
-   caption: string;
-   chosen?: boolean;
+export interface MarkGround {
+   name: string;
+   token: string;
+   dark?: boolean;
 }
 
 export type GlyphKind =
@@ -56,7 +56,7 @@ export const identityPage = {
 export const sectionLabels = {
    palette: "01 · Pigments and roles · contrast measured on Lunar Ceramic",
    type: "02 · Type · three families, one job each",
-   mark: "03 · MM mark · A, chosen over B and C",
+   mark: "03 · MM mark · the official icon",
    circuit: "04 · Circuit vocabulary · 8 px pitch, 45° bends",
    materials: "05 · Materials and the Human Layer",
 };
@@ -139,14 +139,16 @@ export const typeSpecimens: TypeSpecimen[] = [
 export const typeNote =
    "Silkscreen only carries real data: figure numbers, dates, hours from the résumé, measured values. No invented serials or telemetry.";
 
-export const markCandidates: MarkCandidate[] = [
-   { id: "A", caption: "A · shared leg ends in a via", chosen: true },
-   { id: "B", caption: "B · one softened trace" },
-   { id: "C", caption: "C · contact pins" },
+export const markGrounds: MarkGround[] = [
+   { name: "Ceramic", token: "--ceramic" },
+   { name: "Substrate", token: "--substrate" },
+   { name: "Graphite", token: "--graphite", dark: true },
 ];
 
+export const markSizes: number[] = [24, 40, 64];
+
 export const markRationale =
-   "A wins: it reads as MM at 16 px, the shared leg says “two things, one system,” and it’s already drawn with the site’s 45° trace grammar. B turns into a W at small sizes; C reads as a barcode.";
+   "One continuous trace draws both strokes of the M and ends in two via rings, so it reads as MM at tab size and as a routed circuit up close. It is translucent glass in Violet Signal, which keeps it legible on ceramic, substrate and graphite alike.";
 
 export const circuitTerms: CircuitTerm[] = [
    {
