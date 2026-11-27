@@ -1,5 +1,5 @@
 ---
-import Monogram from "@/components/ui/Monogram.astro";
+import Mark from "@/components/ui/Mark.astro";
 import { profile } from "@/data/profile";
 
 const sections = [
@@ -13,7 +13,7 @@ const sections = [
 
 <header class="wrap site-header">
    <a href="/" aria-label={`${profile.name}, home`} class="home tap">
-      <Monogram />
+      <Mark width={40} tile glow={false} />
       <span class="ss hide-m">{profile.name}</span>
    </a>
    <nav aria-label="Primary">
