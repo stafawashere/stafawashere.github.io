@@ -5,13 +5,12 @@ import mark from "@/assets/brand/mark.png";
 interface Props {
    width?: number;
    glow?: boolean;
-   tile?: boolean;
 }
 
-const { width = 44, glow = true, tile = false } = Astro.props;
+const { width = 44, glow = true } = Astro.props;
 ---
 
-<span class:list={["frame", { tile }]}>
+<span class="frame">
    <Image
       src={mark}
       alt=""
@@ -27,19 +26,6 @@ const { width = 44, glow = true, tile = false } = Astro.props;
    .frame {
       display: inline-flex;
       flex: none;
-   }
-
-   .tile {
-      padding: 9px 10px;
-      background: var(--graphite);
-      clip-path: polygon(
-         0 0,
-         calc(100% - 9px) 0,
-         100% 9px,
-         100% 100%,
-         9px 100%,
-         0 calc(100% - 9px)
-      );
    }
 
    .mark {
