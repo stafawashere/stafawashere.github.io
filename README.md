@@ -28,6 +28,24 @@ The dev server runs on http://localhost:4321.
 | `npm test`             | Vitest unit tests for the data and chart helpers      |
 | `npm run verify`       | Everything CI runs, in order                          |
 
+## Command scripts
+
+Shortcuts in `scripts/`. Each one installs dependencies first if they are missing or stale.
+
+| Script                          | What it does                                                 |
+| ------------------------------- | ------------------------------------------------------------ |
+| `scripts/dev.sh`                | Frees the port, starts the dev server and opens the browser  |
+| `scripts/rebuild.sh`            | Clears `dist`, `.astro` and the Vite cache, then builds      |
+| `scripts/preview.sh`            | Builds and serves the production output                      |
+| `scripts/check.sh`              | Lint, format check, tests, type check and build              |
+| `scripts/fix.sh`                | Applies Prettier and ESLint fixes                            |
+| `scripts/clean.sh [--all]`      | Removes build output and caches, `--all` adds `node_modules` |
+| `scripts/update.sh`             | Updates dependencies in range, then runs the checks          |
+| `scripts/deploy.sh`             | Checks, pushes `main` and follows the CI run                 |
+| `scripts/new-project.sh [name]` | Prints the next `PRJ-` id as a stub for `projects.ts`        |
+
+Set `PORT` to use something other than 4321, for example `PORT=4400 scripts/dev.sh`.
+
 ## Layout
 
 ```
