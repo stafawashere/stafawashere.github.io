@@ -1,0 +1,36 @@
+---
+import type { Project } from "@/data/types";
+
+interface Props {
+   project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<a href={project.url} class="tap source">
+   Source <span aria-hidden="true">&nearr;</span>
+   <span class="visually-hidden">for {project.name}</span>
+</a>
+
+<style>
+   .source {
+      position: relative;
+      align-self: flex-start;
+      justify-self: start;
+      width: fit-content;
+      gap: 0.2em;
+      margin-top: var(--source-margin, 0);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--source-color, var(--violet-link));
+   }
+
+   .source:hover {
+      color: var(--source-hover, var(--graphite));
+   }
+
+   .source:focus-visible {
+      outline-color: currentColor;
+   }
+</style>

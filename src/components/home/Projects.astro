@@ -1,13 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import ProjectIndex from "./ProjectIndex.astro";
+import ProjectSource from "@/components/ui/ProjectSource.astro";
+import Mark from "@/components/ui/Mark.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import distributionShot from "@/assets/images/projects/distribution-network.webp";
 import inspectShot from "@/assets/images/projects/inspect-workflow.webp";
 import spicetifyShot from "@/assets/images/projects/spicetify.webp";
 import sujoodShot from "@/assets/images/projects/sujood.webp";
 import trashyShot from "@/assets/images/projects/trashy-apocalypse.webp";
-import webappReShot from "@/assets/images/projects/webapp-re.webp";
 import { projectById, projectIndex } from "@/data/projects";
 
 const disky = projectById("PRJ-03");
@@ -17,18 +18,9 @@ const inspect = projectById("PRJ-07");
 const webappRe = projectById("PRJ-08");
 const sujood = projectById("PRJ-09");
 const spicetify = projectById("PRJ-06");
-const smallProjects = [
-   {
-      project: projectById("PRJ-10"),
-      kind: "VS Code extension",
-      blurb: "Shell tasks for a whole team, one click each, kept in a plain JSON file.",
-   },
-   {
-      project: projectById("PRJ-11"),
-      kind: "Discord bot",
-      blurb: "Balances and inventory through slash commands, with an exportable history.",
-   },
-];
+const taskbench = projectById("PRJ-10");
+const ledger = projectById("PRJ-11");
+const portfolio = projectById("PRJ-12");
 ---
 
 <section id="projects" class="wrap projects">
@@ -66,10 +58,8 @@ const smallProjects = [
                A Discord library written over raw WebSockets and HTTP instead of an existing
                wrapper. It handles the connection, heartbeat, reconnects and sessions on its own.
             </p>
-            <a href={disky.url} class="tap source">
-               Source ↗
-            </a>
          </div>
+         <ProjectSource project={disky} />
       </article>
 
       <article class="s7 signal-card distribution">
@@ -117,153 +107,209 @@ const smallProjects = [
                   tiers, sales approval and a revenue dashboard. Every stock change is written in
                   the same transaction as the count, so the history can’t drift.
                </p>
-               <a href={distribution.url} class="tap strong">
-                  Source ↗
-               </a>
+               <ProjectSource project={distribution} />
             </div>
          </div>
       </article>
 
       <article class="s12 trashy">
-         <figure class="registered">
+         <figure class="game-map">
             <Image
                src={trashyShot}
                alt="Trashy Apocalypse level map: a top-down pixel-art wasteland with stone walls and toxic barrels."
                widths={[450, 900]}
-               sizes="(max-width: 1024px) 100vw, 760px"
+               sizes="(max-width: 700px) calc(100vw - 64px), (max-width: 1024px) calc(58vw - 72px), (max-width: 1360px) calc(58vw - 116px), 680px"
                class="shot pixelated"
             />
-            <span class="corner top-left" aria-hidden="true"></span>
-            <span class="corner bottom-right" aria-hidden="true"></span>
-            <figcaption class="ss small-ink">FIG. 04 · level background, from the repo</figcaption>
+            <figcaption class="ss">Level background from the game</figcaption>
          </figure>
-         <div class="stack">
+         <div class="stack game-body">
             <span class="ss small-muted">
-               {trashy.id} · Lead programmer · AP CSP team · {trashy.date}
+               {trashy.id} · AP CSP team · {trashy.date}
             </span>
-            <h3 class="h3 large">{trashy.name}</h3>
+            <h3 class="h3 game-title">{trashy.name}</h3>
             <p class="ink">
-               A top-down zombie shooter on Python’s Arcade library. I wrote the code, including a
-               layered audio engine and saved high scores. It was our school’s entry in its annual
-               arts event.
+               A top-down zombie shooter with layered audio and saved high scores, built for our
+               school’s annual arts event.
             </p>
-            <a href={trashy.url} class="tap strong">
-               Source ↗
-            </a>
+            <dl class="game-facts">
+               <div>
+                  <dt class="ss small-muted">Role</dt>
+                  <dd>Lead programmer</dd>
+               </div>
+               <div>
+                  <dt class="ss small-muted">Engine</dt>
+                  <dd>Python Arcade</dd>
+               </div>
+            </dl>
+            <ProjectSource project={trashy} />
          </div>
       </article>
 
       <div class="s12 cluster">
          <div class="ss cluster-head">
-            <h3 class="cluster-title">Developer tools and smaller projects</h3>
-            <span>Feb 2026–present</span>
+            <h3 class="cluster-title">More projects</h3>
          </div>
          <div class="g12 cluster-grid">
-            <article class="s7 stack wide">
+            <article class="inspect-project">
+               <div class="inspect-header">
+                  <div class="stack tight">
+                     <span class="ss small-muted">{inspect.id} · Developer tool</span>
+                     <h4 class="h4 inspect-title">{inspect.name}</h4>
+                  </div>
+                  <p class="ink small">
+                     Watch Claude Code transcripts update live as Inspect Workflow groups subagents
+                     and workflow runs.
+                  </p>
+               </div>
+               <figure class="inspect-preview">
+                  <figcaption class="ss stream-caption">Transcript streamed over SSE</figcaption>
+                  <Image
+                     src={inspectShot}
+                     alt="Inspect Workflow showing a Claude Code transcript as a readable conversation with a sidebar of agent runs."
+                     widths={[480, 960, 1600]}
+                     sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1024px) calc(100vw - 56px), (max-width: 1360px) calc(66.67vw - 53px), 845px"
+                     class="shot"
+                  />
+               </figure>
+               <div class="inspect-footer">
+                  <span class="ss small-muted">Python standard library · One HTML page</span>
+                  <ProjectSource project={inspect} />
+               </div>
+            </article>
+
+            <article class="s4 spicetify-project">
+               <div class="stack tight">
+                  <span class="ss project-meta">{spicetify.id} · Spotify client mods</span>
+                  <h4 class="h4">{spicetify.name}</h4>
+               </div>
                <Image
                   src={spicetifyShot}
                   alt="Spotify desktop with the extensions: album-colored theme, a large cover and a library grid."
-                  widths={[640, 960, 1600]}
-                  sizes="(max-width: 1024px) 100vw, 760px"
-                  class="shot outlined"
+                  widths={[480, 960, 1600]}
+                  sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1024px) calc(100vw - 56px), (max-width: 1360px) calc(33.33vw - 43px), 411px"
+                  class="shot spicetify-shot"
                />
-               <div class="split">
-                  <div class="stack tight">
-                     <span class="ss small-muted">{spicetify.id} · Spotify client mods</span>
-                     <h4 class="h4">{spicetify.name}</h4>
-                  </div>
-                  <div class="stack">
-                     <p class="ink small">
-                        Profiled the Spotify client over DevTools and cut an animation from half a
-                        CPU core to 13%.
-                     </p>
+               <div class="stack spicetify-results">
+                  <p>
+                     I used DevTools to profile and optimize an animation in Spotify’s desktop
+                     client.
+                  </p>
+                  <div class="stack tight spicetify-performance">
+                     <span class="ss project-meta">CPU share of one core</span>
                      <div
                         class="cpu"
                         role="img"
-                        aria-label="CPU share of one core: about 50 percent before, 13 percent after"
+                        aria-label="About 50 percent before, 13 percent after"
                      >
                         <span class="ss">Before</span>
                         <span class="track">
-                           <span class="fill" style="width: 50%"></span>
+                           <span class="fill before"></span>
                         </span>
                         <span class="ss">~50%</span>
                         <span class="ss">After</span>
                         <span class="track">
-                           <span class="fill after" style="width: 13%"></span>
+                           <span class="fill after"></span>
                         </span>
-                        <span class="ss after-label">13%</span>
+                        <span class="ss result">13%</span>
                      </div>
                   </div>
+                  <ProjectSource project={spicetify} />
                </div>
             </article>
 
-            <article class="s5 stack">
-               <Image
-                  src={inspectShot}
-                  alt="Inspect Workflow showing a Claude Code transcript as a readable conversation with a sidebar of agent runs."
-                  widths={[480, 960, 1600]}
-                  sizes="(max-width: 1024px) 100vw, 540px"
-                  class="shot outlined"
-               />
-               <span class="ss small-muted">{inspect.id} · Python · one HTML page</span>
-               <h4 class="h4">
-                  <a href={inspect.url}>{inspect.name}</a>
-               </h4>
-               <p class="ink small">
-                  Follows live Claude Code transcripts over SSE, grouping subagents and workflow
-                  runs as they happened. Standard library only.
-               </p>
+            <article class="s5 api-project">
+               <div class="stack tight">
+                  <span class="ss small-muted">{webappRe.id} · Claude Code plugin</span>
+                  <h4 class="h4 api-title">{webappRe.name}</h4>
+                  <p class="ink small">
+                     Builds an automation program around a web app’s private API.
+                  </p>
+               </div>
+               <dl class="api-scope">
+                  <div>
+                     <dt class="ss small-muted">Input</dt>
+                     <dd>Signed-in web app</dd>
+                  </div>
+                  <div class="approval">
+                     <dt class="ss small-muted">Data-changing requests</dt>
+                     <dd>Approval required</dd>
+                  </div>
+               </dl>
+               <ProjectSource project={webappRe} />
             </article>
 
-            <article class="s4 stack">
-               <Image
-                  src={webappReShot}
-                  alt="webapp-re banner with the tagline Never pay for an API again."
-                  widths={[450, 900]}
-                  sizes="(max-width: 1024px) 100vw, 420px"
-                  class="shot outlined"
-               />
-               <span class="ss small-muted">{webappRe.id} · Claude Code plugin</span>
-               <h4 class="h4 small-title">
-                  <a href={webappRe.url}>{webappRe.name}</a>
-               </h4>
-               <p class="ink small">
-                  Finds the private API behind a web app you’re signed into and builds an automation
-                  program for it, holding every data-changing call for approval.
-               </p>
-            </article>
-
-            <article class="s4 stack">
+            <article class="s7 sujood-project">
+               <div class="sujood-body">
+                  <div class="stack tight">
+                     <span class="ss">{sujood.id} · Prayer reference</span>
+                     <h4 class="h4 sujood-title">{sujood.name}</h4>
+                     <p>
+                        The eight positions of salah in order, each with Arabic, transliteration,
+                        and recitation audio.
+                     </p>
+                  </div>
+                  <a href={sujood.url} class="tap detail-link">
+                     Visit Sujood ↗
+                  </a>
+               </div>
                <Image
                   src={sujoodShot}
-                  alt="Sujood page for the standing position: Arabic text, transliteration and a Listen button."
+                  alt="Sujood’s standing position with Arabic recitation, transliteration, and a Listen button."
                   widths={[450, 900]}
-                  sizes="(max-width: 1024px) 100vw, 420px"
-                  class="shot outlined"
+                  sizes="(max-width: 700px) calc(100vw - 72px), (max-width: 1024px) calc(100vw - 104px), (max-width: 1360px) calc(58vw - 107px), 688px"
+                  class="shot sujood-shot"
                />
-               <span class="ss small-muted">{sujood.id} · live at sujood.online</span>
-               <h4 class="h4 small-title">
-                  <a href={sujood.url}>{sujood.name}</a>
-               </h4>
-               <p class="ink small">
-                  The eight positions of salah in order, each with the Arabic, a transliteration and
-                  the recitation audio.
-               </p>
             </article>
 
-            <ul class="s4 mini-list">
-               {smallProjects.map(({ project, kind, blurb }) => (
-                  <li>
-                     <span class="ss small-muted">
-                        {project.id} · {kind}
-                     </span>
-                     <a href={project.url} class="mini-name">
-                        {project.name}
-                     </a>
-                     <span class="ink small">{blurb}</span>
-                  </li>
-               ))}
-            </ul>
+            <article class="s4 compact-project taskbench-project">
+               <div class="stack tight">
+                  <span class="ss small-muted">
+                     {taskbench.id} · {taskbench.kind}
+                  </span>
+                  <h4 class="h4">{taskbench.name}</h4>
+               </div>
+               <p class="ink small">Run your team’s shell tasks in one click.</p>
+               <div class="taskbench-file ss">
+                  <span>JSON</span>
+                  <span>Shared task definitions</span>
+               </div>
+               <ProjectSource project={taskbench} />
+            </article>
+
+            <article class="s4 compact-project ledger-project">
+               <div class="stack tight">
+                  <span class="ss small-muted">
+                     {ledger.id} · {ledger.kind}
+                  </span>
+                  <h4 class="h4">{ledger.name}</h4>
+               </div>
+               <p class="ink small">Bookkeeping through slash commands.</p>
+               <ul class="ledger-columns ss" aria-label="Ledger features">
+                  <li>Balances</li>
+                  <li>Inventory</li>
+                  <li>History export</li>
+               </ul>
+               <ProjectSource project={ledger} />
+            </article>
+
+            <article class="s4 compact-project site-project">
+               <div class="site-lockup">
+                  <div class="stack tight">
+                     <span class="ss small-muted">{portfolio.id} · This site</span>
+                     <h4 class="h4 site-title">{portfolio.name}</h4>
+                  </div>
+                  <Mark width={40} glow={false} />
+               </div>
+               <p class="ink small">An Astro portfolio with its own palette, type, and textures.</p>
+               <div class="site-palette" aria-hidden="true"></div>
+               <div class="site-links">
+                  <a href="/system" class="tap strong detail-link">
+                     Identity system
+                  </a>
+                  <ProjectSource project={portfolio} />
+               </div>
+            </article>
          </div>
       </div>
    </div>
@@ -302,29 +348,12 @@ const smallProjects = [
       font-weight: 600;
    }
 
-   .h3.large {
-      font-size: 36px;
-   }
-
    .h4 {
+      margin: 0;
       font-size: 26px;
+      line-height: 1.12;
       letter-spacing: -0.025em;
       font-weight: 600;
-   }
-
-   .h4 a,
-   .mini-name {
-      color: var(--graphite);
-   }
-
-   .h4 a:hover,
-   .mini-name:hover {
-      color: var(--violet-link);
-   }
-
-   .small-title {
-      font-size: 22px;
-      letter-spacing: 0;
    }
 
    .ink {
@@ -340,12 +369,6 @@ const smallProjects = [
    .small-muted {
       font-size: 11px;
       color: var(--ink-muted);
-   }
-
-   .small-ink {
-      font-size: 10px;
-      color: var(--ink);
-      margin-top: 12px;
    }
 
    .strong {
@@ -391,6 +414,7 @@ const smallProjects = [
       display: flex;
       align-items: baseline;
       gap: 14px;
+      margin-top: auto;
    }
 
    .bigfig {
@@ -440,14 +464,10 @@ const smallProjects = [
       color: var(--on-dark-soft);
    }
 
-   .source {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--violet-mist);
-   }
-
-   .source:hover {
-      color: var(--on-dark);
+   .disky {
+      --source-color: var(--violet-mist);
+      --source-hover: var(--on-dark);
+      --source-margin: auto;
    }
 
    .signal-card {
@@ -520,41 +540,65 @@ const smallProjects = [
    .trashy {
       display: grid;
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      column-gap: 40px;
+      gap: clamp(24px, 4vw, 56px);
       align-items: center;
+      padding-right: clamp(0px, 2vw, 24px);
    }
 
-   .registered {
-      position: relative;
+   .game-map {
+      padding: 12px 12px 0;
+      background: #303b33;
+      color: #e2e7d8;
+      clip-path: polygon(
+         0 12px,
+         6px 12px,
+         6px 6px,
+         12px 6px,
+         12px 0,
+         100% 0,
+         100% calc(100% - 12px),
+         calc(100% - 6px) calc(100% - 12px),
+         calc(100% - 6px) calc(100% - 6px),
+         calc(100% - 12px) calc(100% - 6px),
+         calc(100% - 12px) 100%,
+         0 100%
+      );
    }
 
    .pixelated {
       image-rendering: pixelated;
    }
 
-   .outlined,
-   .pixelated {
-      box-shadow: 0 0 0 1px var(--rule);
+   .game-map figcaption {
+      padding: 11px 0 12px;
+      font-size: 10px;
    }
 
-   .corner {
-      position: absolute;
-      width: 20px;
-      height: 20px;
+   .game-body {
+      align-items: flex-start;
+      gap: 16px;
    }
 
-   .top-left {
-      left: -10px;
-      top: -10px;
-      border-left: 1px solid var(--graphite);
-      border-top: 1px solid var(--graphite);
+   .h3.game-title {
+      max-width: 13ch;
+      font-size: clamp(36px, 4.6vw, 64px);
+      letter-spacing: -0.045em;
    }
 
-   .bottom-right {
-      right: -10px;
-      top: calc(100% - 46px);
-      border-right: 1px solid var(--graphite);
-      border-bottom: 1px solid var(--graphite);
+   .game-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 32px;
+      width: 100%;
+      margin: 4px 0 0;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+   }
+
+   .game-facts dd {
+      margin: 4px 0 0;
+      font-size: 15px;
+      font-weight: 600;
    }
 
    .cluster {
@@ -564,32 +608,133 @@ const smallProjects = [
    }
 
    .cluster-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
       padding-bottom: 14px;
-      color: var(--ink-muted);
       border-bottom: 1.5px solid var(--graphite);
    }
 
    .cluster-title {
       font: inherit;
-      color: var(--graphite);
    }
 
    .cluster-grid {
-      row-gap: 56px;
+      row-gap: 48px;
    }
 
-   .wide {
+   .inspect-project {
+      grid-column: span 8;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
+   }
+
+   .inspect-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      align-items: end;
+      gap: 12px 24px;
+   }
+
+   .inspect-title {
+      font-size: clamp(28px, 3.2vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+   }
+
+   .inspect-preview {
+      padding-left: 8px;
+      background: linear-gradient(
+         to right,
+         var(--graphite-deep) 3px,
+         var(--violet-signal) 3px 4px,
+         var(--graphite-deep) 4px
+      );
+      border-radius: 4px 0 0 4px;
+   }
+
+   .stream-caption {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      color: var(--on-dark-soft);
+      font-size: 10px;
+      border-bottom: 1px solid var(--trace-dark);
+   }
+
+   .stream-caption::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--violet-glow);
+   }
+
+   .inspect-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0 16px;
+      margin-top: -8px;
+      border-bottom: 1px solid var(--rule);
+   }
+
+   .detail-link {
+      align-self: flex-start;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+   }
+
+   .spicetify-project {
+      --spicetify-ink: #f5e6d7;
+      --spicetify-label: #e0b995;
+      --source-color: var(--spicetify-label);
+      --source-hover: var(--spicetify-ink);
+      border-radius: 0 48px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #382820;
+      color: var(--spicetify-ink);
+   }
+
+   .spicetify-project > .tight {
+      padding: 22px 52px 18px 24px;
+      background: repeating-radial-gradient(circle at 100% 0, transparent 0 5px, #77543d 5px 6px)
+         right top / 40px 40px no-repeat;
+   }
+
+   .spicetify-project .project-meta {
+      color: var(--spicetify-label);
+      font-size: 11px;
+   }
+
+   .spicetify-shot {
+      border-block: 1px solid #745341;
+   }
+
+   .spicetify-results {
+      flex: 1;
+      justify-content: space-between;
+      padding: 20px 24px 12px;
+      gap: 16px;
+      font-size: 15px;
+      line-height: 1.55;
+   }
+
+   .spicetify-performance {
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid #745341;
    }
 
    .cpu {
       display: grid;
-      grid-template-columns: 52px minmax(0, 1fr) 40px;
-      gap: 8px 10px;
+      grid-template-columns: 50px minmax(0, 1fr) 38px;
+      gap: 10px 10px;
       align-items: center;
    }
 
@@ -598,58 +743,298 @@ const smallProjects = [
    }
 
    .track {
-      position: relative;
-      height: 10px;
-      background: var(--substrate);
+      display: block;
+      height: 6px;
+      background: #644837;
    }
 
    .fill {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      background: var(--graphite);
+      display: block;
+      height: 100%;
+   }
+
+   .fill.before {
+      width: 50%;
+      background: #bc9880;
    }
 
    .fill.after {
-      background: var(--violet-signal);
+      width: 13%;
+      background: #f3b77e;
    }
 
-   .after-label {
-      color: var(--violet-link);
+   .result {
+      color: #f3b77e;
    }
 
-   .mini-list {
+   .api-project {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+      padding: clamp(20px, 3vw, 40px);
+      border: 1px solid var(--rule);
+      --fold: 26px;
+      background:
+         linear-gradient(45deg, var(--titanium) 50%, transparent 50%) right top / var(--fold)
+            var(--fold) no-repeat,
+         color-mix(in srgb, var(--substrate) 48%, var(--ceramic));
+      clip-path: polygon(0 0, calc(100% - var(--fold)) 0, 100% var(--fold), 100% 100%, 0 100%);
+   }
+
+   .api-title {
+      margin-bottom: 6px;
+      font-family: var(--font-mono);
+      font-size: clamp(26px, 3vw, 42px);
+      font-weight: 500;
+   }
+
+   .api-scope {
+      display: grid;
+      gap: 1px;
       margin: 0;
-      padding: 0;
-      list-style: none;
-      border-top: 1px solid var(--graphite);
+      background: var(--rule);
+      border: 1px solid var(--rule);
    }
 
-   .mini-list li {
+   .api-scope > div {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--titanium);
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4px 12px;
+      padding: 12px 14px;
+      background: var(--ceramic);
    }
 
-   .mini-name {
-      font-size: 20px;
+   .api-scope .approval {
+      border-left: 3px solid var(--violet-link);
+      padding-left: 11px;
+   }
+
+   .api-scope dd {
+      margin: 0;
+      font-size: 15px;
       font-weight: 600;
    }
 
+   .sujood-project {
+      --sujood-ink: #284438;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px;
+      background: #e9dfca;
+      color: var(--sujood-ink);
+      border-left: 6px solid #4b6c59;
+      border-radius: 3px 22px 14px 3px;
+      box-shadow:
+         inset 5px 0 5px -4px #8c7c59,
+         inset 0 -2px #b7a987,
+         inset 0 -4px #f3ebd9,
+         inset 0 -5px #c8bb9c;
+   }
+
+   .sujood-body {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 6px 24px;
+   }
+
+   .sujood-body .ss {
+      font-size: 11px;
+   }
+
+   .sujood-title {
+      font-size: clamp(44px, 5vw, 68px);
+   }
+
+   .sujood-body p {
+      max-width: 40ch;
+      font-size: 15px;
+      line-height: 1.55;
+   }
+
+   .sujood-body a {
+      align-self: flex-end;
+      color: var(--sujood-ink);
+      font-size: 15px;
+      font-weight: 600;
+   }
+
+   .sujood-body a:hover {
+      color: #152e24;
+   }
+
+   .sujood-shot {
+      border: 1px solid #b8aa86;
+   }
+
+   .compact-project {
+      min-width: 0;
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding: 20px 0 0;
+      border-top: 1px solid var(--graphite);
+   }
+
+   .taskbench-project {
+      padding: 24px 18px 10px;
+      border-top: 0;
+      background: var(--substrate);
+      clip-path: polygon(0 0, 30% 0, calc(30% + 12px) 10px, 100% 10px, 100% 100%, 0 100%);
+   }
+
+   .ledger-project {
+      padding: 18px 18px 16px;
+      border-top: 3px double var(--rule);
+      background: #f7f5fa;
+      mask:
+         linear-gradient(black 0 0) top / 100% calc(100% - 5px) no-repeat,
+         linear-gradient(135deg, black 50%, transparent 50%) bottom / 10px 6px repeat-x;
+   }
+
+   .site-project {
+      padding-inline: 14px;
+      background:
+         linear-gradient(var(--graphite) 0 0) left top / 1px 12px no-repeat,
+         linear-gradient(var(--graphite) 0 0) right top / 1px 12px no-repeat;
+   }
+
+   .taskbench-file {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px 12px;
+      min-height: 36px;
+      padding: 4px 10px;
+      border-left: 2px solid var(--violet-signal);
+      background: var(--ceramic);
+      font-size: 10px;
+   }
+
+   .taskbench-file span:first-child {
+      color: var(--violet-link);
+      font-weight: 500;
+   }
+
+   .ledger-columns {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 10px;
+      min-height: 36px;
+      margin: 0;
+      padding: 6px 0;
+      list-style: none;
+      border-block: 1px solid var(--rule);
+      color: var(--ink);
+      font-size: 10px;
+   }
+
+   .ledger-columns li + li {
+      border-left: 1px solid var(--rule);
+      padding-left: 10px;
+   }
+
+   .site-lockup,
+   .site-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px 16px;
+   }
+
+   .site-title {
+      font-size: clamp(20px, 2.3vw, 26px);
+      overflow-wrap: anywhere;
+   }
+
+   .site-palette {
+      align-self: center;
+      height: 12px;
+      margin: 12px 0;
+      background: linear-gradient(
+         to right,
+         var(--graphite) 0 28%,
+         var(--violet-signal) 28% 52%,
+         var(--titanium) 52% 76%,
+         var(--substrate) 76% 100%
+      );
+   }
+
+   @media (max-width: 1024px) {
+      .inspect-project {
+         grid-column: 1 / -1;
+      }
+
+      .spicetify-project,
+      .api-project {
+         grid-column: span 6;
+      }
+   }
+
+   @media (701px <= width <= 850px) {
+      .taskbench-project,
+      .ledger-project {
+         grid-column: span 6;
+      }
+   }
+
+   @media (850px < width <= 1024px) {
+      .compact-project {
+         grid-column: span 4;
+      }
+   }
+
    @media (max-width: 700px) {
+      .projects {
+         padding-top: 80px;
+      }
+
+      .features {
+         row-gap: 56px;
+      }
+
+      .cluster-grid {
+         row-gap: 36px;
+      }
+
+      .card-dark {
+         gap: 16px;
+         padding: 26px 20px 20px;
+      }
+
       .split,
-      .trashy {
+      .trashy,
+      .inspect-header {
          grid-template-columns: 1fr;
-         row-gap: 28px;
+      }
+
+      .trashy {
+         padding-right: 0;
+      }
+
+      .split {
+         row-gap: 16px;
+      }
+
+      .spicetify-project,
+      .api-project {
+         grid-column: 1 / -1;
+      }
+
+      .sujood-project {
+         padding: 14px 14px 16px;
       }
 
       .bigfig {
-         font-size: 46px;
+         font-size: 56px;
       }
    }
 </style>

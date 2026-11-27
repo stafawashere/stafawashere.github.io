@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import RmseChart from "./RmseChart.astro";
 import SectionLabel from "@/components/ui/SectionLabel.astro";
 import { RESEARCH_PATH } from "@/data/projects";
-import { keyFrames, outcomes, study } from "@/data/research";
+import { figureFrames, outcomes, study } from "@/data/research";
 ---
 
 <section id="research" class="research on-dark">
@@ -36,7 +36,7 @@ import { keyFrames, outcomes, study } from "@/data/research";
          </div>
          <div class="s7 evidence">
             <div class="frames">
-               {keyFrames.map((frame) => (
+               {figureFrames.map((frame) => (
                   <figure class:list={{ peak: frame.peak }}>
                      <Image
                         src={frame.src}
@@ -52,10 +52,10 @@ import { keyFrames, outcomes, study } from "@/data/research";
             <RmseChart />
             <p class="ss legend">
                <span class="swatch-row">
-                  <span class="swatch" aria-hidden="true"></span>Real model output · one run, seed
-                  0, same caption
+                  <span class="swatch" aria-hidden="true"></span>Seed 0 · three frames from the same
+                  run
                </span>
-               <span>FIG. 01b · RMSE vs frame 00, measured</span>
+               <span>Pixel error (RMSE) vs frame 00 at selected frames</span>
             </p>
          </div>
       </div>

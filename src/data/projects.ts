@@ -5,9 +5,9 @@ export const RESEARCH_PATH = "/research/psychedelic-model";
 export const projectIndex: Project[] = [
    {
       id: "PRJ-01",
-      name: "Psychedelic Model",
+      name: "Psychedelic Vision Study",
       kind: "ML research",
-      tech: "Python · PyTorch · Stable Diffusion",
+      tech: "Stable Diffusion 1.5 · Image analysis",
       date: "Jun 2026–",
       url: RESEARCH_PATH,
    },

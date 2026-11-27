@@ -7,12 +7,15 @@ import { researchMeta, researchPage, study } from "@/data/research";
       <span class="ss kicker">
          <span class="id">{study.id}</span>
          <span class="rule" aria-hidden="true"></span>
-         {researchPage.kind} · {study.period} · ~{study.hoursPerWeek} hrs/week
+         {researchPage.kind} · {study.period}
       </span>
       <h1 id="research-title" class="title">
          {study.title}
       </h1>
       <p class="serif lede">{researchPage.lede}</p>
+      <a href={study.preprintUrl} class="source-link">
+         Read the preprint (PDF) <span aria-hidden="true">↗</span>
+      </a>
    </div>
 
    <dl class="meta">
@@ -73,7 +76,6 @@ import { researchMeta, researchPage, study } from "@/data/research";
    }
 
    .lede {
-      max-width: 32ch;
       font-size: 36px;
       line-height: 1.18;
       font-style: italic;
@@ -123,9 +125,40 @@ import { researchMeta, researchPage, study } from "@/data/research";
       font-weight: 600;
    }
 
+   .intro .source-link {
+      align-self: flex-start;
+   }
+
    @media (max-width: 1100px) {
       .title {
          font-size: 72px;
+      }
+   }
+
+   @media (width > 700px) and (height <= 1240px) {
+      .title-section {
+         padding-top: 28px;
+         padding-bottom: 20px;
+      }
+
+      .intro {
+         gap: 12px;
+      }
+
+      .title {
+         font-size: clamp(54px, 6vw, 80px);
+      }
+
+      .lede {
+         font-size: clamp(26px, 2.5vw, 30px);
+      }
+
+      .meta {
+         margin-top: 20px;
+      }
+
+      .meta-item {
+         padding-block: 12px;
       }
    }
 

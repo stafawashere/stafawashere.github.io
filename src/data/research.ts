@@ -1,67 +1,47 @@
 import frame00 from "@/assets/images/research/frame-00.webp";
 import frame13 from "@/assets/images/research/frame-13.webp";
 import frame39 from "@/assets/images/research/frame-39.webp";
+import { projectById } from "./projects";
 import type { RmseSample, Screenshot } from "./types";
 
+const project = projectById("PRJ-01");
+const repositoryName = "psychedelic-vision-study";
+const sourceUrl = `https://github.com/stafawashere/${repositoryName}`;
+
 export const study = {
-   id: "PRJ-01",
-   title: "Driving Stable Diffusion with brain variables",
+   id: project.id,
+   title: project.name,
    period: "Jun 2026–present",
-   hoursPerWeek: 10,
    question:
-      "Does the sequence reported in DMT research (geometry, then forms, then figures) emerge when the only things I move are knobs mapped to the brain?",
+      "Can a frozen Stable Diffusion model turn a forest-road photo into organized geometry, then recover the road?",
    method:
-      "Knobs from sensory precision to cortical gain ride one dose curve. Nothing is hand-drawn, the prompt never asks for anything psychedelic, and every metric and pass/fail threshold was fixed before the first run. I’m writing it up as a paper with a public DOI, failures included.",
-   sourceUrl: "https://github.com/stafawashere/psychedelic-model-research",
+      "I gave Stable Diffusion 1.5 the same forest-road photo and caption at every frame. As a simulated dose rose, I reduced the weight of both inputs and increased denoising strength, gain in the first U-Net block, and feedback from the previous frame. I ran the same 40-frame schedule with three starting seeds.",
+   sourceUrl,
+   preprintUrl: `${sourceUrl}/blob/main/docs/paper/forest-road-preprint.pdf`,
 };
 
 export const outcomes = [
    {
-      verdict: "Held",
-      text: "The timing of the arc. The image left the photo and came back: RMSE 0.274 at the peak, 0.025 by frame 39.",
+      verdict: "Returned",
+      text: "All three seeds passed both return tests. Mean pixel error was 0.0277 and mean fine-detail match was 0.846 against each seed’s first render.",
    },
    {
-      verdict: "Emerged",
-      text: "Periodic patterns with no geometry in the prompt: 3.0× a natural image’s spectrum, vs 1.6× at baseline.",
+      verdict: "Repeated",
+      text: "All three peaks developed repeating texture. The mean spectral bump was 1.80 versus 0.44 for the photo.",
    },
    {
       verdict: "Failed",
-      text: "Symmetry stayed near zero, so no form constants. The come-up blurred, and figures never appeared.",
+      text: "The peaks fell short of the geometry threshold, showed little symmetry, and lost motion when I held the settings steady.",
    },
 ] as const;
-
-export const keyFrames: (Screenshot & { caption: string; peak?: boolean })[] = [
-   {
-      src: frame00,
-      alt: "Frame 0: the original photo, a dirt road through a green forest.",
-      caption: "Frame 00 · scene",
-   },
-   {
-      src: frame13,
-      alt: "Frame 13, the dose peak: the forest has dissolved into a repeating mottled texture.",
-      caption: "Frame 13 · dose peak",
-      peak: true,
-   },
-   {
-      src: frame39,
-      alt: "Frame 39: the forest road has returned.",
-      caption: "Frame 39 · return",
-   },
-];
 
 export const LAST_FRAME = 39;
 
 export const rmseSeries: RmseSample[] = [
    { frame: 0, rmse: 0 },
-   { frame: 4, rmse: 0.043 },
-   { frame: 7, rmse: 0.079 },
-   { frame: 11, rmse: 0.189 },
-   { frame: 13, rmse: 0.274 },
-   { frame: 16, rmse: 0.22 },
-   { frame: 20, rmse: 0.126 },
-   { frame: 24, rmse: 0.076 },
-   { frame: 30, rmse: 0.028 },
-   { frame: 39, rmse: 0.025 },
+   { frame: 5, rmse: 0.0485 },
+   { frame: 13, rmse: 0.2766 },
+   { frame: 39, rmse: 0.0241 },
 ];
 
 export interface FigureFrame extends Screenshot {
@@ -86,7 +66,7 @@ export interface TocEntry {
 export interface Knob {
    name: string;
    inModel: string;
-   brainVariable: string;
+   role: string;
    atPeak: string;
 }
 
@@ -95,13 +75,13 @@ export interface Rule {
    text: string;
 }
 
-export type Verdict = "yes" | "partial" | "no";
+export type Verdict = "pass" | "miss";
 
-export interface PhaseScore {
-   phase: string;
+export interface ExperimentCheck {
+   check: string;
    verdict: Verdict;
-   produced: string;
-   missing: string;
+   result: string;
+   criterion: string;
 }
 
 export interface Stat {
@@ -116,209 +96,206 @@ export interface SideNote {
 }
 
 export const researchPage = {
-   kind: "Independent research",
-   lede: "The run reproduced the timing of the DMT arc, and none of the content of its phases.",
+   kind: "Independent student research",
+   lede: "I translated ideas about sensory evidence, expectation, and feedback into controls on a frozen image model. At peak dose, the forest road dissolved into repeating patches. Across three seeds, its fine detail returned as the dose fell. The patches never showed the symmetry I was looking for.",
    description:
-      "An independent study driving Stable Diffusion 1.5 with knobs mapped to brain variables, to test whether the reported order of DMT visuals emerges on its own.",
-   rmseCaption:
-      "FIG. 2 · RMSE of each frame against frame 00 · fast rise over 13 frames, slower tail over 26 · measured, conclusion.md §2",
-   peakLabel: "PEAK 0.274 · D = 1.0",
+      "Mahfuj Mustafa tests whether brain-inspired changes to photo weight, caption guidance, gain, and feedback in Stable Diffusion 1.5 can produce organized geometry.",
+   rmseCaption: "FIG. 2 · Pixel error (RMSE) against the first render at selected frames · seed 0",
 };
 
 export const researchMeta: MetaItem[] = [
-   { label: "Model", value: "Stable Diffusion 1.5" },
-   { label: "Stack", value: "Python · PyTorch · BLIP" },
-   { label: "Status", value: "Paper with public DOI in progress" },
-   { label: "Source", value: "psychedelic-model-research", href: study.sourceUrl },
+   { label: "Model", value: "Stable Diffusion 1.5 (frozen)" },
+   { label: "Input", value: "One 512 × 512 forest-road photo" },
+   { label: "Main runs", value: "Three seeds · 40 frames each" },
+   { label: "Source", value: repositoryName, href: study.sourceUrl },
 ];
 
 export const figureFrames: FigureFrame[] = [
    {
       src: frame00,
-      alt: "Frame 0: a dirt road through a green forest.",
+      alt: "First render of a dirt road through a green forest.",
       figure: "FIG. 1a",
-      caption: "Frame 00 · scene",
+      caption: "Frame 00 · first render",
       frame: 0,
    },
    {
       src: frame13,
-      alt: "Frame 13 at the dose peak: the scene has dissolved into a repeating mottled texture.",
+      alt: "Repeating dark patches obscure the forest road at peak dose.",
       figure: "FIG. 1b",
-      caption: "Frame 13 · peak, t = 4 min",
+      caption: "Frame 13 · peak, 4 simulated min",
       frame: 13,
       peak: true,
    },
    {
       src: frame39,
-      alt: "Frame 39: the forest road has returned.",
+      alt: "The dirt road and surrounding trees are visible again.",
       figure: "FIG. 1c",
-      caption: "Frame 39 · return",
+      caption: "Frame 39 · return, 12 simulated min",
       frame: 39,
    },
 ];
 
 export const tocEntries: TocEntry[] = [
    { id: "question", index: "§1", label: "Question" },
-   { id: "knobs", index: "§2", label: "Five knobs" },
-   { id: "rules", index: "§3", label: "Rules" },
-   { id: "scoreboard", index: "§4", label: "Scoreboard" },
-   { id: "finding", index: "§5", label: "Finding" },
+   { id: "knobs", index: "§2", label: "Model controls" },
+   { id: "rules", index: "§3", label: "Experiment" },
+   { id: "scoreboard", index: "§4", label: "Results" },
+   { id: "finding", index: "§5", label: "Follow-up tests" },
    { id: "limits", index: "§6", label: "Limits" },
 ];
 
 export const questionSection = {
    label: "§1 · Question",
-   title: "Does the order fall out on its own?",
+   title: "How do you turn down an expectation in Stable Diffusion?",
    paragraphs: [
-      "DMT research describes the visuals in a fairly consistent order: geometry, then forms, then figures, then a return to the room. I wanted to know whether that order falls out of an image model when the only things I touch are parameters that map to known brain variables.",
-      "Two ideas set it up. REBUS (Carhart-Harris and Friston) says psychedelics relax the precision of high-level priors. And DMT acts on the 5-HT2A receptor, raising the gain of cortical cells. A latent diffusion model has the same parts loosely: a prior (the caption), sensory evidence (the encoded photo) and a stack of levels (the U-Net).",
+      "The words “dirt road” tell the model what to expect. The photograph tells it where the wheel tracks run and where the branches cross. Carhart-Harris and Friston’s REBUS hypothesis proposes that psychedelics can loosen the influence of high-level beliefs. I borrowed that idea by keeping the caption fixed and turning down its guidance scale. A separate control sets how much of the photograph reaches each frame.",
+      "The harder question was where a pattern would come from. In Bressloff and colleagues’ model of visual cortex, connections between neighboring points help determine which shapes grow. In my experiment, gain simply amplifies features in one layer. Could the connections already in Stable Diffusion organize those features into a lattice or tunnel as the road faded? I tested that by measuring the spacing of the patches and checking whether they lined up under reflection or rotation.",
    ],
 };
 
 export const knobsSection = {
-   label: "§2 · The five knobs",
-   title: "One dose curve, five brain variables.",
+   label: "§2 · Model controls",
+   title: "Five brain-inspired controls in the image model",
 };
 
 export const knobs: Knob[] = [
    {
       name: "scene_precision",
-      inModel: "Weight of the encoded photo, with a floor above zero",
-      brainVariable: "Precision of sensory evidence",
-      atPeak: "falls to floor",
+      inModel: "Weight of the encoded photo",
+      role: "Confidence in sensory evidence",
+      atPeak: "0.40, from 0.85",
    },
    {
       name: "prior_precision",
-      inModel: "Guidance scale on the caption",
-      brainVariable: "Precision of high-level priors",
-      atPeak: "falls",
+      inModel: "Caption guidance scale",
+      role: "Confidence in a high-level expectation",
+      atPeak: "6, from 12",
    },
    {
       name: "gain",
-      inModel: "Multiplies one U-Net block, tanh soft-clipped",
-      brainVariable: "5-HT2A cortical gain",
-      atPeak: "rises",
+      inModel: "Multiplier on the block output, with soft clipping",
+      role: "How strongly a layer responds",
+      atPeak: "2.8, from 1",
    },
    {
       name: "depth",
-      inModel: "Which U-Net block gets the gain",
-      brainVariable: "Which cortical level destabilizes",
-      atPeak: "moves deeper",
+      inModel: "U-Net block that receives gain",
+      role: "Which level of the hierarchy is amplified",
+      atPeak: "First down block throughout",
    },
    {
       name: "recurrence",
-      inModel: "Weight of the previous frame",
-      brainVariable: "The loop feeding on itself",
-      atPeak: "rises, then falls",
+      inModel: "Weight of the previous render",
+      role: "How much prior activity feeds back",
+      atPeak: "0.12, from 0",
    },
 ];
 
 export const rulesSection = {
-   label: "§3 · Rules, fixed in advance",
-   title: "If you prompt for the result, you’ve proven nothing.",
+   label: "§3 · Experiment",
+   title: "One road, one caption, three starting seeds",
 };
 
 export const rules: Rule[] = [
    {
       index: "01",
-      text: "Nothing is hand-drawn. No geometry is painted in, so any pattern has to come out of the model.",
+      text: "I kept the model frozen and used the same caption throughout: “a view of a dirt road in the middle of a forest.”",
    },
    {
       index: "02",
-      text: "The prompt is a neutral caption written by BLIP, with 78 words like fractal and spiral filtered out.",
+      text: "Every frame received the same aligned photo. The main runs used no spatial warp or injected pattern, and the starting noise was held fixed within each seed.",
    },
    {
       index: "03",
-      text: "Sensory precision never hits zero, so the photo always has a way back.",
+      text: "Dose is a number that schedules the model settings. Four controls varied as it rose and fell over twelve simulated minutes. Depth stayed fixed at the first down block. Denoise strength also rose from 0.45 to 0.82, so the model started from more noise at the four-minute peak.",
    },
    {
       index: "04",
-      text: "Measurements and thresholds are written down before the runs they judge.",
-   },
-   {
-      index: "05",
-      text: "A result is a computational signature. Never a claim about experience.",
+      text: "I set the thresholds in advance. For return, the final frame had to score at most 0.05 in pixel error and at least 0.8 in fine-detail match against its own first render.",
    },
 ];
 
 export const scoreboardSection = {
-   label: "§4 · Scoreboard",
-   title: "Phase by phase.",
+   label: "§4 · Results",
+   title: "Two of six checks passed",
 };
 
-export const scoreboard: PhaseScore[] = [
+export const scoreboard: ExperimentCheck[] = [
    {
-      phase: "Come-up",
-      verdict: "partial",
-      produced: "Monotone, graded onset",
-      missing: "Detail-preserving shimmer; got defocus",
+      check: "Early detail",
+      verdict: "miss",
+      result: "Seed 0 dropped to 0.509 by frame 06.",
+      criterion: "Fine-detail match above 0.6 through frame 11",
    },
    {
-      phase: "Geometry",
-      verdict: "no",
-      produced: "Elevated periodicity only",
-      missing: "Wavelength selection, symmetry, radial organisation",
+      check: "Repetition",
+      verdict: "miss",
+      result: "Mean peak spectral bump was 1.80. The photo scored 0.44.",
+      criterion: "Spectral bump above 5",
    },
    {
-      phase: "Breakthrough",
-      verdict: "partial",
-      produced: "Total loss of the real scene",
-      missing: "A self-consistent space with its own motion",
+      check: "Symmetry",
+      verdict: "miss",
+      result: "Mean mirror score was 0.101. Mean 60-degree rotation score was −0.024.",
+      criterion: "Spatial order under reflection or rotation",
    },
    {
-      phase: "Entities",
-      verdict: "no",
-      produced: "Nothing",
-      missing: "Closed by the architecture, not the evidence",
+      check: "Peak motion",
+      verdict: "miss",
+      result: "Frame-to-frame change decayed at all three seeds during the hold.",
+      criterion: "Sustained change with patterns that still line up",
    },
    {
-      phase: "Return",
-      verdict: "yes",
-      produced: "Exact return to the source scene",
-      missing: "Nothing, but guaranteed by construction",
+      check: "Return",
+      verdict: "pass",
+      result: "All three seeds passed. Mean RMSE was 0.0277 and mean detail match was 0.846.",
+      criterion: "RMSE of 0.05 or less and detail match of 0.8 or more",
+   },
+   {
+      check: "Implementation",
+      verdict: "pass",
+      result: "The configuration and hook checks passed.",
+      criterion: "Controls work as specified",
    },
 ];
 
 export const findingSection = {
-   label: "§5 · What it established",
-   title: "The boundary is dimensional, not empirical.",
+   label: "§5 · Follow-up tests",
+   title: "What happened when I added structure or motion?",
    paragraphs: [
-      "Every knob is a scalar, and every phase the run produced is one whose brain mechanism is also essentially scalar: a global change in gain, a reweighting of precision. Every phase it failed depends on something spatial, like an interaction kernel with a length constant, or on a model of another agent. A scalar can push a system across a bifurcation. It can’t pick which pattern lies on the other side.",
+      "The peak spacing ranged from 20.5 to 46.5 pixels across seeds, and even a flat gray input produced repeating texture. A separate log-polar warp failed to increase the expected measures of radial order on either the flat field or the forest road.",
+      "I injected a hexagonal lattice directly into the first U-Net block. It had a mirror score of 1.000 at injection and averaged 0.066 in the rendered images over eight seeds. Where the layout was lost remains open.",
+      "Drifting the starting noise increased movement during a separate peak hold. Only two of three seeds sustained it. The tested full arc with drift missed both return thresholds, ending at 0.1498 pixel error and 0.028 fine-detail match.",
    ],
    stats: [
-      { label: "Excess periodic power at 19 px", value: "3.0×", comparison: "vs 1.6× photo" },
+      { label: "Peak spectral bump", value: "1.80", comparison: "vs 0.44 for the photo" },
       {
-         label: "Mirror / rotational symmetry at peak",
-         value: "≈ 0",
-         comparison: "vs 0.98–0.99 controls",
+         label: "Mirror score after lattice injection",
+         value: "0.066",
+         comparison: "vs 1.000 at injection",
       },
    ] satisfies Stat[],
 };
 
 export const limitsSection = {
    label: "§6 · Limits",
-   statement:
-      "A computational signature, never a claim about experience. The model isn’t “tripping.”",
+   statement: "The three-seed result comes from one photograph.",
    items: [
-      "The headline numbers come from one run, on one photo, with one seed.",
-      "The return is guaranteed by construction: the photo is re-encoded every frame.",
-      "The missing figures say nothing about DMT; the setup strips figure words from the only route to them.",
-      "I used agentic AI tools for assisted coding and research. The question, the design and the thresholds were mine.",
+      "The aligned source photo was available at every frame. In the one jittered-input run, final fine-detail match dropped to 0.686.",
+      "Several settings changed together, so the time course cannot isolate the effect of any one control.",
+      "The measurements describe rendered images. The study collected no participant reports or neural recordings.",
+      "I designed the question, controls, and thresholds. I used AI tools for coding, research assistance, and manuscript drafting.",
    ],
 };
 
 export const sideNotes: SideNote[] = [
    {
-      label: "Read this as",
-      text: "An independent student study, documented with its failures. Not yet peer reviewed.",
+      label: "Return reference",
+      text: "Frame 00 is already one pass through the model. Each seed’s final frame is compared with its own first render.",
    },
    {
-      label: "Builds on",
-      text: "REBUS; the entropic brain hypothesis; Klüver’s form constants; Ermentrout & Cowan 1979; Bressloff et al. 2001.",
-   },
-   {
-      label: "Next",
-      text: "A gain-only come-up with denoise held flat; jittered input to test the return; a difference-of-Gaussians lateral kernel. Each with its pass/fail line set first.",
+      label: "Next tests",
+      text: "Repeat the full arc on other photos and measure the injected lattice after successive blocks to locate where its layout breaks down.",
    },
 ];
 

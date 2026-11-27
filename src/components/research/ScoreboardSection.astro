@@ -4,28 +4,28 @@ import { scoreboard, scoreboardSection } from "@/data/research";
 ---
 
 <PaperSection id="scoreboard" label={scoreboardSection.label} title={scoreboardSection.title}>
-   <div role="table" aria-label="Scoreboard by phase" class="table">
+   <div role="table" aria-label="Experimental checks" class="table">
       <div role="row" class="score ss head">
-         <span role="columnheader">Phase</span>
-         <span role="columnheader">Produced</span>
-         <span role="columnheader">What came out</span>
+         <span role="columnheader">Check</span>
+         <span role="columnheader">Verdict</span>
+         <span role="columnheader">Result</span>
          <span role="columnheader" class="hide-s">
-            What was missing
+            Criterion
          </span>
       </div>
       {scoreboard.map((score) => (
          <div role="row" class="score row">
-            <span role="cell" class="phase">
-               {score.phase}
+            <span role="cell" class="check">
+               {score.check}
             </span>
             <span role="cell">
                <span class:list={["ss", "verdict", score.verdict]}>{score.verdict}</span>
             </span>
             <span role="cell" class="note">
-               {score.produced}
+               {score.result}
             </span>
             <span role="cell" class="hide-s note">
-               {score.missing}
+               {score.criterion}
             </span>
          </div>
       ))}
@@ -61,7 +61,7 @@ import { scoreboard, scoreboardSection } from "@/data/research";
       line-height: 1.45;
    }
 
-   .phase {
+   .check {
       font-weight: 600;
    }
 
@@ -70,17 +70,12 @@ import { scoreboard, scoreboardSection } from "@/data/research";
       font-size: 10px;
    }
 
-   .verdict.yes {
+   .verdict.pass {
       background: var(--graphite);
       color: var(--ceramic);
    }
 
-   .verdict.partial {
-      background: var(--titanium);
-      color: var(--graphite);
-   }
-
-   .verdict.no {
+   .verdict.miss {
       background: var(--ceramic);
       color: var(--graphite);
    }

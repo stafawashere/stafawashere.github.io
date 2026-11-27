@@ -26,7 +26,7 @@ const gridLines = gridValues.map((value) => ({
 const frameLabel = (frame: number) => `F${String(frame).padStart(2, "0")}`;
 const peakX = (peakSample.frame / LAST_FRAME) * box.width;
 
-const formatRmse = (rmse: number) => (rmse === 0 ? "0" : rmse.toFixed(3));
+const formatRmse = (rmse: number) => (rmse === 0 ? "0" : rmse.toFixed(4));
 const chartSummary = rmseSeries
    .map((sample, index) => {
       const isFirst = index === 0;
@@ -57,13 +57,14 @@ const rmseAt = (frame: number) => rmseSeries.find((sample) => sample.frame === f
                   width={512}
                   height={512}
                   class="shot"
+                  loading="eager"
                   sizes="(max-width: 700px) 100vw, 33vw"
                />
                <figcaption class="ss frame-caption">
                   <span>
                      {frame.figure} · {frame.caption}
                   </span>
-                  <span>RMSE {rmseAt(frame.frame).toFixed(3)}</span>
+                  <span>RMSE {rmseAt(frame.frame).toFixed(4)}</span>
                </figcaption>
             </figure>
          ))}
@@ -73,7 +74,7 @@ const rmseAt = (frame: number) => rmseSeries.find((sample) => sample.frame === f
          <svg
             viewBox={`0 0 ${box.width} 290`}
             role="img"
-            aria-label={`RMSE of each frame against frame 0: ${chartSummary}.`}
+            aria-label={`Seed 0 RMSE against frame 0 at selected frames: ${chartSummary}.`}
          >
             <path class="axis" d={`M0 ${box.baseline}H${box.width}`}></path>
             {gridLines.map((line) => (
@@ -109,7 +110,7 @@ const rmseAt = (frame: number) => rmseSeries.find((sample) => sample.frame === f
                <>
                   <circle class="peak-dot" cx={peakPoint.x} cy={peakPoint.y} r="6" />
                   <text class="peak-label" x={peakPoint.x + 12.7} y={peakPoint.y + 4}>
-                     {researchPage.peakLabel}
+                     PEAK {formatRmse(peakSample.rmse)}
                   </text>
                </>
             )}
@@ -217,6 +218,18 @@ const rmseAt = (frame: number) => rmseSeries.find((sample) => sample.frame === f
    .chart-caption {
       font-size: 10px;
       color: var(--on-dark-muted);
+   }
+
+   @media (width > 700px) and (height <= 1240px) {
+      .inner {
+         padding-top: 20px;
+      }
+
+      .frames {
+         width: 100%;
+         max-width: calc(3 * clamp(160px, 100svh - 575px, 420px) + 32px);
+         margin-inline: auto;
+      }
    }
 
    @media (max-width: 700px) {

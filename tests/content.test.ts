@@ -51,10 +51,10 @@ describe("rmse series", () => {
       expect(frames.at(-1)).toBe(LAST_FRAME);
    });
 
-   it("peaks at frame 13 with 0.274", () => {
+   it("peaks at frame 13 with 0.2766", () => {
       const peak = rmseSeries.reduce((best, sample) => (sample.rmse > best.rmse ? sample : best));
 
-      expect(peak).toEqual({ frame: 13, rmse: 0.274 });
+      expect(peak).toEqual({ frame: 13, rmse: 0.2766 });
    });
 });
 

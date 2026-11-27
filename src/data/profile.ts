@@ -19,8 +19,8 @@ export const strands: Strand[] = [
    {
       code: "R",
       label: "Research",
-      title: "Diffusion-model perception study",
-      summary: "Paper with a public DOI in progress",
+      title: "Brain-inspired controls in Stable Diffusion",
+      summary: "One forest road, three seeds, 40 frames per run",
       href: "#research",
    },
    {

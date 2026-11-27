@@ -16,7 +16,7 @@ const peakSample = rmseSeries[peakIndex]!;
 const peakPoint = points[peakIndex]!;
 const lastSample = rmseSeries.at(-1)!;
 const lastPoint = points.at(-1)!;
-const label = `RMSE against frame 0 rises from 0 to a peak of ${peakSample.rmse} at frame ${peakSample.frame}, then falls to ${lastSample.rmse} by frame ${LAST_FRAME}.`;
+const label = `Selected RMSE measurements against frame 0 for seed 0, from 0 to ${peakSample.rmse} at frame ${peakSample.frame}, and ${lastSample.rmse} by frame ${LAST_FRAME}.`;
 ---
 
 <svg viewBox="0 0 700 100" role="img" aria-label={label} class="chart">
@@ -38,10 +38,10 @@ const label = `RMSE against frame 0 rises from 0 to a peak of ${peakSample.rmse}
    </g>
    <circle cx={peakPoint.x} cy={peakPoint.y} r="4" fill="var(--violet-glow)"></circle>
    <text x={peakPoint.x + 10} y={peakPoint.y + 4} class="mark bright">
-      F{peakSample.frame} · {peakSample.rmse.toFixed(3)}
+      F{peakSample.frame} · {peakSample.rmse.toFixed(4)}
    </text>
    <text x={box.width} y={lastPoint.y - 9} text-anchor="end" class="mark">
-      F{lastSample.frame} · {lastSample.rmse.toFixed(3)}
+      F{lastSample.frame} · {lastSample.rmse.toFixed(4)}
    </text>
    <text x="0" y="98" class="mark small">
       FRAME 00
