@@ -17,7 +17,7 @@ export const study = {
    method:
       "I gave Stable Diffusion 1.5 the same forest-road photo and caption at every frame. As a simulated dose rose, I reduced the weight of both inputs and increased denoising strength, gain in the first U-Net block, and feedback from the previous frame. I ran the same 40-frame schedule with three starting seeds.",
    sourceUrl,
-   preprintUrl: `${sourceUrl}/blob/main/docs/paper/forest-road-preprint.pdf`,
+   paperUrl: "https://zenodo.org/records/24592604",
 };
 
 export const outcomes = [
